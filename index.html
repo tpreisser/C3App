@@ -25,7 +25,8 @@
   <style>
     :root {
       --teal: #14B8A6;
-      --teal-glow: rgba(20, 184, 166, 0.3);
+      --teal-dim: rgba(20, 184, 166, 0.15);
+      --blue: #3B82F6;
       --bg: #000000;
       --card: #111111;
       --card-hover: #1a1a1a;
@@ -36,9 +37,8 @@
       --padding: 20px;
       --radius: 16px;
       --radius-sm: 12px;
-      --nav-height: 84px;
-      --safe-top: env(safe-area-inset-top, 0px);
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --radius-xs: 8px;
+      --nav-height: 72px;
     }
 
     * {
@@ -78,10 +78,7 @@
       background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
       border-radius: 55px;
       padding: 4px;
-      box-shadow:
-        0 50px 100px rgba(0,0,0,0.5),
-        0 0 0 1px rgba(255,255,255,0.1),
-        inset 0 1px 0 rgba(255,255,255,0.15);
+      box-shadow: 0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
       transform-origin: center center;
     }
 
@@ -105,20 +102,6 @@
       background: #000;
       border-radius: 24px;
       z-index: 1000;
-      box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.08);
-    }
-
-    .dynamic-island::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 24px;
-      transform: translateY(-50%);
-      width: 10px;
-      height: 10px;
-      background: radial-gradient(circle, #1a1a2e 0%, #0d0d15 100%);
-      border-radius: 50%;
-      box-shadow: inset 0 0 2px rgba(255,255,255,0.1);
     }
 
     /* Home Indicator */
@@ -146,6 +129,69 @@
       overflow: hidden;
     }
 
+    /* Header */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 56px var(--padding) 12px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .logo-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--text-primary);
+    }
+
+    .logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .icon-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--text-primary);
+    }
+
     /* Pages Container */
     .pages {
       flex: 1;
@@ -165,7 +211,7 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
       -webkit-overflow-scrolling: touch;
-      padding-bottom: calc(var(--nav-height) + 20px);
+      padding-bottom: calc(var(--nav-height) + 30px);
     }
 
     .page.active {
@@ -173,15 +219,20 @@
       pointer-events: auto;
     }
 
-    .page::-webkit-scrollbar {
-      display: none;
+    .page::-webkit-scrollbar { display: none; }
+
+    /* Page Title */
+    .page-title {
+      padding: 70px var(--padding) 20px;
+      font-size: 28px;
+      font-weight: 700;
     }
 
-    /* Hero Section - Full Width to Edge */
+    /* Hero Section */
     .hero {
       position: relative;
       width: 100%;
-      height: 380px;
+      height: 340px;
       overflow: hidden;
     }
 
@@ -197,14 +248,7 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.3) 0%,
-        rgba(0,0,0,0) 30%,
-        rgba(0,0,0,0) 50%,
-        rgba(0,0,0,0.7) 75%,
-        rgba(0,0,0,0.95) 100%
-      );
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 80%, rgba(0,0,0,1) 100%);
     }
 
     .hero-content {
@@ -213,7 +257,6 @@
       left: 0;
       right: 0;
       padding: var(--padding);
-      padding-bottom: 24px;
     }
 
     .hero-eyebrow {
@@ -226,10 +269,10 @@
     }
 
     .hero-title {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 10px;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
     .hero-meta {
@@ -238,13 +281,7 @@
       gap: 12px;
       font-size: 13px;
       color: var(--text-secondary);
-      margin-bottom: 16px;
-    }
-
-    .hero-meta-item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      margin-bottom: 14px;
     }
 
     .hero-actions {
@@ -257,7 +294,7 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 10px 20px;
+      padding: 10px 18px;
       border-radius: 24px;
       font-size: 14px;
       font-weight: 600;
@@ -271,40 +308,36 @@
       color: #000;
     }
 
-    .btn-primary:active {
-      transform: scale(0.96);
-    }
+    .btn-primary:active { transform: scale(0.96); }
 
     .btn-secondary {
       background: rgba(255,255,255,0.12);
       color: var(--text-primary);
-      backdrop-filter: blur(10px);
     }
 
     /* Check-In Section */
     .checkin-section {
-      padding: 0 var(--padding);
-      margin-top: -8px;
+      padding: 20px var(--padding);
+      background: var(--bg);
     }
 
     .checkin-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .checkin-date {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 600;
-      color: var(--text-primary);
     }
 
     .streak-badge {
       display: flex;
       align-items: center;
       gap: 4px;
-      padding: 4px 10px;
+      padding: 5px 10px;
       background: rgba(251, 191, 36, 0.15);
       border-radius: 20px;
     }
@@ -331,8 +364,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 10px 6px;
+      padding: 10px 4px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -350,7 +382,7 @@
     }
 
     .time-btn .time {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: var(--text-primary);
     }
@@ -365,16 +397,14 @@
       color: #000;
     }
 
-    /* Animated Check-in Button */
-    .checkin-btn-container {
+    .checkin-btn-wrap {
       overflow: hidden;
       max-height: 0;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-top: 0;
+      transition: all 0.3s ease;
     }
 
-    .checkin-btn-container.visible {
+    .checkin-btn-wrap.visible {
       max-height: 60px;
       opacity: 1;
       margin-top: 12px;
@@ -394,11 +424,6 @@
       font-weight: 600;
       color: #000;
       cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .checkin-btn:active {
-      transform: scale(0.98);
     }
 
     .checkin-btn svg {
@@ -406,7 +431,7 @@
       height: 18px;
     }
 
-    /* Section Headers */
+    /* Section */
     .section {
       margin-top: 28px;
     }
@@ -420,7 +445,7 @@
     }
 
     .section-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
@@ -434,44 +459,39 @@
       text-decoration: none;
     }
 
-    /* Horizontal Scroll - With Proper Padding */
+    /* Horizontal Scroll - FIXED: starts with padding, scrolls to edge */
     .hscroll {
       display: flex;
       gap: 12px;
       overflow-x: auto;
-      padding: 0 var(--padding);
+      padding-left: var(--padding);
+      padding-right: var(--padding);
+      scroll-padding-left: var(--padding);
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
     }
 
-    .hscroll::-webkit-scrollbar {
-      display: none;
-    }
+    .hscroll::-webkit-scrollbar { display: none; }
 
-    .hscroll > *:last-child {
-      margin-right: 0;
+    .hscroll::after {
+      content: '';
+      flex-shrink: 0;
+      width: 8px;
     }
 
     /* Event Cards */
     .event-card {
-      flex: 0 0 auto;
-      width: 200px;
+      flex: 0 0 180px;
       background: var(--card);
       border-radius: var(--radius);
       overflow: hidden;
       scroll-snap-align: start;
       border: 1px solid var(--border);
-      transition: transform 0.2s ease;
-    }
-
-    .event-card:active {
-      transform: scale(0.98);
     }
 
     .event-image {
-      position: relative;
       width: 100%;
-      height: 110px;
+      height: 100px;
       overflow: hidden;
     }
 
@@ -486,26 +506,25 @@
     }
 
     .event-date {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: var(--teal);
       margin-bottom: 4px;
     }
 
     .event-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      color: var(--text-primary);
       margin-bottom: 2px;
     }
 
     .event-subtitle {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-tertiary);
     }
 
-    /* NT26 Reading Plan Card */
-    .reading-card {
+    /* NT26 Card */
+    .nt26-card {
       margin: 24px var(--padding) 0;
       display: flex;
       align-items: center;
@@ -515,35 +534,24 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .reading-card:active {
-      background: var(--card-hover);
-      transform: scale(0.99);
-    }
-
-    .reading-logo {
-      width: 48px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .nt26-logo {
+      width: 50px;
+      height: 50px;
       flex-shrink: 0;
     }
 
-    .reading-logo img {
+    .nt26-logo svg {
       width: 100%;
       height: 100%;
-      object-fit: contain;
     }
 
-    .reading-content {
+    .nt26-content {
       flex: 1;
-      min-width: 0;
     }
 
-    .reading-label {
+    .nt26-label {
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
@@ -552,22 +560,21 @@
       margin-bottom: 4px;
     }
 
-    .reading-title {
+    .nt26-title {
       font-size: 15px;
       font-weight: 600;
-      color: var(--text-primary);
     }
 
-    .reading-arrow {
+    .nt26-arrow {
       font-size: 20px;
       color: var(--text-tertiary);
     }
 
-    /* Encounter Card - Simple */
+    /* Encounter Card */
     .encounter-card {
       margin: 24px var(--padding) 0;
       position: relative;
-      height: 180px;
+      height: 160px;
       border-radius: var(--radius);
       overflow: hidden;
       cursor: pointer;
@@ -579,17 +586,13 @@
       object-fit: cover;
     }
 
-    .encounter-gradient {
+    .encounter-overlay {
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.2) 0%,
-        rgba(0,0,0,0.6) 100%
-      );
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
     }
 
     .encounter-content {
@@ -597,36 +600,25 @@
       bottom: 0;
       left: 0;
       right: 0;
-      padding: 20px;
+      padding: 16px;
     }
 
     .encounter-title {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 800;
-      letter-spacing: 4px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      color: #fff;
       margin-bottom: 4px;
     }
 
     .encounter-subtitle {
-      font-size: 13px;
+      font-size: 12px;
       color: rgba(255,255,255,0.8);
     }
 
-    .encounter-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 8px;
-      font-size: 12px;
-      color: rgba(255,255,255,0.7);
-    }
-
-    /* Message Cards (for Watch page) */
+    /* Message Cards */
     .message-card {
-      flex: 0 0 auto;
-      width: 160px;
+      flex: 0 0 150px;
       scroll-snap-align: start;
       cursor: pointer;
     }
@@ -634,7 +626,7 @@
     .message-thumb {
       position: relative;
       width: 100%;
-      height: 95px;
+      height: 90px;
       border-radius: var(--radius-sm);
       overflow: hidden;
       margin-bottom: 8px;
@@ -651,199 +643,47 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 36px;
-      height: 36px;
-      background: rgba(0,0,0,0.7);
+      width: 32px;
+      height: 32px;
+      background: rgba(0,0,0,0.6);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-    }
-
-    .message-thumb:hover .play-overlay,
-    .message-card:active .play-overlay {
-      opacity: 1;
     }
 
     .play-overlay svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
       fill: #fff;
       margin-left: 2px;
     }
 
     .message-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      color: var(--text-primary);
       margin-bottom: 2px;
     }
 
     .message-meta {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-tertiary);
     }
 
-    /* Fixed Bottom Navigation */
-    .nav-container {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 12px 16px;
-      padding-bottom: calc(12px + var(--safe-bottom) + 8px);
-      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 70%, transparent 100%);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      padding: 8px 4px;
-      background: rgba(30,30,30,0.85);
-      backdrop-filter: blur(40px) saturate(180%);
-      -webkit-backdrop-filter: blur(40px) saturate(180%);
-      border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.4),
-        inset 0 1px 0 rgba(255,255,255,0.08);
-    }
-
-    .nav-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 8px 16px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border-radius: 20px;
-    }
-
-    .nav-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: var(--text-tertiary);
-      transition: fill 0.2s ease;
-    }
-
-    .nav-btn span {
-      font-size: 10px;
-      font-weight: 500;
-      color: var(--text-tertiary);
-      transition: color 0.2s ease;
-    }
-
-    .nav-btn.active svg {
-      fill: var(--text-primary);
-    }
-
-    .nav-btn.active span {
-      color: var(--text-primary);
-    }
-
-    .nav-btn:active {
-      transform: scale(0.9);
-    }
-
-    /* Watch Page Styles */
-    .watch-hero {
-      position: relative;
-      margin: var(--padding);
-      margin-top: 60px;
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-
-    .watch-thumbnail {
-      position: relative;
-      width: 100%;
-      height: 200px;
-    }
-
-    .watch-thumbnail img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .play-button {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 56px;
-      height: 56px;
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .play-button:hover {
-      background: var(--teal);
-    }
-
-    .play-button svg {
-      width: 24px;
-      height: 24px;
-      fill: #fff;
-      margin-left: 3px;
-    }
-
-    .watch-info {
-      padding: 16px;
-      background: var(--card);
-    }
-
-    .watch-series {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--teal);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .watch-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .watch-meta {
-      font-size: 13px;
-      color: var(--text-tertiary);
-    }
-
-    /* Series Item */
-    .series-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 0 var(--padding);
-      margin-bottom: 12px;
+    /* Series Card (larger) */
+    .series-card {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
       cursor: pointer;
     }
 
     .series-thumb {
       position: relative;
-      width: 100px;
-      height: 60px;
-      border-radius: var(--radius-sm);
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius);
       overflow: hidden;
-      flex-shrink: 0;
+      margin-bottom: 10px;
     }
 
     .series-thumb img {
@@ -852,71 +692,214 @@
       object-fit: cover;
     }
 
-    .series-info {
-      flex: 1;
+    .series-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
     }
 
     .series-title {
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .series-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* Category Chips */
+    .category-chips {
+      display: flex;
+      gap: 8px;
+      padding: 0 var(--padding);
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+
+    .category-chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #000;
+    }
+
+    /* Watch Hero */
+    .watch-hero {
+      margin: 70px var(--padding) 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .watch-thumb {
+      position: relative;
+      width: 100%;
+      height: 180px;
+    }
+
+    .watch-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-btn-large {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .play-btn-large svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+      margin-left: 3px;
+    }
+
+    .watch-info {
+      padding: 14px;
+    }
+
+    .watch-series-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .watch-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .watch-meta {
       font-size: 12px;
       color: var(--text-tertiary);
     }
 
+    /* Series List Item */
+    .series-list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 var(--padding);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .series-list-thumb {
+      width: 100px;
+      height: 60px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .series-list-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .series-list-info {
+      flex: 1;
+    }
+
+    .series-list-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .series-list-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
     /* Give Page */
-    .give-page {
-      padding: var(--padding);
-      padding-top: 70px;
+    .give-content {
+      padding: 0 var(--padding);
     }
 
-    .give-header {
+    .give-hero {
       text-align: center;
-      margin-bottom: 32px;
+      padding: 20px 0 30px;
     }
 
-    .give-header h1 {
+    .give-hero h1 {
       font-size: 28px;
       font-weight: 700;
       margin-bottom: 8px;
     }
 
-    .give-header p {
+    .give-hero p {
       font-size: 14px;
       color: var(--text-secondary);
     }
 
     .give-section {
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .give-label {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--text-tertiary);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .fund-options {
-      display: flex;
-      flex-wrap: wrap;
+    .fund-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
     }
 
     .fund-btn {
-      padding: 10px 16px;
+      padding: 14px;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: var(--radius-sm);
       font-size: 14px;
       font-weight: 500;
       color: var(--text-primary);
       cursor: pointer;
+      text-align: center;
       transition: all 0.2s ease;
     }
 
@@ -929,11 +912,11 @@
     .amount-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap: 8px;
     }
 
     .amount-btn {
-      padding: 16px;
+      padding: 16px 8px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
@@ -960,7 +943,7 @@
       font-weight: 600;
       color: var(--text-primary);
       text-align: center;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .amount-input:focus {
@@ -968,18 +951,18 @@
       border-color: var(--teal);
     }
 
-    .frequency-options {
-      display: flex;
+    .freq-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 8px;
     }
 
     .freq-btn {
-      flex: 1;
-      padding: 12px;
+      padding: 12px 8px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--text-primary);
       cursor: pointer;
@@ -992,35 +975,78 @@
       color: #000;
     }
 
-    .give-submit {
-      width: 100%;
-      padding: 16px;
-      background: var(--teal);
-      border: none;
-      border-radius: var(--radius-sm);
-      font-size: 16px;
-      font-weight: 600;
-      color: #000;
-      cursor: pointer;
-      margin-top: 24px;
-      transition: transform 0.2s ease;
+    .payment-methods {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 8px;
     }
 
-    .give-submit:active {
-      transform: scale(0.98);
+    .payment-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .payment-btn:hover {
+      background: var(--card-hover);
+    }
+
+    .payment-btn.apple-pay {
+      background: #fff;
+      color: #000;
+    }
+
+    .payment-btn.card {
+      background: var(--teal);
+      color: #000;
+    }
+
+    .payment-btn svg {
+      width: 20px;
+      height: 20px;
     }
 
     /* Connect Page */
+    .connect-hero {
+      margin: 70px var(--padding) 20px;
+      padding: 24px;
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .connect-hero h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 6px;
+    }
+
+    .connect-hero p {
+      font-size: 13px;
+      color: rgba(0,0,0,0.7);
+    }
+
     .connect-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
       padding: 0 var(--padding);
-      margin-top: 70px;
     }
 
     .connect-card {
-      padding: 20px 16px;
+      padding: 18px 14px;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -1030,78 +1056,111 @@
 
     .connect-card:active {
       transform: scale(0.98);
-      background: var(--card-hover);
     }
 
-    .connect-card svg {
-      width: 28px;
-      height: 28px;
-      fill: var(--teal);
+    .connect-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal-dim);
+      border-radius: 12px;
       margin-bottom: 12px;
     }
 
+    .connect-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--teal);
+    }
+
     .connect-card h3 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
     .connect-card p {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--text-tertiary);
     }
 
-    /* More Page */
-    .more-page {
-      padding: var(--padding);
-      padding-top: 70px;
+    .connect-featured {
+      margin: 24px var(--padding) 0;
+      padding: 20px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
     }
 
-    .profile-header {
+    .connect-featured h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .connect-featured p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .connect-featured .btn {
+      width: 100%;
+    }
+
+    /* More Page */
+    .more-content {
+      padding: 70px var(--padding) 0;
+    }
+
+    .profile-card {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 20px;
+      gap: 14px;
+      padding: 18px;
       background: var(--card);
       border-radius: var(--radius);
       margin-bottom: 24px;
     }
 
     .profile-avatar {
-      width: 56px;
-      height: 56px;
+      width: 52px;
+      height: 52px;
       background: var(--teal);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       color: #000;
     }
 
     .profile-info h3 {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .profile-info p {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--text-tertiary);
     }
 
-    .menu-section {
-      margin-bottom: 24px;
+    .menu-group {
+      margin-bottom: 20px;
     }
 
-    .menu-label {
-      font-size: 12px;
+    .menu-group-title {
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--text-tertiary);
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       padding-left: 4px;
     }
 
@@ -1109,58 +1168,109 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px;
+      padding: 14px;
       background: var(--card);
-      border-radius: var(--radius-sm);
-      margin-bottom: 2px;
+      margin-bottom: 1px;
       cursor: pointer;
-      transition: background 0.2s ease;
     }
 
-    .menu-item:first-child {
+    .menu-item:first-of-type {
       border-radius: var(--radius-sm) var(--radius-sm) 0 0;
     }
 
-    .menu-item:last-child {
+    .menu-item:last-of-type {
       border-radius: 0 0 var(--radius-sm) var(--radius-sm);
       margin-bottom: 0;
     }
 
-    .menu-item:only-child {
+    .menu-item:only-of-type {
       border-radius: var(--radius-sm);
     }
 
-    .menu-item:active {
-      background: var(--card-hover);
-    }
-
     .menu-item span {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
     }
 
     .menu-item svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       fill: var(--text-tertiary);
+    }
+
+    /* Bottom Navigation */
+    .nav-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 10px 14px 20px;
+      background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 60%, transparent 100%);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 6px;
+      background: rgba(28,28,30,0.9);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 8px 14px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 16px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--text-tertiary);
+      transition: fill 0.2s ease;
+    }
+
+    .nav-btn span {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn.active svg {
+      fill: var(--text-primary);
+    }
+
+    .nav-btn.active span {
+      color: var(--text-primary);
     }
 
     /* Toast */
     .toast {
       position: fixed;
-      bottom: 120px;
+      bottom: 100px;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      padding: 14px 24px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 24px;
+      transform: translateX(-50%) translateY(80px);
+      padding: 12px 20px;
+      background: var(--teal);
+      border-radius: 20px;
       font-size: 14px;
       font-weight: 500;
-      color: var(--text-primary);
+      color: #000;
       z-index: 1001;
       opacity: 0;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s ease;
     }
 
     .toast.visible {
@@ -1168,56 +1278,60 @@
       opacity: 1;
     }
 
-    .toast.success {
-      background: var(--teal);
-      color: #000;
-      border-color: var(--teal);
-    }
-
-    /* Responsive Scaling */
+    /* Responsive */
     @media (max-height: 900px) {
-      .device-frame {
-        transform: scale(0.85);
-      }
+      .device-frame { transform: scale(0.9); }
     }
-
-    @media (max-height: 750px) {
-      .device-frame {
-        transform: scale(0.7);
-      }
+    @media (max-height: 800px) {
+      .device-frame { transform: scale(0.8); }
+    }
+    @media (max-height: 700px) {
+      .device-frame { transform: scale(0.7); }
     }
   </style>
 </head>
 <body>
-  <!-- Device Frame -->
   <div class="device-container">
     <div class="device-frame">
       <div class="device-screen">
-        <!-- Dynamic Island -->
         <div class="dynamic-island"></div>
-
-        <!-- Home Indicator -->
         <div class="home-indicator"></div>
 
-        <!-- App -->
         <div class="app">
+          <!-- Header -->
+          <header class="header">
+            <div class="header-inner">
+              <div class="logo">
+                <div class="logo-icon">
+                  <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <span class="logo-text">CELEBRATION</span>
+              </div>
+              <div class="header-actions">
+                <button class="icon-btn">
+                  <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+                </button>
+                <button class="icon-btn">
+                  <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </button>
+              </div>
+            </div>
+          </header>
+
           <!-- Pages -->
           <main class="pages">
-            <!-- HOME PAGE -->
+            <!-- HOME -->
             <section class="page active" id="page-home">
-              <!-- Hero -->
               <div class="hero">
-                <img class="hero-image" src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80" alt="Bible Basics" loading="eager">
+                <img class="hero-image" src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80" alt="Bible Basics">
                 <div class="hero-gradient"></div>
                 <div class="hero-content">
                   <div class="hero-eyebrow">This Week's Message</div>
                   <h1 class="hero-title">Bible Basics - Week 1</h1>
                   <div class="hero-meta">
-                    <span class="hero-meta-item">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
-                      2 Timothy 3:14-17
-                    </span>
-                    <span class="hero-meta-item">38 min</span>
+                    <span>2 Timothy 3:14-17</span>
+                    <span>·</span>
+                    <span>38 min</span>
                   </div>
                   <div class="hero-actions">
                     <button class="btn btn-primary">
@@ -1229,34 +1343,21 @@
                 </div>
               </div>
 
-              <!-- Check-In Section -->
               <div class="checkin-section">
                 <div class="checkin-header">
                   <div class="checkin-date">This Sunday, February 2</div>
                   <div class="streak-badge">
-                    <svg class="streak-icon" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
+                    <svg class="streak-icon" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
                     <span class="streak-count">12</span>
                   </div>
                 </div>
                 <div class="service-times">
-                  <button class="time-btn" data-time="sat-5" onclick="selectService(this)">
-                    <div class="day">Sat</div>
-                    <div class="time">5 PM</div>
-                  </button>
-                  <button class="time-btn" data-time="sun-8" onclick="selectService(this)">
-                    <div class="day">Sun</div>
-                    <div class="time">8 AM</div>
-                  </button>
-                  <button class="time-btn" data-time="sun-930" onclick="selectService(this)">
-                    <div class="day">Sun</div>
-                    <div class="time">9:30</div>
-                  </button>
-                  <button class="time-btn" data-time="sun-11" onclick="selectService(this)">
-                    <div class="day">Sun</div>
-                    <div class="time">11 AM</div>
-                  </button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sat</div><div class="time">5 PM</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">8 AM</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">9:30</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">11 AM</div></button>
                 </div>
-                <div class="checkin-btn-container" id="checkin-container">
+                <div class="checkin-btn-wrap" id="checkin-wrap">
                   <button class="checkin-btn" onclick="checkIn()">
                     <span>I'll Be There</span>
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
@@ -1264,47 +1365,38 @@
                 </div>
               </div>
 
-              <!-- Upcoming Events -->
               <section class="section">
                 <div class="section-header">
                   <div class="section-title">Upcoming Events</div>
                   <a href="#" class="section-link" onclick="switchPage('connect'); return false;">All Events</a>
                 </div>
                 <div class="hscroll">
-                  <div class="event-card" onclick="openEvent('gylib')">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Get Your Life Back" loading="lazy">
-                    </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 11 · 6 PM</div>
                       <div class="event-title">Get Your Life Back</div>
                       <div class="event-subtitle">Financial workshop</div>
                     </div>
                   </div>
-                  <div class="event-card" onclick="openEvent('nts')">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine" loading="lazy">
-                    </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 13 · 4 PM</div>
                       <div class="event-title">Night to Shine</div>
                       <div class="event-subtitle">Tim Tebow Foundation</div>
                     </div>
                   </div>
-                  <div class="event-card" onclick="openEvent('baptisms')">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Baptisms" loading="lazy">
-                    </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Baptisms"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 14-15</div>
                       <div class="event-title">Baptisms</div>
                       <div class="event-subtitle">Take your next step</div>
                     </div>
                   </div>
-                  <div class="event-card" onclick="openEvent('breakfast')">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Men's Breakfast" loading="lazy">
-                    </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Breakfast"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 28 · 7:30 AM</div>
                       <div class="event-title">Men's Breakfast</div>
@@ -1314,215 +1406,315 @@
                 </div>
               </section>
 
-              <!-- NT26 Reading Plan -->
-              <div class="reading-card" onclick="openNT26()">
-                <div class="reading-logo">
-                  <img src="https://media.thechurchcoassets.com/accounts/6004/media/2024/11/b08aab9b-8f2d-48ed-9c7b-aa6bb2fa6ad1-nt26-logo-300x300.png" alt="NT26">
+              <div class="nt26-card" onclick="openNT26()">
+                <div class="nt26-logo">
+                  <!-- NT26 Logo SVG -->
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <text x="50" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" font-weight="800" fill="white">
+                      <tspan>N</tspan><tspan dx="-8">T</tspan>
+                    </text>
+                    <text x="22" y="78" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white">20</text>
+                    <text x="68" y="78" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white">26</text>
+                  </svg>
                 </div>
-                <div class="reading-content">
-                  <div class="reading-label">Today's Reading</div>
-                  <div class="reading-title">February 2 · Matthew 7</div>
+                <div class="nt26-content">
+                  <div class="nt26-label">Today's Reading</div>
+                  <div class="nt26-title">February 2 · Matthew 7</div>
                 </div>
-                <div class="reading-arrow">›</div>
+                <div class="nt26-arrow">›</div>
               </div>
 
-              <!-- Encounter Card -->
               <div class="encounter-card" onclick="switchPage('connect')">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Encounter Young Adults" loading="lazy">
-                <div class="encounter-gradient"></div>
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Encounter">
+                <div class="encounter-overlay"></div>
                 <div class="encounter-content">
                   <div class="encounter-title">Encounter</div>
-                  <div class="encounter-subtitle">Young Adults Ministry</div>
-                  <div class="encounter-meta">
-                    <span>Ages 18-25</span>
-                    <span>•</span>
-                    <span>Thursdays 7PM</span>
-                  </div>
+                  <div class="encounter-subtitle">Young Adults · Thursdays 7PM</div>
                 </div>
               </div>
 
-              <div style="height: 40px;"></div>
+              <div style="height: 30px;"></div>
             </section>
 
-            <!-- WATCH PAGE -->
+            <!-- WATCH -->
             <section class="page" id="page-watch">
+              <h1 class="page-title">Watch</h1>
+
+              <div class="category-chips">
+                <div class="chip active">All</div>
+                <div class="chip">Sermons</div>
+                <div class="chip">Series</div>
+                <div class="chip">Encounter</div>
+                <div class="chip">Finances</div>
+                <div class="chip">Marriage</div>
+              </div>
+
               <div class="watch-hero">
-                <div class="watch-thumbnail">
-                  <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80" alt="Parables sermon" loading="lazy">
-                  <div class="play-button">
+                <div class="watch-thumb">
+                  <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80" alt="Parables">
+                  <div class="play-btn-large">
                     <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                   </div>
                 </div>
                 <div class="watch-info">
-                  <div class="watch-series">Parables of Jesus</div>
-                  <h1 class="watch-title">Week 4: The Talents</h1>
-                  <div class="watch-meta">Pastor Kael · January 26, 2026 · 38 min</div>
+                  <div class="watch-series-label">Parables of Jesus</div>
+                  <div class="watch-title">Week 4: The Talents</div>
+                  <div class="watch-meta">Pastor Kael · Jan 26 · 38 min</div>
                 </div>
               </div>
-
-              <section class="section">
-                <div class="section-header">
-                  <div class="section-title">Recent Messages</div>
-                  <a href="#" class="section-link">See All</a>
-                </div>
-                <div class="hscroll">
-                  <div class="message-card">
-                    <div class="message-thumb">
-                      <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Parables sermon" loading="lazy">
-                      <div class="play-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      </div>
-                    </div>
-                    <div class="message-title">Parables Wk 3</div>
-                    <div class="message-meta">Jan 19 · 41 min</div>
-                  </div>
-                  <div class="message-card">
-                    <div class="message-thumb">
-                      <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=400&q=80" alt="Parables sermon" loading="lazy">
-                      <div class="play-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      </div>
-                    </div>
-                    <div class="message-title">Parables Wk 2</div>
-                    <div class="message-meta">Jan 12 · 36 min</div>
-                  </div>
-                  <div class="message-card">
-                    <div class="message-thumb">
-                      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80" alt="NT26 Kickoff" loading="lazy">
-                      <div class="play-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      </div>
-                    </div>
-                    <div class="message-title">NT26 Kickoff</div>
-                    <div class="message-meta">Jan 5 · 44 min</div>
-                  </div>
-                  <div class="message-card">
-                    <div class="message-thumb">
-                      <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=80" alt="Bible Basics" loading="lazy">
-                      <div class="play-overlay">
-                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                      </div>
-                    </div>
-                    <div class="message-title">Bible Basics Wk 1</div>
-                    <div class="message-meta">Dec 29 · 38 min</div>
-                  </div>
-                </div>
-              </section>
 
               <section class="section">
                 <div class="section-header">
                   <div class="section-title">Current Series</div>
                 </div>
-                <div class="series-item">
-                  <div class="series-thumb">
-                    <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=300&q=80" alt="The Sower" loading="lazy">
-                  </div>
-                  <div class="series-info">
-                    <div class="series-title">Parables Wk 3 - The Sower</div>
-                    <div class="series-meta">Jan 19 · 41 min</div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 3 - The Sower</div>
+                    <div class="series-list-meta">Jan 19 · 41 min</div>
                   </div>
                 </div>
-                <div class="series-item">
-                  <div class="series-thumb">
-                    <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=300&q=80" alt="The Prodigal" loading="lazy">
-                  </div>
-                  <div class="series-info">
-                    <div class="series-title">Parables Wk 2 - The Prodigal</div>
-                    <div class="series-meta">Jan 12 · 36 min</div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 2 - The Prodigal</div>
+                    <div class="series-list-meta">Jan 12 · 36 min</div>
                   </div>
                 </div>
-                <div class="series-item">
-                  <div class="series-thumb">
-                    <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=300&q=80" alt="Good Samaritan" loading="lazy">
-                  </div>
-                  <div class="series-info">
-                    <div class="series-title">Parables Wk 1 - Good Samaritan</div>
-                    <div class="series-meta">Jan 5 · 44 min</div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 1 - Good Samaritan</div>
+                    <div class="series-list-meta">Jan 5 · 44 min</div>
                   </div>
                 </div>
               </section>
 
-              <div style="height: 40px;"></div>
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Previous Series</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Bible Basics">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Bible Basics</div>
+                    <div class="series-meta">Foundation Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=400&q=80" alt="Christmas">
+                      <div class="series-badge">3 messages</div>
+                    </div>
+                    <div class="series-title">Christmas 2025</div>
+                    <div class="series-meta">Holiday Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=80" alt="Faith Forward">
+                      <div class="series-badge">6 messages</div>
+                    </div>
+                    <div class="series-title">Faith Forward</div>
+                    <div class="series-meta">Growth Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Finances</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial Peace">
+                      <div class="series-badge">8 lessons</div>
+                    </div>
+                    <div class="series-title">Financial Peace</div>
+                    <div class="series-meta">Stewardship Course</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&q=80" alt="Generosity">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Generosity</div>
+                    <div class="series-meta">Giving Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Marriage & Family</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" alt="Marriage">
+                      <div class="series-badge">6 lessons</div>
+                    </div>
+                    <div class="series-title">Marriage Course</div>
+                    <div class="series-meta">Relationship Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=400&q=80" alt="Parenting">
+                      <div class="series-badge">5 lessons</div>
+                    </div>
+                    <div class="series-title">Parenting</div>
+                    <div class="series-meta">Family Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Encounter Young Adults</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" alt="Identity">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Identity</div>
+                    <div class="series-meta">Young Adults Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80" alt="Purpose">
+                      <div class="series-badge">3 messages</div>
+                    </div>
+                    <div class="series-title">Purpose</div>
+                    <div class="series-meta">Young Adults Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <div style="height: 30px;"></div>
             </section>
 
-            <!-- GIVE PAGE -->
+            <!-- GIVE -->
             <section class="page" id="page-give">
-              <div class="give-page">
-                <div class="give-header">
-                  <h1>Give</h1>
+              <h1 class="page-title">Give</h1>
+
+              <div class="give-content">
+                <div class="give-hero">
                   <p>Support the mission of C3 Hays</p>
                 </div>
 
                 <div class="give-section">
                   <div class="give-label">Select Fund</div>
-                  <div class="fund-options">
-                    <button class="fund-btn selected" onclick="selectFund(this, 'general')">General</button>
-                    <button class="fund-btn" onclick="selectFund(this, 'missions')">Missions</button>
-                    <button class="fund-btn" onclick="selectFund(this, 'building')">Building</button>
-                    <button class="fund-btn" onclick="selectFund(this, 'benevolence')">Benevolence</button>
+                  <div class="fund-grid">
+                    <button class="fund-btn selected" onclick="selectFund(this)">General</button>
+                    <button class="fund-btn" onclick="selectFund(this)">Missions</button>
+                    <button class="fund-btn" onclick="selectFund(this)">Building</button>
+                    <button class="fund-btn" onclick="selectFund(this)">Benevolence</button>
                   </div>
                 </div>
 
                 <div class="give-section">
                   <div class="give-label">Amount</div>
                   <div class="amount-grid">
-                    <button class="amount-btn" onclick="selectAmount(this, 25)">$25</button>
-                    <button class="amount-btn" onclick="selectAmount(this, 50)">$50</button>
-                    <button class="amount-btn selected" onclick="selectAmount(this, 100)">$100</button>
-                    <button class="amount-btn" onclick="selectAmount(this, 250)">$250</button>
-                    <button class="amount-btn" onclick="selectAmount(this, 500)">$500</button>
-                    <button class="amount-btn" onclick="selectAmount(this, 1000)">$1000</button>
+                    <button class="amount-btn" onclick="selectAmount(this)">$25</button>
+                    <button class="amount-btn" onclick="selectAmount(this)">$50</button>
+                    <button class="amount-btn selected" onclick="selectAmount(this)">$100</button>
+                    <button class="amount-btn" onclick="selectAmount(this)">$250</button>
+                    <button class="amount-btn" onclick="selectAmount(this)">$500</button>
+                    <button class="amount-btn" onclick="selectAmount(this)">$1000</button>
                   </div>
-                  <input type="text" class="amount-input" placeholder="Other amount" oninput="handleCustomAmount(this)">
+                  <input type="text" class="amount-input" placeholder="Other amount">
                 </div>
 
                 <div class="give-section">
                   <div class="give-label">Frequency</div>
-                  <div class="frequency-options">
-                    <button class="freq-btn selected" onclick="selectFrequency(this, 'once')">One-Time</button>
-                    <button class="freq-btn" onclick="selectFrequency(this, 'weekly')">Weekly</button>
-                    <button class="freq-btn" onclick="selectFrequency(this, 'monthly')">Monthly</button>
+                  <div class="freq-grid">
+                    <button class="freq-btn selected" onclick="selectFreq(this)">One-Time</button>
+                    <button class="freq-btn" onclick="selectFreq(this)">Weekly</button>
+                    <button class="freq-btn" onclick="selectFreq(this)">Monthly</button>
                   </div>
                 </div>
 
-                <button class="give-submit" onclick="submitGift()">Continue to Payment</button>
+                <div class="give-section">
+                  <div class="give-label">Payment Method</div>
+                  <div class="payment-methods">
+                    <button class="payment-btn apple-pay">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                      Apple Pay
+                    </button>
+                    <button class="payment-btn card">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                      Credit / Debit Card
+                    </button>
+                    <button class="payment-btn">
+                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+                      Bank Transfer
+                    </button>
+                  </div>
+                </div>
               </div>
             </section>
 
-            <!-- CONNECT PAGE -->
+            <!-- CONNECT -->
             <section class="page" id="page-connect">
+              <h1 class="page-title">Connect</h1>
+
+              <div class="connect-hero">
+                <h2>We're Glad You're Here</h2>
+                <p>Find your place at C3 Hays</p>
+              </div>
+
               <div class="connect-grid">
-                <div class="connect-card" onclick="openPrayer()">
-                  <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                <div class="connect-card" onclick="showToast('Opening prayer form...')">
+                  <div class="connect-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                  </div>
                   <h3>Prayer Request</h3>
-                  <p>Submit a prayer</p>
+                  <p>Submit a prayer request</p>
                 </div>
-                <div class="connect-card" onclick="window.location.href='pages/lifegroups.html'">
-                  <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <div class="connect-card" onclick="showToast('Opening LifeGroups...')">
+                  <div class="connect-icon">
+                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                  </div>
                   <h3>LifeGroups</h3>
-                  <p>Find a group</p>
+                  <p>Find a small group</p>
                 </div>
-                <div class="connect-card" onclick="openServe()">
-                  <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="connect-card" onclick="showToast('Opening volunteer signup...')">
+                  <div class="connect-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  </div>
                   <h3>Serve</h3>
-                  <p>Join a team</p>
+                  <p>Join a volunteer team</p>
                 </div>
-                <div class="connect-card" onclick="openNewHere()">
-                  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                <div class="connect-card" onclick="showToast('Welcome to C3!')">
+                  <div class="connect-icon">
+                    <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                  </div>
                   <h3>I'm New</h3>
-                  <p>Start here</p>
+                  <p>Start your journey</p>
                 </div>
               </div>
 
-              <section class="section" style="margin-top: 32px;">
+              <div class="connect-featured">
+                <h3>Baptism Weekend</h3>
+                <p>Ready to take your next step of faith? Sign up for baptism on February 14-15. It's a celebration you won't forget!</p>
+                <button class="btn btn-primary">Sign Up for Baptism</button>
+              </div>
+
+              <section class="section">
                 <div class="section-header">
                   <div class="section-title">Upcoming Events</div>
                 </div>
                 <div class="hscroll">
                   <div class="event-card">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Get Your Life Back" loading="lazy">
-                    </div>
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 11 · 6 PM</div>
                       <div class="event-title">Get Your Life Back</div>
@@ -1530,9 +1722,7 @@
                     </div>
                   </div>
                   <div class="event-card">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine" loading="lazy">
-                    </div>
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 13 · 4 PM</div>
                       <div class="event-title">Night to Shine</div>
@@ -1540,9 +1730,7 @@
                     </div>
                   </div>
                   <div class="event-card">
-                    <div class="event-image">
-                      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Men's Breakfast" loading="lazy">
-                    </div>
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Breakfast"></div>
                     <div class="event-body">
                       <div class="event-date">Feb 28 · 7:30 AM</div>
                       <div class="event-title">Men's Breakfast</div>
@@ -1552,13 +1740,13 @@
                 </div>
               </section>
 
-              <div style="height: 40px;"></div>
+              <div style="height: 30px;"></div>
             </section>
 
-            <!-- MORE PAGE -->
+            <!-- MORE -->
             <section class="page" id="page-more">
-              <div class="more-page">
-                <div class="profile-header">
+              <div class="more-content">
+                <div class="profile-card">
                   <div class="profile-avatar">TP</div>
                   <div class="profile-info">
                     <h3>Tyler Preisser</h3>
@@ -1566,77 +1754,77 @@
                   </div>
                 </div>
 
-                <div class="menu-section">
-                  <div class="menu-label">Resources</div>
+                <div class="menu-group">
+                  <div class="menu-group-title">Resources</div>
                   <div class="menu-item" onclick="openNT26()">
                     <span>NT26 Reading Plan</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>Sermon Notes</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>Church Calendar</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                 </div>
 
-                <div class="menu-section">
-                  <div class="menu-label">About C3</div>
+                <div class="menu-group">
+                  <div class="menu-group-title">About C3</div>
                   <div class="menu-item">
                     <span>C3 Staff</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>Weekend Services</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>Encounter Young Adults</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>Contact Us</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                 </div>
 
-                <div class="menu-section">
-                  <div class="menu-label">Settings</div>
+                <div class="menu-group">
+                  <div class="menu-group-title">Settings</div>
                   <div class="menu-item">
                     <span>Notifications</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                   <div class="menu-item">
                     <span>App Settings</span>
-                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
                   </div>
                 </div>
               </div>
             </section>
           </main>
 
-          <!-- Fixed Bottom Navigation -->
+          <!-- Bottom Nav -->
           <div class="nav-container">
             <nav class="nav">
-              <button class="nav-btn active" data-page="home" onclick="switchPage('home')">
+              <button class="nav-btn active" onclick="switchPage('home')">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                 <span>Home</span>
               </button>
-              <button class="nav-btn" data-page="watch" onclick="switchPage('watch')">
-                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8l7 4-7 4V8z"/></svg>
+              <button class="nav-btn" onclick="switchPage('watch')">
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8l7 4-7 4z"/></svg>
                 <span>Watch</span>
               </button>
-              <button class="nav-btn" data-page="give" onclick="switchPage('give')">
-                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+              <button class="nav-btn" onclick="switchPage('give')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>
                 <span>Give</span>
               </button>
-              <button class="nav-btn" data-page="connect" onclick="switchPage('connect')">
-                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+              <button class="nav-btn" onclick="switchPage('connect')">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
                 <span>Connect</span>
               </button>
-              <button class="nav-btn" data-page="more" onclick="switchPage('more')">
+              <button class="nav-btn" onclick="switchPage('more')">
                 <svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
                 <span>More</span>
               </button>
@@ -1647,159 +1835,68 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
   <div class="toast" id="toast"></div>
 
   <script>
-    // State
-    let selectedService = null;
-    let checkedIn = false;
-
-    // Page Navigation
-    function switchPage(pageName) {
-      // Update pages
-      document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-      });
-      document.getElementById('page-' + pageName).classList.add('active');
-
-      // Update nav
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.page === pageName) {
-          btn.classList.add('active');
-        }
-      });
-
-      // Haptic feedback
+    function switchPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
       if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    // Service Selection
     function selectService(btn) {
-      // Deselect all
       document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
-
-      // Select clicked
       btn.classList.add('selected');
-      selectedService = btn.dataset.time;
-
-      // Show check-in button with animation
-      document.getElementById('checkin-container').classList.add('visible');
-
-      // Haptic feedback
+      document.getElementById('checkin-wrap').classList.add('visible');
       if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    // Check-in
     function checkIn() {
-      if (!selectedService) return;
-
-      checkedIn = true;
-      showToast('You\'re checked in! See you Sunday.', 'success');
-
-      // Update streak
-      const streakCount = document.querySelector('.streak-count');
-      streakCount.textContent = '13';
-
-      // Hide button after success
+      showToast('You\'re checked in! See you Sunday.');
+      document.querySelector('.streak-count').textContent = '13';
       setTimeout(() => {
-        document.getElementById('checkin-container').classList.remove('visible');
+        document.getElementById('checkin-wrap').classList.remove('visible');
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
       }, 1500);
-
-      // Haptic feedback
-      if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
     }
 
-    // Give Page Functions
-    function selectFund(btn, fund) {
+    function selectFund(btn) {
       document.querySelectorAll('.fund-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    function selectAmount(btn, amount) {
+    function selectAmount(btn) {
       document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      document.querySelector('.amount-input').value = '';
-      if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    function handleCustomAmount(input) {
-      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
-      // Format as currency
-      let value = input.value.replace(/[^0-9]/g, '');
-      if (value) {
-        input.value = '$' + parseInt(value).toLocaleString();
-      }
-    }
-
-    function selectFrequency(btn, freq) {
+    function selectFreq(btn) {
       document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
-      if (navigator.vibrate) navigator.vibrate(10);
     }
 
-    function submitGift() {
-      showToast('Opening secure payment...', 'success');
-      if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
-    }
-
-    // Toast
-    function showToast(message, type = 'default') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = 'toast ' + type;
-
-      setTimeout(() => {
-        toast.classList.add('visible');
-      }, 10);
-
-      setTimeout(() => {
-        toast.classList.remove('visible');
-      }, 3000);
-    }
-
-    // Placeholder functions for navigation
     function openNT26() {
       showToast('Opening NT26 Reading Plan...');
     }
 
-    function openEvent(eventId) {
-      showToast('Opening event details...');
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('visible');
+      setTimeout(() => t.classList.remove('visible'), 2500);
     }
 
-    function openPrayer() {
-      showToast('Opening prayer request form...');
-    }
-
-    function openServe() {
-      showToast('Opening volunteer signup...');
-    }
-
-    function openNewHere() {
-      showToast('Welcome to C3!');
-    }
-
-    // Expose to window
+    // Expose
     window.switchPage = switchPage;
     window.selectService = selectService;
     window.checkIn = checkIn;
     window.selectFund = selectFund;
     window.selectAmount = selectAmount;
-    window.handleCustomAmount = handleCustomAmount;
-    window.selectFrequency = selectFrequency;
-    window.submitGift = submitGift;
+    window.selectFreq = selectFreq;
     window.openNT26 = openNT26;
-    window.openEvent = openEvent;
-    window.openPrayer = openPrayer;
-    window.openServe = openServe;
-    window.openNewHere = openNewHere;
-
-    // PWA Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    }
+    window.showToast = showToast;
   </script>
 </body>
 </html>
