@@ -28,6 +28,7 @@ const ServiceTimes = [
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  initDeviceScaling();
   initNavigation();
   initCheckIn();
   initGiving();
@@ -42,6 +43,45 @@ document.addEventListener('DOMContentLoaded', () => {
   updateDateDisplay();
   loadCheckInState();
 });
+
+/**
+ * Device Frame Scaling
+ * Calculates the scale factor to fit the phone in the viewport
+ */
+function initDeviceScaling() {
+  const deviceFrame = document.querySelector('.device-frame');
+  if (!deviceFrame) return;
+
+  // iPhone dimensions (fixed)
+  const DEVICE_WIDTH = 393;
+  const DEVICE_HEIGHT = 852;
+  const PADDING = 40; // 20px on each side
+
+  function calculateScale() {
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+
+    // Available space
+    const availableWidth = viewportWidth - PADDING;
+    const availableHeight = viewportHeight - PADDING;
+
+    // Calculate scale factors
+    const scaleX = availableWidth / DEVICE_WIDTH;
+    const scaleY = availableHeight / DEVICE_HEIGHT;
+
+    // Use the smaller scale to ensure phone fits completely
+    const scale = Math.min(scaleX, scaleY, 1.2); // Cap at 1.2x to not get too big
+
+    // Apply scale
+    deviceFrame.style.setProperty('--device-scale', scale);
+  }
+
+  // Initial calculation
+  calculateScale();
+
+  // Recalculate on resize
+  window.addEventListener('resize', calculateScale);
+}
 
 /**
  * Navigation System
