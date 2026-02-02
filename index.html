@@ -169,33 +169,52 @@
     }
 
     /* Liquid Glass Effect */
+    /* Real Liquid Glass Effect */
     .liquid-glass {
       position: relative;
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid var(--glass-border);
-      box-shadow:
-        0 8px 32px var(--shadow-color),
-        inset 0 1px 0 var(--glass-highlight),
-        inset 0 -1px 0 rgba(255,255,255,0.05);
-      transition: background 0.3s ease, border-color 0.3s ease;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25), 0 0 24px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.5);
     }
 
-    .liquid-glass::before {
-      content: '';
+    .liquid-glass-effect {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 50%;
-      background: linear-gradient(
-        180deg,
-        var(--glass-highlight) 0%,
-        transparent 100%
-      );
+      z-index: 0;
+      inset: 0;
+      backdrop-filter: blur(8px) saturate(180%);
+      -webkit-backdrop-filter: blur(8px) saturate(180%);
+      filter: url(#glass-distortion);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .liquid-glass-tint {
+      z-index: 1;
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    [data-theme="light"] .liquid-glass-tint {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .liquid-glass-shine {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      box-shadow:
+        inset 2px 2px 2px 0 rgba(255, 255, 255, 0.4),
+        inset -1px -1px 1px 1px rgba(255, 255, 255, 0.2);
       border-radius: inherit;
-      pointer-events: none;
+    }
+
+    .liquid-glass-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
     }
 
     .header-pill {
@@ -1398,6 +1417,8 @@
     }
 
     .nav-btn {
+      position: relative;
+      z-index: 5;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1477,8 +1498,13 @@
           <!-- Header -->
           <header class="header">
             <div class="header-pill liquid-glass">
-              <img src="https://media.thechurchcoassets.com/accounts/6004/0e8bc4ff-13bf-4baf-b900-89812eb5727a-imported-asset__largepreview__.webp" alt="C3" class="logo-img">
-              <span class="logo-text" id="header-title">Home</span>
+              <div class="liquid-glass-effect"></div>
+              <div class="liquid-glass-tint"></div>
+              <div class="liquid-glass-shine"></div>
+              <div class="liquid-glass-content">
+                <img src="https://media.thechurchcoassets.com/accounts/6004/0e8bc4ff-13bf-4baf-b900-89812eb5727a-imported-asset__largepreview__.webp" alt="C3" class="logo-img">
+                <span class="logo-text" id="header-title">Home</span>
+              </div>
             </div>
             <div class="header-actions">
               <button class="icon-btn liquid-glass" onclick="toggleTheme()">
@@ -2017,6 +2043,9 @@
           <!-- Bottom Nav -->
           <div class="nav-container">
             <nav class="nav liquid-glass">
+              <div class="liquid-glass-effect"></div>
+              <div class="liquid-glass-tint"></div>
+              <div class="liquid-glass-shine"></div>
               <button class="nav-btn active" onclick="switchPage('home')">
                 <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
                 <span>Home</span>
@@ -2043,6 +2072,24 @@
       </div>
     </div>
   </div>
+
+  <!-- Liquid Glass SVG Filter -->
+  <svg style="display: none">
+    <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+      <feTurbulence type="fractalNoise" baseFrequency="0.015 0.015" numOctaves="2" seed="5" result="turbulence"/>
+      <feComponentTransfer in="turbulence" result="mapped">
+        <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5"/>
+        <feFuncG type="gamma" amplitude="0" exponent="1" offset="0"/>
+        <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5"/>
+      </feComponentTransfer>
+      <feGaussianBlur in="turbulence" stdDeviation="2" result="softMap"/>
+      <feSpecularLighting in="softMap" surfaceScale="3" specularConstant="0.8" specularExponent="80" lighting-color="white" result="specLight">
+        <fePointLight x="-100" y="-100" z="200"/>
+      </feSpecularLighting>
+      <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage"/>
+      <feDisplacementMap in="SourceGraphic" in2="softMap" scale="30" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
 
   <div class="toast" id="toast"></div>
 
