@@ -24,6 +24,8 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/liquid-glass.css">
   <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/modals.css">
+  <link rel="stylesheet" href="css/pages.css">
 
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -635,6 +637,200 @@
         </button>
       </div>
     </nav>
+  </div>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Prayer Request Modal -->
+  <div class="modal-overlay" id="prayer-modal">
+    <div class="modal-content">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <div class="modal-title">Prayer Request</div>
+          <button class="modal-close" onclick="closeModal('prayer-modal')">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="prayer-modal-header">
+            <div class="prayer-modal-icon">🙏</div>
+            <div class="prayer-modal-title">How can we pray for you?</div>
+            <div class="prayer-modal-subtitle">Our prayer team is here for you</div>
+          </div>
+
+          <form id="prayer-form">
+            <div class="prayer-form-group">
+              <label class="prayer-form-label">Your Name</label>
+              <input type="text" class="prayer-form-input" placeholder="Enter your name" required>
+            </div>
+
+            <div class="prayer-form-group">
+              <label class="prayer-form-label">Email (optional)</label>
+              <input type="email" class="prayer-form-input" placeholder="you@example.com">
+            </div>
+
+            <div class="prayer-form-group">
+              <label class="prayer-form-label">Your Prayer Request</label>
+              <textarea class="prayer-form-input prayer-form-textarea" placeholder="Share what's on your heart..." required></textarea>
+            </div>
+
+            <div class="prayer-form-group">
+              <label class="prayer-form-label">Who should see this?</label>
+              <div class="prayer-visibility-options">
+                <div class="prayer-visibility-option active" data-value="team">
+                  <div class="prayer-radio"></div>
+                  <div class="prayer-option-text">
+                    <div class="prayer-option-title">Prayer Team Only</div>
+                    <div class="prayer-option-desc">Shared privately with our prayer team</div>
+                  </div>
+                </div>
+                <div class="prayer-visibility-option" data-value="anonymous">
+                  <div class="prayer-radio"></div>
+                  <div class="prayer-option-text">
+                    <div class="prayer-option-title">Anonymous Prayer Wall</div>
+                    <div class="prayer-option-desc">Others can pray with you (no name shown)</div>
+                  </div>
+                </div>
+                <div class="prayer-visibility-option" data-value="call">
+                  <div class="prayer-radio"></div>
+                  <div class="prayer-option-text">
+                    <div class="prayer-option-title">Request a Call</div>
+                    <div class="prayer-option-desc">A pastor will reach out to you</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" class="prayer-submit-btn">Submit Prayer Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NT26 Reading Plan Modal -->
+  <div class="modal-overlay" id="nt26-modal">
+    <div class="modal-content">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <div class="modal-title">NT26 Reading Plan</div>
+          <button class="modal-close" onclick="closeModal('nt26-modal')">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="nt26-today">
+            <div class="nt26-today-header">
+              <div class="nt26-icon">📖</div>
+              <div class="nt26-today-info">
+                <div class="nt26-today-label">Today's Reading</div>
+                <div class="nt26-today-title">Matthew 7</div>
+              </div>
+            </div>
+            <div class="nt26-verse">
+              "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you."
+              <br><br>— Matthew 7:7
+            </div>
+            <div class="nt26-actions">
+              <button class="btn btn-primary btn-block">Read Now</button>
+              <button class="btn btn-secondary">Listen</button>
+            </div>
+          </div>
+
+          <div class="nt26-progress-section">
+            <div class="nt26-progress-header">
+              <div class="nt26-progress-title">Your Progress</div>
+              <div class="nt26-progress-percent">12%</div>
+            </div>
+            <div class="nt26-progress-bar">
+              <div class="nt26-progress-fill" style="width: 12%"></div>
+            </div>
+            <div class="nt26-stats">
+              <div class="nt26-stat">
+                <strong>33</strong> days completed
+              </div>
+              <div class="nt26-stat">
+                <strong>🔥 12</strong> day streak
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Here Modal -->
+  <div class="modal-overlay" id="new-here-modal">
+    <div class="modal-content">
+      <div class="modal-sheet">
+        <div class="modal-handle"></div>
+        <div class="modal-header">
+          <div class="modal-title">Plan Your Visit</div>
+          <button class="modal-close" onclick="closeModal('new-here-modal')">
+            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="new-here-header">
+            <div class="new-here-icon">👋</div>
+            <div class="new-here-title">Welcome to C3!</div>
+            <div class="new-here-subtitle">We're so glad you're checking us out</div>
+          </div>
+
+          <div class="new-here-steps">
+            <div class="new-here-step">
+              <div class="step-number">1</div>
+              <div class="step-content">
+                <div class="step-title">Pick a Service</div>
+                <div class="step-desc">Choose a time that works for you</div>
+              </div>
+            </div>
+            <div class="new-here-step">
+              <div class="step-number">2</div>
+              <div class="step-content">
+                <div class="step-title">Look for Greeters</div>
+                <div class="step-desc">They'll help you find everything</div>
+              </div>
+            </div>
+            <div class="new-here-step">
+              <div class="step-number">3</div>
+              <div class="step-content">
+                <div class="step-title">Grab Some Coffee</div>
+                <div class="step-desc">Free coffee bar in the lobby</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="new-here-info">
+            <div class="new-here-info-row">
+              <div class="new-here-info-icon">📍</div>
+              <div class="new-here-info-text">
+                <div class="new-here-info-label">Location</div>
+                <div class="new-here-info-value">5790 230th Ave, Hays</div>
+              </div>
+            </div>
+            <div class="new-here-info-row">
+              <div class="new-here-info-icon">⏰</div>
+              <div class="new-here-info-text">
+                <div class="new-here-info-label">Service Times</div>
+                <div class="new-here-info-value">Sat 5pm · Sun 8, 9:30, 11am</div>
+              </div>
+            </div>
+            <div class="new-here-info-row">
+              <div class="new-here-info-icon">👶</div>
+              <div class="new-here-info-text">
+                <div class="new-here-info-label">Kids Ministry</div>
+                <div class="new-here-info-value">Birth through 5th grade</div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block btn-lg">Get Directions</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- JavaScript -->

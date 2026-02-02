@@ -1,0 +1,650 @@
+/* C3 Church App - Modal Styles */
+
+/* ==================== MODAL OVERLAY ==================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: var(--z-modal-backdrop);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ==================== MODAL SHEET ==================== */
+
+.modal-content {
+  width: 100%;
+  max-width: var(--app-max-width);
+  max-height: 92vh;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.modal-overlay.active .modal-content {
+  transform: translateY(0);
+}
+
+.modal-sheet {
+  background: var(--bg-elevated);
+  border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 92vh;
+}
+
+/* Handle */
+.modal-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+/* Header */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: all var(--transition-base);
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-primary);
+}
+
+.modal-close svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+/* Body */
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Footer */
+.modal-footer {
+  padding: 16px 20px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 20px));
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+/* ==================== PRAYER REQUEST MODAL ==================== */
+
+#prayer-modal .modal-body {
+  padding: 24px 20px;
+}
+
+.prayer-modal-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.prayer-modal-icon {
+  width: 56px;
+  height: 56px;
+  background: var(--c3-teal-muted);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  margin: 0 auto 12px;
+}
+
+.prayer-modal-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 4px;
+}
+
+.prayer-modal-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.prayer-form-group {
+  margin-bottom: 20px;
+}
+
+.prayer-form-label {
+  display: block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.prayer-form-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  transition: all var(--transition-base);
+}
+
+.prayer-form-input:focus {
+  outline: none;
+  border-color: var(--c3-teal);
+  background: var(--bg-input-focus);
+}
+
+.prayer-form-textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.prayer-visibility-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prayer-visibility-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.prayer-visibility-option:hover {
+  background: var(--bg-card-hover);
+}
+
+.prayer-visibility-option.active {
+  border-color: var(--c3-teal);
+  background: var(--c3-teal-muted);
+}
+
+.prayer-radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border-medium);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-base);
+}
+
+.prayer-visibility-option.active .prayer-radio {
+  border-color: var(--c3-teal);
+}
+
+.prayer-visibility-option.active .prayer-radio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  background: var(--c3-teal);
+  border-radius: 50%;
+}
+
+.prayer-option-text {
+  flex: 1;
+}
+
+.prayer-option-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 2px;
+}
+
+.prayer-option-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.prayer-submit-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--c3-teal);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--black);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.prayer-submit-btn:hover {
+  background: var(--c3-teal-light);
+}
+
+/* ==================== NT26 MODAL ==================== */
+
+#nt26-modal .modal-body {
+  padding: 0;
+}
+
+.nt26-today {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--c3-teal-muted) 0%, rgba(20, 184, 166, 0.05) 100%);
+}
+
+.nt26-today-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.nt26-icon {
+  width: 52px;
+  height: 52px;
+  background: var(--c3-teal);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.nt26-today-info {
+  flex: 1;
+}
+
+.nt26-today-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--c3-teal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.nt26-today-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.nt26-verse {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.nt26-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.nt26-progress-section {
+  padding: 20px;
+}
+
+.nt26-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.nt26-progress-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.nt26-progress-percent {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--c3-teal);
+}
+
+.nt26-progress-bar {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.nt26-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c3-teal) 0%, var(--c3-teal-light) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease;
+}
+
+.nt26-stats {
+  display: flex;
+  gap: 20px;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.nt26-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nt26-stat strong {
+  color: var(--text-primary);
+}
+
+/* ==================== NEW HERE MODAL ==================== */
+
+#new-here-modal .modal-body {
+  padding: 24px 20px;
+}
+
+.new-here-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.new-here-icon {
+  width: 64px;
+  height: 64px;
+  background: var(--c3-teal-muted);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 16px;
+}
+
+.new-here-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-extrabold);
+  margin-bottom: 8px;
+}
+
+.new-here-subtitle {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}
+
+.new-here-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.new-here-step {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  background: var(--c3-teal);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--black);
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-title {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.new-here-info {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.new-here-info-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.new-here-info-row:last-child {
+  border-bottom: none;
+}
+
+.new-here-info-icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.new-here-info-text {
+  flex: 1;
+}
+
+.new-here-info-label {
+  font-size: var(--font-size-xs);
+  color: var(--text-tertiary);
+}
+
+.new-here-info-value {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ==================== CONFIRM MODAL ==================== */
+
+.confirm-modal-body {
+  padding: 32px 20px;
+  text-align: center;
+}
+
+.confirm-icon {
+  width: 72px;
+  height: 72px;
+  background: var(--accent-green-muted);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 20px;
+}
+
+.confirm-icon.error {
+  background: var(--accent-rose-muted);
+}
+
+.confirm-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 8px;
+}
+
+.confirm-message {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.confirm-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.confirm-btn-secondary {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+}
+
+.confirm-btn-primary {
+  background: var(--c3-teal);
+  border: none;
+  color: var(--black);
+}
+
+/* ==================== VIDEO PLAYER MODAL ==================== */
+
+#video-modal {
+  align-items: center;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+#video-modal .modal-content {
+  max-width: 100%;
+  max-height: 100%;
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+#video-modal.active .modal-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.video-modal-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 10;
+}
+
+.video-close-btn {
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.video-close-btn svg {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.video-container {
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16/9;
+  background: var(--black);
+  margin: 0 auto;
+}
+
+.video-container iframe,
+.video-container video {
+  width: 100%;
+  height: 100%;
+}
+
+/* ==================== LOADING STATES ==================== */
+
+.modal-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  gap: 16px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--c3-teal);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+}

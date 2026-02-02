@@ -33,8 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initGiving();
   initServiceTimes();
   initQuickActions();
+  initConnectCards();
+  initPrayerForm();
+  initReadingCards();
+  initFeaturedCards();
   initTooltips();
   updateDateDisplay();
+  loadCheckInState();
 });
 
 /**
@@ -345,13 +350,15 @@ function initQuickActions() {
 }
 
 function openPrayerModal() {
-  // Could open a prayer request modal
-  showToast('Prayer request feature coming soon', 'info');
+  openModal('prayer-modal');
 }
 
 function openReadingPlan() {
-  // Could open NT26 reading plan
-  showToast('Opening NT26 Reading Plan...', 'info');
+  openModal('nt26-modal');
+}
+
+function openNewHereModal() {
+  openModal('new-here-modal');
 }
 
 /**
@@ -398,6 +405,145 @@ function updateDateDisplay() {
     const options = { month: 'long', day: 'numeric' };
     dateDisplay.textContent = now.toLocaleDateString('en-US', options);
   }
+}
+
+/**
+ * Connect Cards
+ */
+function initConnectCards() {
+  const connectCards = document.querySelectorAll('.connect-card');
+
+  connectCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('.connect-title')?.textContent;
+
+      switch (title) {
+        case 'Prayer Request':
+          openPrayerModal();
+          break;
+        case 'LifeGroups':
+          showToast('LifeGroups finder coming soon', 'info');
+          break;
+        case 'Serve':
+          showToast('Volunteer sign-up coming soon', 'info');
+          break;
+        case 'Events':
+          showToast('Events calendar coming soon', 'info');
+          break;
+        default:
+          console.log('Connect card clicked:', title);
+      }
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+  });
+}
+
+/**
+ * Featured Cards
+ */
+function initFeaturedCards() {
+  const featuredCards = document.querySelectorAll('.featured-card');
+
+  featuredCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('.featured-title')?.textContent;
+
+      if (title === 'New Here?') {
+        openNewHereModal();
+      } else if (title === 'Ready for Baptism?') {
+        showToast('Baptism registration coming soon', 'info');
+      }
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+  });
+}
+
+/**
+ * Reading Cards
+ */
+function initReadingCards() {
+  const readingCards = document.querySelectorAll('.reading-card');
+
+  readingCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('.reading-eyebrow')?.textContent;
+
+      if (title && title.includes('NT26')) {
+        openReadingPlan();
+      } else if (title && title.includes('Sermon')) {
+        showToast('Sermon notes coming soon', 'info');
+      } else if (title && title.includes('Why Give')) {
+        showToast('Generosity info coming soon', 'info');
+      }
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+  });
+}
+
+/**
+ * Prayer Form
+ */
+function initPrayerForm() {
+  // Prayer visibility options
+  const visibilityOptions = document.querySelectorAll('.prayer-visibility-option');
+
+  visibilityOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      visibilityOptions.forEach(o => o.classList.remove('active'));
+      option.classList.add('active');
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+  });
+
+  // Prayer form submission
+  const prayerForm = document.getElementById('prayer-form');
+  if (prayerForm) {
+    prayerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handlePrayerSubmit();
+    });
+  }
+}
+
+function handlePrayerSubmit() {
+  // Get form values
+  const form = document.getElementById('prayer-form');
+  if (!form) return;
+
+  const name = form.querySelector('input[type="text"]')?.value;
+  const email = form.querySelector('input[type="email"]')?.value;
+  const request = form.querySelector('textarea')?.value;
+  const visibility = document.querySelector('.prayer-visibility-option.active')?.dataset.value || 'team';
+
+  if (!name || !request) {
+    showToast('Please fill in required fields', 'error');
+    return;
+  }
+
+  // Log the submission (in real app, would send to server)
+  console.log('Prayer request:', { name, email, request, visibility });
+
+  // Close modal and show success
+  closeModal('prayer-modal');
+  showToast('Prayer request submitted. We\'re praying for you! 🙏', 'success');
+
+  // Reset form
+  form.reset();
+  document.querySelectorAll('.prayer-visibility-option').forEach((o, i) => {
+    o.classList.toggle('active', i === 0);
+  });
 }
 
 /**
@@ -503,3 +649,7 @@ window.selectAmount = selectAmount;
 window.selectFrequency = selectFrequency;
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.openPrayerModal = openPrayerModal;
+window.openReadingPlan = openReadingPlan;
+window.openNewHereModal = openNewHereModal;
+window.showToast = showToast;
