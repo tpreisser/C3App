@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>LifeGroups - C3 Hays</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <button class="back-btn" onclick="history.back()">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Back
+        </button>
+      </div>
+    </header>
+
+    <main style="padding-top: 90px; padding-bottom: 40px;">
+      <!-- Header Section -->
+      <div class="lifegroups-header">
+        <h1 class="lifegroups-title">LifeGroups</h1>
+        <p class="lifegroups-subtitle">Find your community</p>
+      </div>
+
+      <!-- Search -->
+      <div class="lifegroups-search">
+        <div class="search-input-wrapper">
+          <div class="search-icon">
+            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+          </div>
+          <input type="text" class="search-input" placeholder="Search groups...">
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="lifegroups-filters">
+        <div class="filter-chips">
+          <button class="filter-chip active">All Groups</button>
+          <button class="filter-chip">Near Me</button>
+          <button class="filter-chip">Men</button>
+          <button class="filter-chip">Women</button>
+          <button class="filter-chip">Young Adults</button>
+          <button class="filter-chip">Couples</button>
+          <button class="filter-chip">Online</button>
+        </div>
+      </div>
+
+      <!-- Groups List -->
+      <div class="lifegroups-list">
+        <div class="lifegroup-card">
+          <div class="lifegroup-header">
+            <div class="lifegroup-info">
+              <div class="lifegroup-name">Men of Purpose</div>
+              <div class="lifegroup-leaders">Led by Mike & John</div>
+            </div>
+            <div class="lifegroup-avatar">👨</div>
+          </div>
+          <div class="lifegroup-meta">
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              Tuesdays 7pm
+            </div>
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              North Hays
+            </div>
+          </div>
+          <div class="lifegroup-description">
+            A group for men looking to grow in their faith through accountability, study, and brotherhood.
+          </div>
+          <div class="lifegroup-tags">
+            <span class="lifegroup-tag">Men</span>
+            <span class="lifegroup-tag">Bible Study</span>
+          </div>
+        </div>
+
+        <div class="lifegroup-card">
+          <div class="lifegroup-header">
+            <div class="lifegroup-info">
+              <div class="lifegroup-name">Women's Coffee & Scripture</div>
+              <div class="lifegroup-leaders">Led by Sarah & Emily</div>
+            </div>
+            <div class="lifegroup-avatar">👩</div>
+          </div>
+          <div class="lifegroup-meta">
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              Wednesdays 9:30am
+            </div>
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              Central Hays
+            </div>
+          </div>
+          <div class="lifegroup-description">
+            Join us for coffee, conversation, and diving deep into God's Word together.
+          </div>
+          <div class="lifegroup-tags">
+            <span class="lifegroup-tag">Women</span>
+            <span class="lifegroup-tag">Morning</span>
+          </div>
+        </div>
+
+        <div class="lifegroup-card">
+          <div class="lifegroup-header">
+            <div class="lifegroup-info">
+              <div class="lifegroup-name">Young Adults Connect</div>
+              <div class="lifegroup-leaders">Led by Pastor Jake</div>
+            </div>
+            <div class="lifegroup-avatar">🎓</div>
+          </div>
+          <div class="lifegroup-meta">
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              Sundays 6pm
+            </div>
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              C3 Campus
+            </div>
+          </div>
+          <div class="lifegroup-description">
+            For college students and young professionals (18-25). Food, games, and real conversations about faith.
+          </div>
+          <div class="lifegroup-tags">
+            <span class="lifegroup-tag">Young Adults</span>
+            <span class="lifegroup-tag">On-Campus</span>
+          </div>
+        </div>
+
+        <div class="lifegroup-card">
+          <div class="lifegroup-header">
+            <div class="lifegroup-info">
+              <div class="lifegroup-name">Couples Growing Together</div>
+              <div class="lifegroup-leaders">Led by Dan & Lisa</div>
+            </div>
+            <div class="lifegroup-avatar">💑</div>
+          </div>
+          <div class="lifegroup-meta">
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+              Thursdays 7pm
+            </div>
+            <div class="lifegroup-meta-item">
+              <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              South Hays
+            </div>
+          </div>
+          <div class="lifegroup-description">
+            Strengthen your marriage through biblical principles and community with other couples.
+          </div>
+          <div class="lifegroup-tags">
+            <span class="lifegroup-tag">Couples</span>
+            <span class="lifegroup-tag">Marriage</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Filter chips
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

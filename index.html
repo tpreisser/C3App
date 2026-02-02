@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="C3 Hays Church App - Meet. Grow. Serve.">
+
+  <title>C3 Hays</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://media.thechurchcoassets.com/accounts/6004/5ca66885-9d51-4eb7-8501-acc99b127608-imported-asset.png">
+  <link rel="apple-touch-icon" href="https://media.thechurchcoassets.com/accounts/6004/5ca66885-9d51-4eb7-8501-acc99b127608-imported-asset.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    :root {
+      --teal: #14B8A6;
+      --teal-dim: rgba(20, 184, 166, 0.15);
+      --blue: #3B82F6;
+      --padding: 20px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --radius-xs: 8px;
+      --nav-height: 56px;
+    }
+
+    /* Dark Mode (default) */
+    :root, [data-theme="dark"] {
+      --bg: #000000;
+      --bg-secondary: #0a0a0a;
+      --card: #111111;
+      --card-hover: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.5);
+      --glass-bg: rgba(28,28,30,0.7);
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-highlight: rgba(255,255,255,0.15);
+      --shadow-color: rgba(0,0,0,0.3);
+    }
+
+    /* Light Mode */
+    [data-theme="light"] {
+      --bg: #F2F2F7;
+      --bg-secondary: #FFFFFF;
+      --card: #FFFFFF;
+      --card-hover: #F5F5F5;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #000000;
+      --text-secondary: rgba(0,0,0,0.6);
+      --text-tertiary: rgba(0,0,0,0.4);
+      --glass-bg: rgba(255,255,255,0.7);
+      --glass-border: rgba(0,0,0,0.1);
+      --glass-highlight: rgba(255,255,255,0.8);
+      --shadow-color: rgba(0,0,0,0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg-secondary);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Device Container */
+    .device-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(145deg, #0f0f0f 0%, #000 100%);
+    }
+
+    .device-frame {
+      position: relative;
+      width: 393px;
+      height: 852px;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border-radius: 55px;
+      padding: 4px;
+      box-shadow: 0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+      transform-origin: center center;
+    }
+
+    .device-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      border-radius: 51px;
+      overflow: hidden;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 37px;
+      background: #000;
+      border-radius: 24px;
+      z-index: 1000;
+    }
+
+    /* Home Indicator */
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      z-index: 1000;
+    }
+
+    /* App Container */
+    .app {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 52px var(--padding) 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Liquid Glass Effect */
+    .liquid-glass {
+      position: relative;
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      box-shadow:
+        0 8px 32px var(--shadow-color),
+        inset 0 1px 0 var(--glass-highlight),
+        inset 0 -1px 0 rgba(255,255,255,0.05);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    .liquid-glass::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: linear-gradient(
+        180deg,
+        var(--glass-highlight) 0%,
+        transparent 100%
+      );
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .header-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px 8px 10px;
+      border-radius: 50px;
+    }
+
+    .logo-img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .icon-btn svg {
+      width: 17px;
+      height: 17px;
+      fill: var(--text-primary);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Pages Container */
+    .pages {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(var(--nav-height) + 30px);
+    }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .page::-webkit-scrollbar { display: none; }
+
+    /* Page Spacer - for pages without hero */
+    .page-spacer {
+      height: 120px;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 340px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 80%, rgba(0,0,0,1) 100%);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--padding);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #000;
+    }
+
+    .btn-primary:active { transform: scale(0.96); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: var(--text-primary);
+    }
+
+    /* Check-In Section */
+    .checkin-section {
+      padding: 20px var(--padding);
+      background: var(--bg);
+    }
+
+    .checkin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .checkin-date {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      background: rgba(251, 191, 36, 0.15);
+      border-radius: 20px;
+    }
+
+    .streak-icon {
+      width: 14px;
+      height: 14px;
+      fill: #FBBF24;
+    }
+
+    .streak-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FBBF24;
+    }
+
+    .service-times {
+      display: flex;
+      gap: 8px;
+    }
+
+    .time-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .time-btn .day {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 2px;
+    }
+
+    .time-btn .time {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .time-btn.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .time-btn.selected .day,
+    .time-btn.selected .time {
+      color: #000;
+    }
+
+    .checkin-btn-wrap {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .checkin-btn-wrap.visible {
+      max-height: 60px;
+      opacity: 1;
+      margin-top: 12px;
+    }
+
+    .checkin-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      background: var(--teal);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+    }
+
+    .checkin-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Section */
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--padding);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+    }
+
+    .section-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    /* Horizontal Scroll - FIXED: starts with padding, scrolls to edge */
+    .hscroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-left: var(--padding);
+      padding-right: var(--padding);
+      scroll-padding-left: var(--padding);
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .hscroll::-webkit-scrollbar { display: none; }
+
+    .hscroll::after {
+      content: '';
+      flex-shrink: 0;
+      width: 8px;
+    }
+
+    /* Event Cards */
+    .event-card {
+      flex: 0 0 180px;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+    }
+
+    .event-image {
+      width: 100%;
+      height: 100px;
+      overflow: hidden;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .event-body {
+      padding: 12px;
+    }
+
+    .event-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .event-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .event-subtitle {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* NT26 Card */
+    .nt26-card {
+      margin: 24px var(--padding) 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+
+    .nt26-logo {
+      width: 50px;
+      height: 50px;
+      flex-shrink: 0;
+    }
+
+    .nt26-logo svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .nt26-content {
+      flex: 1;
+    }
+
+    .nt26-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .nt26-title {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nt26-arrow {
+      font-size: 20px;
+      color: var(--text-tertiary);
+    }
+
+    .nt26-progress-wrapper {
+      margin-top: 8px;
+    }
+
+    .nt26-progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nt26-progress-fill {
+      height: 100%;
+      background: var(--teal);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .nt26-progress-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    .nt26-completed {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .nt26-completed svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    /* Encounter Card */
+    .encounter-card {
+      margin: 24px var(--padding) 0;
+      position: relative;
+      height: 160px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .encounter-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .encounter-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .encounter-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px;
+    }
+
+    .encounter-title {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .encounter-subtitle {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* Message Cards */
+    .message-card {
+      flex: 0 0 150px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+
+    .message-thumb {
+      position: relative;
+      width: 100%;
+      height: 90px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .message-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 32px;
+      height: 32px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-overlay svg {
+      width: 14px;
+      height: 14px;
+      fill: #fff;
+      margin-left: 2px;
+    }
+
+    .message-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .message-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* Series Card (larger) */
+    .series-card {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+
+    .series-thumb {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .series-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .series-badge {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      padding: 4px 8px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .series-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .series-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* Category Chips */
+    .category-chips {
+      display: flex;
+      gap: 8px;
+      padding: 0 var(--padding);
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+
+    .category-chips::-webkit-scrollbar { display: none; }
+
+    .chip {
+      flex-shrink: 0;
+      padding: 8px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .chip.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #000;
+    }
+
+    /* Watch Hero */
+    .watch-hero {
+      margin: 0 var(--padding);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--card);
+    }
+
+    .watch-thumb {
+      position: relative;
+      width: 100%;
+      height: 180px;
+    }
+
+    .watch-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-btn-large {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .play-btn-large svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+      margin-left: 3px;
+    }
+
+    .watch-info {
+      padding: 14px;
+    }
+
+    .watch-series-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .watch-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .watch-meta {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* Series List Item */
+    .series-list-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 var(--padding);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .series-list-thumb {
+      width: 100px;
+      height: 60px;
+      border-radius: var(--radius-xs);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .series-list-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .series-list-info {
+      flex: 1;
+    }
+
+    .series-list-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .series-list-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    /* Give Page */
+    .give-content {
+      padding: 0 var(--padding);
+    }
+
+    .give-amount-display {
+      text-align: center;
+      padding: 30px 0 20px;
+      position: relative;
+    }
+
+    .give-amount-display::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), #0d9488);
+      border-radius: 2px;
+    }
+
+    .give-amount {
+      font-size: 56px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #fff 0%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .give-amount-sub {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      margin-top: 4px;
+    }
+
+    .give-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .give-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .give-card-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--teal-dim);
+      border-radius: 8px;
+    }
+
+    .give-card-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--teal);
+    }
+
+    .give-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .amount-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .amount-chip {
+      flex: 1 1 calc(33.333% - 6px);
+      min-width: 80px;
+      padding: 14px 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .amount-chip.selected {
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      border-color: transparent;
+      color: #000;
+      box-shadow: 0 4px 20px rgba(20,184,166,0.3);
+    }
+
+    .fund-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .fund-chips::-webkit-scrollbar { display: none; }
+
+    .fund-chip {
+      flex-shrink: 0;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .fund-chip.selected {
+      background: var(--teal);
+      border-color: transparent;
+      color: #000;
+    }
+
+    .freq-chips {
+      display: flex;
+      gap: 8px;
+    }
+
+    .freq-chip {
+      flex: 1;
+      padding: 12px 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .freq-chip.selected {
+      background: var(--teal);
+      border-color: transparent;
+      color: #000;
+    }
+
+    .give-cta {
+      margin-top: 24px;
+    }
+
+    .give-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 24px rgba(20,184,166,0.3);
+    }
+
+    .give-btn:active {
+      transform: scale(0.98);
+    }
+
+    .give-methods {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .give-method {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .give-method svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Connect Page */
+    .connect-hero {
+      margin: 0 var(--padding) 24px;
+      padding: 28px 24px;
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 50%, #065f46 100%);
+      border-radius: var(--radius);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .connect-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .connect-hero h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    .connect-hero p {
+      font-size: 14px;
+      color: rgba(0,0,0,0.7);
+      position: relative;
+    }
+
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 var(--padding);
+    }
+
+    .connect-card {
+      position: relative;
+      height: 140px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .connect-card:active {
+      transform: scale(0.98);
+    }
+
+    .connect-card-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
+    }
+
+    .connect-card:hover .connect-card-bg {
+      transform: scale(1.05);
+    }
+
+    .connect-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .connect-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px;
+    }
+
+    .connect-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .connect-card p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .connect-featured {
+      margin: 24px var(--padding) 0;
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      height: 180px;
+    }
+
+    .connect-featured-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .connect-featured-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(20,184,166,0.9) 0%, rgba(6,95,70,0.95) 100%);
+    }
+
+    .connect-featured-content {
+      position: relative;
+      padding: 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .connect-featured h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .connect-featured p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .connect-featured .btn {
+      width: fit-content;
+      background: #fff;
+      color: #000;
+    }
+
+    /* More Page */
+    .more-content {
+      padding: 0 var(--padding);
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px;
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar {
+      width: 52px;
+      height: 52px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .profile-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .profile-info p {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .menu-group {
+      margin-bottom: 20px;
+    }
+
+    .menu-group-title {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      background: var(--card);
+      margin-bottom: 1px;
+      cursor: pointer;
+    }
+
+    .menu-item:first-of-type {
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .menu-item:last-of-type {
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      margin-bottom: 0;
+    }
+
+    .menu-item:only-of-type {
+      border-radius: var(--radius-sm);
+    }
+
+    .menu-item span {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .menu-item svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--text-tertiary);
+    }
+
+    /* Bottom Navigation */
+    .nav-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 8px 16px 16px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 4px 6px;
+      border-radius: 50px;
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 6px 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-tertiary);
+      transition: fill 0.2s ease;
+    }
+
+    .nav-btn span {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn.active svg {
+      fill: var(--text-primary);
+    }
+
+    .nav-btn.active span {
+      color: var(--text-primary);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      padding: 12px 20px;
+      background: var(--teal);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #000;
+      z-index: 1001;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-height: 900px) {
+      .device-frame { transform: scale(0.9); }
+    }
+    @media (max-height: 800px) {
+      .device-frame { transform: scale(0.8); }
+    }
+    @media (max-height: 700px) {
+      .device-frame { transform: scale(0.7); }
+    }
+  </style>
+</head>
+<body>
+  <div class="device-container">
+    <div class="device-frame">
+      <div class="device-screen">
+        <div class="dynamic-island"></div>
+        <div class="home-indicator"></div>
+
+        <div class="app">
+          <!-- Header -->
+          <header class="header">
+            <div class="header-pill liquid-glass">
+              <img src="https://media.thechurchcoassets.com/accounts/6004/0e8bc4ff-13bf-4baf-b900-89812eb5727a-imported-asset__largepreview__.webp" alt="C3" class="logo-img">
+              <span class="logo-text" id="header-title">Home</span>
+            </div>
+            <div class="header-actions">
+              <button class="icon-btn liquid-glass" onclick="toggleTheme()">
+                <svg id="theme-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+              </button>
+              <button class="icon-btn liquid-glass">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              </button>
+            </div>
+          </header>
+
+          <!-- Pages -->
+          <main class="pages">
+            <!-- HOME -->
+            <section class="page active" id="page-home">
+              <div class="hero">
+                <img class="hero-image" src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80" alt="Bible Basics">
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                  <div class="hero-eyebrow">This Week's Message</div>
+                  <h1 class="hero-title">Bible Basics - Week 1</h1>
+                  <div class="hero-meta">
+                    <span>2 Timothy 3:14-17</span>
+                    <span>·</span>
+                    <span>38 min</span>
+                  </div>
+                  <div class="hero-actions">
+                    <button class="btn btn-primary">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      Watch
+                    </button>
+                    <button class="btn btn-secondary">+ Save</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="checkin-section">
+                <div class="checkin-header">
+                  <div class="checkin-date">This Sunday, February 2</div>
+                  <div class="streak-badge">
+                    <svg class="streak-icon" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
+                    <span class="streak-count">12</span>
+                  </div>
+                </div>
+                <div class="service-times">
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sat</div><div class="time">5 PM</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">8 AM</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">9:30</div></button>
+                  <button class="time-btn" onclick="selectService(this)"><div class="day">Sun</div><div class="time">11 AM</div></button>
+                </div>
+                <div class="checkin-btn-wrap" id="checkin-wrap">
+                  <button class="checkin-btn" onclick="checkIn()">
+                    <span>I'll Be There</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Upcoming Events</div>
+                  <a href="#" class="section-link" onclick="switchPage('connect'); return false;">All Events</a>
+                </div>
+                <div class="hscroll">
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 11 · 6 PM</div>
+                      <div class="event-title">Get Your Life Back</div>
+                      <div class="event-subtitle">Financial workshop</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 13 · 4 PM</div>
+                      <div class="event-title">Night to Shine</div>
+                      <div class="event-subtitle">Tim Tebow Foundation</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Baptisms"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 14-15</div>
+                      <div class="event-title">Baptisms</div>
+                      <div class="event-subtitle">Take your next step</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Breakfast"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 28 · 7:30 AM</div>
+                      <div class="event-title">Men's Breakfast</div>
+                      <div class="event-subtitle">Fellowship & food</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div class="nt26-card" onclick="openNT26()">
+                <div class="nt26-logo">
+                  <!-- NT26 Logo SVG -->
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <text x="50" y="52" text-anchor="middle" font-family="Inter, sans-serif" font-size="36" font-weight="800" fill="white">
+                      <tspan>N</tspan><tspan dx="-8">T</tspan>
+                    </text>
+                    <text x="22" y="78" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white">20</text>
+                    <text x="68" y="78" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="white">26</text>
+                  </svg>
+                </div>
+                <div class="nt26-content">
+                  <div class="nt26-label">Today's Reading</div>
+                  <div class="nt26-title">February 2 · Matthew 7</div>
+                  <div class="nt26-progress-wrapper">
+                    <div class="nt26-progress-bar">
+                      <div class="nt26-progress-fill" style="width: 9%"></div>
+                    </div>
+                    <div class="nt26-progress-text">
+                      <span>33 of 365 days</span>
+                      <span class="nt26-completed">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Read today
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="nt26-arrow">›</div>
+              </div>
+
+              <div class="encounter-card" onclick="switchPage('connect')">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Encounter">
+                <div class="encounter-overlay"></div>
+                <div class="encounter-content">
+                  <div class="encounter-title">Encounter</div>
+                  <div class="encounter-subtitle">Young Adults · Thursdays 7PM</div>
+                </div>
+              </div>
+
+              <div style="height: 30px;"></div>
+            </section>
+
+            <!-- WATCH -->
+            <section class="page" id="page-watch">
+              <div class="page-spacer"></div>
+              <div class="category-chips">
+                <div class="chip active">All</div>
+                <div class="chip">Sermons</div>
+                <div class="chip">Series</div>
+                <div class="chip">Encounter</div>
+                <div class="chip">Finances</div>
+                <div class="chip">Marriage</div>
+              </div>
+
+              <div class="watch-hero">
+                <div class="watch-thumb">
+                  <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80" alt="Parables">
+                  <div class="play-btn-large">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <div class="watch-info">
+                  <div class="watch-series-label">Parables of Jesus</div>
+                  <div class="watch-title">Week 4: The Talents</div>
+                  <div class="watch-meta">Pastor Kael · Jan 26 · 38 min</div>
+                </div>
+              </div>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Current Series</div>
+                </div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 3 - The Sower</div>
+                    <div class="series-list-meta">Jan 19 · 41 min</div>
+                  </div>
+                </div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 2 - The Prodigal</div>
+                    <div class="series-list-meta">Jan 12 · 36 min</div>
+                  </div>
+                </div>
+                <div class="series-list-item">
+                  <div class="series-list-thumb"><img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=300&q=80" alt="Parables"></div>
+                  <div class="series-list-info">
+                    <div class="series-list-title">Parables Wk 1 - Good Samaritan</div>
+                    <div class="series-list-meta">Jan 5 · 44 min</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Previous Series</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Bible Basics">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Bible Basics</div>
+                    <div class="series-meta">Foundation Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=400&q=80" alt="Christmas">
+                      <div class="series-badge">3 messages</div>
+                    </div>
+                    <div class="series-title">Christmas 2025</div>
+                    <div class="series-meta">Holiday Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=80" alt="Faith Forward">
+                      <div class="series-badge">6 messages</div>
+                    </div>
+                    <div class="series-title">Faith Forward</div>
+                    <div class="series-meta">Growth Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Finances</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial Peace">
+                      <div class="series-badge">8 lessons</div>
+                    </div>
+                    <div class="series-title">Financial Peace</div>
+                    <div class="series-meta">Stewardship Course</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&q=80" alt="Generosity">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Generosity</div>
+                    <div class="series-meta">Giving Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Marriage & Family</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" alt="Marriage">
+                      <div class="series-badge">6 lessons</div>
+                    </div>
+                    <div class="series-title">Marriage Course</div>
+                    <div class="series-meta">Relationship Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1475503572774-15a45e5d60b9?w=400&q=80" alt="Parenting">
+                      <div class="series-badge">5 lessons</div>
+                    </div>
+                    <div class="series-title">Parenting</div>
+                    <div class="series-meta">Family Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Encounter Young Adults</div>
+                  <a href="#" class="section-link">View All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" alt="Identity">
+                      <div class="series-badge">4 messages</div>
+                    </div>
+                    <div class="series-title">Identity</div>
+                    <div class="series-meta">Young Adults Series</div>
+                  </div>
+                  <div class="series-card">
+                    <div class="series-thumb">
+                      <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80" alt="Purpose">
+                      <div class="series-badge">3 messages</div>
+                    </div>
+                    <div class="series-title">Purpose</div>
+                    <div class="series-meta">Young Adults Series</div>
+                  </div>
+                </div>
+              </section>
+
+              <div style="height: 30px;"></div>
+            </section>
+
+            <!-- GIVE -->
+            <section class="page" id="page-give">
+              <div class="page-spacer"></div>
+              <div class="give-content">
+                <div class="give-amount-display">
+                  <div class="give-amount" id="give-amount">$100</div>
+                  <div class="give-amount-sub">One-time gift to General Fund</div>
+                </div>
+
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+                    </div>
+                    <div class="give-card-title">Select Amount</div>
+                  </div>
+                  <div class="amount-chips">
+                    <button class="amount-chip" onclick="selectAmount(this, 25)">$25</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 50)">$50</button>
+                    <button class="amount-chip selected" onclick="selectAmount(this, 100)">$100</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 250)">$250</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 500)">$500</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 1000)">$1k</button>
+                  </div>
+                </div>
+
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+                    </div>
+                    <div class="give-card-title">Fund</div>
+                  </div>
+                  <div class="fund-chips">
+                    <button class="fund-chip selected" onclick="selectFund(this)">General</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Missions</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Building</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Youth</button>
+                  </div>
+                </div>
+
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                    </div>
+                    <div class="give-card-title">Frequency</div>
+                  </div>
+                  <div class="freq-chips">
+                    <button class="freq-chip selected" onclick="selectFreq(this)">One-time</button>
+                    <button class="freq-chip" onclick="selectFreq(this)">Weekly</button>
+                    <button class="freq-chip" onclick="selectFreq(this)">Monthly</button>
+                  </div>
+                </div>
+
+                <div class="give-cta">
+                  <button class="give-btn" onclick="showToast('Processing gift...')">
+                    Continue to Payment
+                  </button>
+                  <div class="give-methods">
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                      Apple Pay
+                    </div>
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                      Card
+                    </div>
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M4 10h3v7H4zm6-5h3v12h-3zm6 3h3v9h-3z"/></svg>
+                      Bank
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- CONNECT -->
+            <section class="page" id="page-connect">
+              <div class="page-spacer"></div>
+              <div class="connect-hero">
+                <h2>We're Glad You're Here</h2>
+                <p>Find your place at C3 Hays</p>
+              </div>
+
+              <div class="connect-grid">
+                <div class="connect-card" onclick="showToast('Opening prayer form...')">
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>Prayer Request</h3>
+                    <p>We'd love to pray for you</p>
+                  </div>
+                </div>
+                <div class="connect-card" onclick="showToast('Opening LifeGroups...')">
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>LifeGroups</h3>
+                    <p>Find your community</p>
+                  </div>
+                </div>
+                <div class="connect-card" onclick="showToast('Opening volunteer signup...')">
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>Serve</h3>
+                    <p>Make a difference</p>
+                  </div>
+                </div>
+                <div class="connect-card" onclick="showToast('Welcome to C3!')">
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1523803326055-9729b9e02e5a?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>I'm New</h3>
+                    <p>Start your journey</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="connect-featured">
+                <div class="connect-featured-bg" style="background-image: url('https://images.unsplash.com/photo-1473172707857-f9e276582ab6?w=800&q=80')"></div>
+                <div class="connect-featured-overlay"></div>
+                <div class="connect-featured-content">
+                  <h3>Baptism Weekend</h3>
+                  <p>Take your next step of faith. February 14-15.</p>
+                  <button class="btn">Sign Up</button>
+                </div>
+              </div>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Upcoming Events</div>
+                </div>
+                <div class="hscroll">
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 11 · 6 PM</div>
+                      <div class="event-title">Get Your Life Back</div>
+                      <div class="event-subtitle">Financial workshop</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 13 · 4 PM</div>
+                      <div class="event-title">Night to Shine</div>
+                      <div class="event-subtitle">Tim Tebow Foundation</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Breakfast"></div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 28 · 7:30 AM</div>
+                      <div class="event-title">Men's Breakfast</div>
+                      <div class="event-subtitle">Fellowship & food</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div style="height: 30px;"></div>
+            </section>
+
+            <!-- MORE -->
+            <section class="page" id="page-more">
+              <div class="page-spacer"></div>
+              <div class="more-content">
+                <div class="profile-card">
+                  <div class="profile-avatar">TP</div>
+                  <div class="profile-info">
+                    <h3>Tyler Preisser</h3>
+                    <p>tyler@example.com</p>
+                  </div>
+                </div>
+
+                <div class="menu-group">
+                  <div class="menu-group-title">Resources</div>
+                  <div class="menu-item" onclick="openNT26()">
+                    <span>NT26 Reading Plan</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Sermon Notes</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Church Calendar</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                </div>
+
+                <div class="menu-group">
+                  <div class="menu-group-title">About C3</div>
+                  <div class="menu-item">
+                    <span>C3 Staff</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Weekend Services</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Encounter Young Adults</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Contact Us</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                </div>
+
+                <div class="menu-group">
+                  <div class="menu-group-title">Settings</div>
+                  <div class="menu-item">
+                    <span>Notifications</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>App Settings</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <!-- Bottom Nav -->
+          <div class="nav-container">
+            <nav class="nav liquid-glass">
+              <button class="nav-btn active" onclick="switchPage('home')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Home</span>
+              </button>
+              <button class="nav-btn" onclick="switchPage('watch')">
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8l7 4-7 4z"/></svg>
+                <span>Watch</span>
+              </button>
+              <button class="nav-btn" onclick="switchPage('give')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54z"/></svg>
+                <span>Give</span>
+              </button>
+              <button class="nav-btn" onclick="switchPage('connect')">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span>Connect</span>
+              </button>
+              <button class="nav-btn" onclick="switchPage('more')">
+                <svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <span>More</span>
+              </button>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function switchPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+
+      // Update header title
+      const titles = { home: 'Home', watch: 'Watch', give: 'Give', connect: 'Connect', more: 'More' };
+      document.getElementById('header-title').textContent = titles[page] || 'Home';
+
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function selectService(btn) {
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('checkin-wrap').classList.add('visible');
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function checkIn() {
+      showToast('You\'re checked in! See you Sunday.');
+      document.querySelector('.streak-count').textContent = '13';
+      setTimeout(() => {
+        document.getElementById('checkin-wrap').classList.remove('visible');
+        document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      }, 1500);
+    }
+
+    function selectFund(btn) {
+      document.querySelectorAll('.fund-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function selectAmount(btn, amount) {
+      document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('give-amount').textContent = '$' + amount.toLocaleString();
+    }
+
+    function selectFreq(btn) {
+      document.querySelectorAll('.freq-chip').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    }
+
+    function openNT26() {
+      showToast('Opening NT26 Reading Plan...');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('visible');
+      setTimeout(() => t.classList.remove('visible'), 2500);
+    }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.innerHTML = theme === 'light'
+          ? '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'
+          : '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
+      }
+    }
+
+    // Initialize theme from localStorage
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      document.addEventListener('DOMContentLoaded', () => updateThemeIcon(saved));
+    })();
+
+    // Expose
+    window.switchPage = switchPage;
+    window.selectService = selectService;
+    window.checkIn = checkIn;
+    window.selectFund = selectFund;
+    window.selectAmount = selectAmount;
+    window.selectFreq = selectFreq;
+    window.openNT26 = openNT26;
+    window.showToast = showToast;
+  </script>
+</body>
+</html>
