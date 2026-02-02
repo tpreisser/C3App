@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>Profile - C3 Hays</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <button class="back-btn" onclick="history.back()">
+          <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          Back
+        </button>
+        <button style="background: none; border: none; color: var(--c3-teal); font-size: 14px; font-weight: 600; cursor: pointer;">
+          Edit
+        </button>
+      </div>
+    </header>
+
+    <main class="profile-page" style="padding-top: 100px;">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar-large">TP</div>
+        <div class="profile-name-large">Tyler Preisser</div>
+        <div class="profile-email-large">tyler@example.com</div>
+        <button class="profile-edit-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+          Edit Profile
+        </button>
+      </div>
+
+      <!-- Stats -->
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-value">12</div>
+          <div class="profile-stat-label">Week Streak</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value">47</div>
+          <div class="profile-stat-label">Sundays</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-value">33</div>
+          <div class="profile-stat-label">NT26 Days</div>
+        </div>
+      </div>
+
+      <!-- My Activity -->
+      <div class="more-section">
+        <div class="more-section-title">My Activity</div>
+        <div class="more-list">
+          <div class="more-item">
+            <div class="more-icon teal">📖</div>
+            <div class="more-text">
+              <div class="more-title">NT26 Progress</div>
+              <div class="more-subtitle">12% complete · Matthew 7</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+          <div class="more-item">
+            <div class="more-icon teal">📝</div>
+            <div class="more-text">
+              <div class="more-title">My Sermon Notes</div>
+              <div class="more-subtitle">5 saved notes</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+          <div class="more-item">
+            <div class="more-icon teal">❤️</div>
+            <div class="more-text">
+              <div class="more-title">Saved Messages</div>
+              <div class="more-subtitle">8 messages</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+          <div class="more-item">
+            <div class="more-icon teal">💝</div>
+            <div class="more-text">
+              <div class="more-title">Giving History</div>
+              <div class="more-subtitle">View your giving statements</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Groups -->
+      <div class="more-section">
+        <div class="more-section-title">My Groups</div>
+        <div class="more-list">
+          <div class="more-item">
+            <div class="more-icon">👨</div>
+            <div class="more-text">
+              <div class="more-title">Men of Purpose</div>
+              <div class="more-subtitle">Tuesdays at 7pm</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+        </div>
+        <div style="padding: 16px;">
+          <button class="btn btn-secondary btn-block">Find a Group</button>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <div class="more-section">
+        <div class="more-section-title">Account</div>
+        <div class="more-list">
+          <div class="more-item">
+            <div class="more-icon">🔐</div>
+            <div class="more-text">
+              <div class="more-title">Change Password</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+          <div class="more-item">
+            <div class="more-icon">📱</div>
+            <div class="more-text">
+              <div class="more-title">Connected Devices</div>
+              <div class="more-subtitle">2 devices</div>
+            </div>
+            <div class="more-arrow">›</div>
+          </div>
+          <div class="more-item" style="color: var(--accent-rose);">
+            <div class="more-icon" style="background: var(--accent-rose-muted);">🚪</div>
+            <div class="more-text">
+              <div class="more-title" style="color: var(--accent-rose);">Sign Out</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; padding: 32px 16px; color: var(--text-muted); font-size: var(--font-size-sm);">
+        <p>Member since January 2024</p>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
