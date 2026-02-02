@@ -23,30 +23,186 @@ body {
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-normal);
   color: var(--text-primary);
-  background: #1a1a1a;
+  background: linear-gradient(145deg, #0d0d1a 0%, #1a1a2e 30%, #16213e 60%, #0f0f23 100%);
   min-height: 100vh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  /* Center the app frame */
+  /* Center the phone device */
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 20px 0;
-}
-
-/* Desktop: Show phone frame */
-@media (min-width: 500px) {
-  body {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-    padding: 40px 20px;
-  }
-}
-
-/* Prevent pull-to-refresh on mobile */
-body {
+  align-items: center;
+  padding: 20px;
   overscroll-behavior-y: contain;
+}
+
+/* Subtle background pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(20, 184, 166, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ==================== iPHONE 17 PRO MAX DEVICE FRAME ==================== */
+
+.device-frame {
+  position: relative;
+  z-index: 1;
+  width: 402px;
+  height: 874px;
+  background: linear-gradient(145deg, #2c2c2e 0%, #1c1c1e 50%, #0c0c0e 100%);
+  border-radius: 60px;
+  padding: 10px;
+  /* Titanium frame effect */
+  box-shadow:
+    /* Inner highlight */
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    /* Frame border */
+    0 0 0 1px rgba(80, 80, 82, 0.8),
+    0 0 0 3px #1a1a1c,
+    0 0 0 4px rgba(60, 60, 62, 0.5),
+    /* Deep shadows */
+    0 25px 50px -12px rgba(0, 0, 0, 0.8),
+    0 50px 100px -20px rgba(0, 0, 0, 0.6),
+    0 80px 150px -30px rgba(0, 0, 0, 0.4),
+    /* Ambient glow from screen */
+    0 0 120px -20px rgba(20, 184, 166, 0.15);
+}
+
+/* Left side buttons container */
+.device-buttons-left {
+  position: absolute;
+  left: -3px;
+  top: 160px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Mute/Action switch */
+.device-mute {
+  width: 4px;
+  height: 28px;
+  background: linear-gradient(90deg, #5a5a5c 0%, #3a3a3c 40%, #2a2a2c 100%);
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 1px 0 1px rgba(255,255,255,0.15);
+}
+
+/* Volume buttons */
+.device-volume-up,
+.device-volume-down {
+  width: 4px;
+  height: 40px;
+  background: linear-gradient(90deg, #5a5a5c 0%, #3a3a3c 40%, #2a2a2c 100%);
+  border-radius: 2px 0 0 2px;
+  box-shadow: inset 1px 0 1px rgba(255,255,255,0.15);
+}
+
+/* Right side button (Power/Action) */
+.device-power {
+  position: absolute;
+  right: -3px;
+  top: 220px;
+  width: 4px;
+  height: 95px;
+  background: linear-gradient(90deg, #2a2a2c 0%, #3a3a3c 60%, #5a5a5c 100%);
+  border-radius: 0 2px 2px 0;
+  box-shadow: inset -1px 0 1px rgba(255,255,255,0.15);
+}
+
+/* Camera Control button (iPhone 16+) */
+.device-camera-btn {
+  position: absolute;
+  right: -3px;
+  top: 340px;
+  width: 4px;
+  height: 32px;
+  background: linear-gradient(90deg, #2a2a2c 0%, #3a3a3c 60%, #4a4a4c 100%);
+  border-radius: 0 3px 3px 0;
+  box-shadow: inset -1px 0 1px rgba(255,255,255,0.1);
+}
+
+/* Inner screen bezel */
+.device-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 52px;
+  overflow: hidden;
+  /* Screen edge highlight */
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Dynamic Island */
+.dynamic-island {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 126px;
+  height: 37px;
+  background: #000;
+  border-radius: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 16px;
+  gap: 8px;
+  /* Subtle border */
+  box-shadow:
+    0 0 0 1px rgba(50, 50, 52, 0.5),
+    inset 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Camera lens */
+.dynamic-island::before {
+  content: '';
+  position: absolute;
+  right: 26px;
+  width: 11px;
+  height: 11px;
+  background:
+    radial-gradient(circle at 35% 35%, #2a4a5a 0%, #1a2a3a 40%, #0a1520 70%, #000 100%);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    0 0 0 1.5px #0a0a0a,
+    0 0 0 2.5px #1a1a1a;
+}
+
+/* Face ID sensors */
+.dynamic-island::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #1a1a2a 0%, #0a0a15 100%);
+  border-radius: 50%;
+  opacity: 0.7;
+}
+
+/* Home indicator */
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  z-index: 9999;
 }
 
 img,
@@ -107,42 +263,18 @@ ol {
 
 .app {
   width: 100%;
-  max-width: var(--app-max-width);
-  min-height: 100vh;
-  min-height: 100dvh;
+  height: 100%;
   background: var(--bg-primary);
   position: relative;
   overflow-x: hidden;
+  overflow-y: auto;
+  /* Hide the scrollbar inside the device */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Desktop: Phone frame styling */
-@media (min-width: 500px) {
-  .app {
-    min-height: 852px;
-    max-height: 90vh;
-    border-radius: 44px;
-    box-shadow:
-      0 0 0 12px #1a1a1a,
-      0 0 0 14px #333,
-      0 25px 50px rgba(0, 0, 0, 0.5),
-      0 50px 100px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    overflow-y: auto;
-  }
-
-  /* Simulated notch */
-  .app::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 160px;
-    height: 34px;
-    background: #000;
-    border-radius: 0 0 20px 20px;
-    z-index: 9999;
-  }
+.app::-webkit-scrollbar {
+  display: none;
 }
 
 .app-inner {
@@ -463,10 +595,8 @@ ol {
 
 .page {
   display: none;
-  padding-top: var(--header-height);
-  padding-bottom: calc(var(--nav-height) + 20px);
-  min-height: 100vh;
-  min-height: 100dvh;
+  padding-top: 10px;
+  padding-bottom: calc(var(--nav-height) + 40px);
 }
 
 .page.active {

@@ -3,19 +3,16 @@
 /* ==================== HEADER ==================== */
 
 .header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
   width: 100%;
-  max-width: var(--app-max-width);
   z-index: var(--z-fixed);
-  padding: 48px 20px 16px;
+  padding: 60px 20px 16px;
   background: linear-gradient(
     180deg,
     var(--bg-primary) 0%,
-    var(--bg-primary) 50%,
-    rgba(0, 0, 0, 0.9) 75%,
+    var(--bg-primary) 60%,
+    rgba(0, 0, 0, 0.9) 85%,
     transparent 100%
   );
 }
@@ -1091,8 +1088,8 @@
 /* ==================== BADGE ==================== */
 
 .badge {
-  position: fixed;
-  top: 10px;
+  position: absolute;
+  top: 58px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--c3-teal);
