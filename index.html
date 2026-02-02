@@ -249,7 +249,7 @@
 
     /* Page Spacer - for pages without hero */
     .page-spacer {
-      height: 110px;
+      height: 120px;
     }
 
     /* Hero Section */
@@ -919,187 +919,235 @@
       padding: 0 var(--padding);
     }
 
-    .give-hero {
+    .give-amount-display {
       text-align: center;
-      padding: 20px 0 30px;
+      padding: 30px 0 20px;
+      position: relative;
     }
 
-    .give-hero h1 {
-      font-size: 28px;
+    .give-amount-display::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), #0d9488);
+      border-radius: 2px;
+    }
+
+    .give-amount {
+      font-size: 56px;
       font-weight: 700;
-      margin-bottom: 8px;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #fff 0%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    .give-hero p {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .give-section {
-      margin-bottom: 24px;
-    }
-
-    .give-label {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-tertiary);
-      margin-bottom: 10px;
-    }
-
-    .fund-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .fund-btn {
-      padding: 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s ease;
-    }
-
-    .fund-btn.selected {
-      background: var(--teal);
-      border-color: var(--teal);
-      color: #000;
-    }
-
-    .amount-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .amount-btn {
-      padding: 16px 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .amount-btn.selected {
-      background: var(--teal);
-      border-color: var(--teal);
-      color: #000;
-    }
-
-    .amount-input {
-      width: 100%;
-      padding: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-primary);
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .amount-input:focus {
-      outline: none;
-      border-color: var(--teal);
-    }
-
-    .freq-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    .freq-btn {
-      padding: 12px 8px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+    .give-amount-sub {
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.2s ease;
+      color: var(--text-tertiary);
+      margin-top: 4px;
     }
 
-    .freq-btn.selected {
-      background: var(--teal);
-      border-color: var(--teal);
-      color: #000;
+    .give-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
     }
 
-    .payment-methods {
+    .give-card-header {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 8px;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .payment-btn {
+    .give-card-icon {
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      padding: 16px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 15px;
+      background: var(--teal-dim);
+      border-radius: 8px;
+    }
+
+    .give-card-icon svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--teal);
+    }
+
+    .give-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .amount-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .amount-chip {
+      flex: 1 1 calc(33.333% - 6px);
+      min-width: 80px;
+      padding: 14px 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--text-primary);
       cursor: pointer;
       transition: all 0.2s ease;
+      text-align: center;
     }
 
-    .payment-btn:hover {
-      background: var(--card-hover);
-    }
-
-    .payment-btn.apple-pay {
-      background: #fff;
+    .amount-chip.selected {
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      border-color: transparent;
       color: #000;
+      box-shadow: 0 4px 20px rgba(20,184,166,0.3);
     }
 
-    .payment-btn.card {
+    .fund-chips {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .fund-chips::-webkit-scrollbar { display: none; }
+
+    .fund-chip {
+      flex-shrink: 0;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .fund-chip.selected {
       background: var(--teal);
+      border-color: transparent;
       color: #000;
     }
 
-    .payment-btn svg {
+    .freq-chips {
+      display: flex;
+      gap: 8px;
+    }
+
+    .freq-chip {
+      flex: 1;
+      padding: 12px 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .freq-chip.selected {
+      background: var(--teal);
+      border-color: transparent;
+      color: #000;
+    }
+
+    .give-cta {
+      margin-top: 24px;
+    }
+
+    .give-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 24px rgba(20,184,166,0.3);
+    }
+
+    .give-btn:active {
+      transform: scale(0.98);
+    }
+
+    .give-methods {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .give-method {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    .give-method svg {
       width: 20px;
       height: 20px;
+      fill: currentColor;
     }
 
     /* Connect Page */
     .connect-hero {
-      margin: 0 var(--padding) 20px;
-      padding: 24px;
-      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
+      margin: 0 var(--padding) 24px;
+      padding: 28px 24px;
+      background: linear-gradient(135deg, var(--teal) 0%, #0d9488 50%, #065f46 100%);
       border-radius: var(--radius);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .connect-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+      pointer-events: none;
     }
 
     .connect-hero h2 {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
       color: #000;
       margin-bottom: 6px;
+      position: relative;
     }
 
     .connect-hero p {
-      font-size: 13px;
+      font-size: 14px;
       color: rgba(0,0,0,0.7);
+      position: relative;
     }
 
     .connect-grid {
@@ -1110,10 +1158,10 @@
     }
 
     .connect-card {
-      padding: 18px 14px;
-      background: var(--card);
-      border: 1px solid var(--border);
+      position: relative;
+      height: 140px;
       border-radius: var(--radius);
+      overflow: hidden;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -1122,57 +1170,104 @@
       transform: scale(0.98);
     }
 
-    .connect-icon {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--teal-dim);
-      border-radius: 12px;
-      margin-bottom: 12px;
+    .connect-card-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.3s ease;
     }
 
-    .connect-icon svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--teal);
+    .connect-card:hover .connect-card-bg {
+      transform: scale(1.05);
+    }
+
+    .connect-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.7) 100%);
+    }
+
+    .connect-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 14px;
     }
 
     .connect-card h3 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
     }
 
     .connect-card p {
       font-size: 11px;
-      color: var(--text-tertiary);
+      color: rgba(255,255,255,0.8);
     }
 
     .connect-featured {
       margin: 24px var(--padding) 0;
-      padding: 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
+      position: relative;
       border-radius: var(--radius);
+      overflow: hidden;
+      height: 180px;
+    }
+
+    .connect-featured-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .connect-featured-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(20,184,166,0.9) 0%, rgba(6,95,70,0.95) 100%);
+    }
+
+    .connect-featured-content {
+      position: relative;
+      padding: 24px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .connect-featured h3 {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       margin-bottom: 8px;
+      color: #fff;
     }
 
     .connect-featured p {
       font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 16px;
       line-height: 1.5;
     }
 
     .connect-featured .btn {
-      width: 100%;
+      width: fit-content;
+      background: #fff;
+      color: #000;
     }
 
     /* More Page */
@@ -1673,57 +1768,74 @@
             <section class="page" id="page-give">
               <div class="page-spacer"></div>
               <div class="give-content">
-                <div class="give-hero">
-                  <p>Support the mission of C3 Hays</p>
+                <div class="give-amount-display">
+                  <div class="give-amount" id="give-amount">$100</div>
+                  <div class="give-amount-sub">One-time gift to General Fund</div>
                 </div>
 
-                <div class="give-section">
-                  <div class="give-label">Select Fund</div>
-                  <div class="fund-grid">
-                    <button class="fund-btn selected" onclick="selectFund(this)">General</button>
-                    <button class="fund-btn" onclick="selectFund(this)">Missions</button>
-                    <button class="fund-btn" onclick="selectFund(this)">Building</button>
-                    <button class="fund-btn" onclick="selectFund(this)">Benevolence</button>
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+                    </div>
+                    <div class="give-card-title">Select Amount</div>
+                  </div>
+                  <div class="amount-chips">
+                    <button class="amount-chip" onclick="selectAmount(this, 25)">$25</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 50)">$50</button>
+                    <button class="amount-chip selected" onclick="selectAmount(this, 100)">$100</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 250)">$250</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 500)">$500</button>
+                    <button class="amount-chip" onclick="selectAmount(this, 1000)">$1k</button>
                   </div>
                 </div>
 
-                <div class="give-section">
-                  <div class="give-label">Amount</div>
-                  <div class="amount-grid">
-                    <button class="amount-btn" onclick="selectAmount(this)">$25</button>
-                    <button class="amount-btn" onclick="selectAmount(this)">$50</button>
-                    <button class="amount-btn selected" onclick="selectAmount(this)">$100</button>
-                    <button class="amount-btn" onclick="selectAmount(this)">$250</button>
-                    <button class="amount-btn" onclick="selectAmount(this)">$500</button>
-                    <button class="amount-btn" onclick="selectAmount(this)">$1000</button>
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>
+                    </div>
+                    <div class="give-card-title">Fund</div>
                   </div>
-                  <input type="text" class="amount-input" placeholder="Other amount">
-                </div>
-
-                <div class="give-section">
-                  <div class="give-label">Frequency</div>
-                  <div class="freq-grid">
-                    <button class="freq-btn selected" onclick="selectFreq(this)">One-Time</button>
-                    <button class="freq-btn" onclick="selectFreq(this)">Weekly</button>
-                    <button class="freq-btn" onclick="selectFreq(this)">Monthly</button>
+                  <div class="fund-chips">
+                    <button class="fund-chip selected" onclick="selectFund(this)">General</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Missions</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Building</button>
+                    <button class="fund-chip" onclick="selectFund(this)">Youth</button>
                   </div>
                 </div>
 
-                <div class="give-section">
-                  <div class="give-label">Payment Method</div>
-                  <div class="payment-methods">
-                    <button class="payment-btn apple-pay">
-                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+                <div class="give-card">
+                  <div class="give-card-header">
+                    <div class="give-card-icon">
+                      <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+                    </div>
+                    <div class="give-card-title">Frequency</div>
+                  </div>
+                  <div class="freq-chips">
+                    <button class="freq-chip selected" onclick="selectFreq(this)">One-time</button>
+                    <button class="freq-chip" onclick="selectFreq(this)">Weekly</button>
+                    <button class="freq-chip" onclick="selectFreq(this)">Monthly</button>
+                  </div>
+                </div>
+
+                <div class="give-cta">
+                  <button class="give-btn" onclick="showToast('Processing gift...')">
+                    Continue to Payment
+                  </button>
+                  <div class="give-methods">
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
                       Apple Pay
-                    </button>
-                    <button class="payment-btn card">
-                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-                      Credit / Debit Card
-                    </button>
-                    <button class="payment-btn">
-                      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
-                      Bank Transfer
-                    </button>
+                    </div>
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
+                      Card
+                    </div>
+                    <div class="give-method">
+                      <svg viewBox="0 0 24 24"><path d="M4 10h3v7H4zm6-5h3v12h-3zm6 3h3v9h-3z"/></svg>
+                      Bank
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1739,39 +1851,47 @@
 
               <div class="connect-grid">
                 <div class="connect-card" onclick="showToast('Opening prayer form...')">
-                  <div class="connect-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>Prayer Request</h3>
+                    <p>We'd love to pray for you</p>
                   </div>
-                  <h3>Prayer Request</h3>
-                  <p>Submit a prayer request</p>
                 </div>
                 <div class="connect-card" onclick="showToast('Opening LifeGroups...')">
-                  <div class="connect-icon">
-                    <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>LifeGroups</h3>
+                    <p>Find your community</p>
                   </div>
-                  <h3>LifeGroups</h3>
-                  <p>Find a small group</p>
                 </div>
                 <div class="connect-card" onclick="showToast('Opening volunteer signup...')">
-                  <div class="connect-icon">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>Serve</h3>
+                    <p>Make a difference</p>
                   </div>
-                  <h3>Serve</h3>
-                  <p>Join a volunteer team</p>
                 </div>
                 <div class="connect-card" onclick="showToast('Welcome to C3!')">
-                  <div class="connect-icon">
-                    <svg viewBox="0 0 24 24"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
+                  <div class="connect-card-bg" style="background-image: url('https://images.unsplash.com/photo-1523803326055-9729b9e02e5a?w=400&q=80')"></div>
+                  <div class="connect-card-overlay"></div>
+                  <div class="connect-card-content">
+                    <h3>I'm New</h3>
+                    <p>Start your journey</p>
                   </div>
-                  <h3>I'm New</h3>
-                  <p>Start your journey</p>
                 </div>
               </div>
 
               <div class="connect-featured">
-                <h3>Baptism Weekend</h3>
-                <p>Ready to take your next step of faith? Sign up for baptism on February 14-15. It's a celebration you won't forget!</p>
-                <button class="btn btn-primary">Sign Up for Baptism</button>
+                <div class="connect-featured-bg" style="background-image: url('https://images.unsplash.com/photo-1473172707857-f9e276582ab6?w=800&q=80')"></div>
+                <div class="connect-featured-overlay"></div>
+                <div class="connect-featured-content">
+                  <h3>Baptism Weekend</h3>
+                  <p>Take your next step of faith. February 14-15.</p>
+                  <button class="btn">Sign Up</button>
+                </div>
               </div>
 
               <section class="section">
@@ -1935,17 +2055,18 @@
     }
 
     function selectFund(btn) {
-      document.querySelectorAll('.fund-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.fund-chip').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
     }
 
-    function selectAmount(btn) {
-      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+    function selectAmount(btn, amount) {
+      document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
+      document.getElementById('give-amount').textContent = '$' + amount.toLocaleString();
     }
 
     function selectFreq(btn) {
-      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('.freq-chip').forEach(b => b.classList.remove('selected'));
       btn.classList.add('selected');
     }
 
