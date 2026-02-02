@@ -34,11 +34,31 @@
   <!-- SVG Filters for Liquid Glass Effects -->
   <svg class="liquid-glass-filters" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <filter id="liquid-glass-distortion" x="-50%" y="-50%" width="200%" height="200%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" seed="1"/>
-        <feGaussianBlur in="noise" stdDeviation="2" result="blur"/>
-        <feDisplacementMap in="SourceGraphic" in2="blur" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+      <!-- Glass blur and distortion filter -->
+      <filter id="liquid-glass-blur" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur"/>
+        <feColorMatrix in="blur" type="saturate" values="1.2" result="saturated"/>
+        <feComponentTransfer in="saturated" result="brightened">
+          <feFuncR type="linear" slope="1.05" intercept="0.02"/>
+          <feFuncG type="linear" slope="1.05" intercept="0.02"/>
+          <feFuncB type="linear" slope="1.05" intercept="0.02"/>
+        </feComponentTransfer>
       </filter>
+
+      <!-- Specular highlight gradient -->
+      <linearGradient id="glass-specular" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="white" stop-opacity="0.4"/>
+        <stop offset="30%" stop-color="white" stop-opacity="0.15"/>
+        <stop offset="60%" stop-color="white" stop-opacity="0.03"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0"/>
+      </linearGradient>
+
+      <!-- Glass edge highlight -->
+      <linearGradient id="glass-edge" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="white" stop-opacity="0.35"/>
+        <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
+        <stop offset="100%" stop-color="white" stop-opacity="0.05"/>
+      </linearGradient>
     </defs>
   </svg>
 
