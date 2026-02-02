@@ -1,0 +1,409 @@
+/* Apple Liquid Glass Design System */
+/* Based on iOS 26 / macOS Tahoe 26 Design Language */
+
+/* ==================== SVG FILTERS ==================== */
+/* These filters create the realistic glass distortion effect */
+
+.liquid-glass-filters {
+  position: absolute;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+/* ==================== BASE GLASS MIXIN ==================== */
+
+.glass-surface {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ==================== LIQUID GLASS NAVIGATION ==================== */
+/* The floating pill navigation bar at the bottom */
+
+.glass-nav {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.glass-pill {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 10px;
+  border-radius: 28px;
+  position: relative;
+
+  /* Apple Liquid Glass Core Effect */
+  background: rgba(28, 28, 30, 0.72);
+  backdrop-filter: blur(50px) saturate(180%);
+  -webkit-backdrop-filter: blur(50px) saturate(180%);
+
+  /* Multi-layer border for depth */
+  border: 0.5px solid rgba(255, 255, 255, 0.18);
+
+  /* Layered shadows for floating effect */
+  box-shadow:
+    /* Outer ambient shadow */
+    0 2px 4px rgba(0, 0, 0, 0.1),
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    0 16px 32px rgba(0, 0, 0, 0.1),
+    /* Inner edge light */
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Specular highlight layer */
+.glass-pill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 16px;
+  right: 16px;
+  height: 50%;
+  border-radius: 28px 28px 100% 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* Inner glow layer */
+.glass-pill::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 27px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+/* ==================== NAV BUTTON STYLES ==================== */
+
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 14px;
+  border-radius: 22px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-family);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  position: relative;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-btn:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-btn.active {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+  transition: transform var(--transition-bounce);
+}
+
+.nav-btn.active svg {
+  transform: scale(1.05);
+}
+
+/* Give button special styling */
+.nav-btn.give-nav {
+  color: var(--c3-teal);
+}
+
+.nav-btn.give-nav:hover {
+  color: var(--c3-teal-light);
+}
+
+.nav-btn.give-nav.active {
+  background: rgba(20, 184, 166, 0.2);
+  color: var(--c3-teal-light);
+  box-shadow:
+    inset 0 1px 0 rgba(20, 184, 166, 0.2),
+    0 0 12px rgba(20, 184, 166, 0.15);
+}
+
+/* ==================== GLASS CARD COMPONENTS ==================== */
+
+.glass-card {
+  position: relative;
+  background: rgba(28, 28, 30, 0.6);
+  backdrop-filter: blur(40px) saturate(150%);
+  -webkit-backdrop-filter: blur(40px) saturate(150%);
+  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-xl);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 8px 24px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+/* ==================== GLASS MODAL / SHEET ==================== */
+
+.glass-modal {
+  position: relative;
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(60px) saturate(180%);
+  -webkit-backdrop-filter: blur(60px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-2xl);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 16px 48px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.glass-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 50%;
+  border-radius: var(--radius-2xl) var(--radius-2xl) 50% 50%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ==================== GLASS BUTTON ==================== */
+
+.glass-button {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  padding: 12px 24px;
+  color: var(--white);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* ==================== GLASS HEADER ==================== */
+
+.glass-header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--app-max-width);
+  z-index: var(--z-fixed);
+  padding: 48px 20px 16px;
+  background: linear-gradient(
+    180deg,
+    var(--bg-primary) 0%,
+    var(--bg-primary) 60%,
+    rgba(0, 0, 0, 0.8) 80%,
+    transparent 100%
+  );
+}
+
+/* ==================== GLASS INPUT ==================== */
+
+.glass-input {
+  width: 100%;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  transition: all var(--transition-base);
+}
+
+.glass-input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--c3-teal);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.15);
+}
+
+.glass-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* ==================== GLASS TOGGLE / CHIP ==================== */
+
+.glass-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+}
+
+.glass-chip.active {
+  border-color: var(--c3-teal);
+  background: var(--c3-teal-muted);
+  color: var(--text-primary);
+}
+
+/* ==================== LIQUID REFRACTION EFFECT ==================== */
+/* Advanced effect using SVG filter for edge distortion */
+
+.liquid-refract {
+  position: relative;
+}
+
+.liquid-refract::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.1) 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.liquid-refract:hover::after {
+  opacity: 1;
+}
+
+/* ==================== ANIMATION KEYFRAMES ==================== */
+
+@keyframes glassShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes glassFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.glass-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: glassShimmer 2s infinite;
+}
+
+/* ==================== DARK MODE ADJUSTMENTS ==================== */
+/* (Already optimized for dark, but provides additional depth) */
+
+@media (prefers-color-scheme: dark) {
+  .glass-pill {
+    background: rgba(28, 28, 30, 0.75);
+  }
+
+  .glass-card {
+    background: rgba(28, 28, 30, 0.65);
+  }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-pill,
+  .glass-card,
+  .glass-button,
+  .nav-btn,
+  .glass-chip {
+    transition: none;
+  }
+
+  .glass-shimmer {
+    animation: none;
+  }
+}

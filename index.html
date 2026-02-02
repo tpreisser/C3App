@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="C3 Hays Church App - Meet. Grow. Serve.">
+
+  <title>C3 Hays</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/images/favicon.png">
+  <link rel="apple-touch-icon" href="assets/images/app-icon-180.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/liquid-glass.css">
+  <link rel="stylesheet" href="css/components.css">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!-- SVG Filters for Liquid Glass Effects -->
+  <svg class="liquid-glass-filters" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="liquid-glass-distortion" x="-50%" y="-50%" width="200%" height="200%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" seed="1"/>
+        <feGaussianBlur in="noise" stdDeviation="2" result="blur"/>
+        <feDisplacementMap in="SourceGraphic" in2="blur" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- App Container -->
+  <div class="app">
+    <!-- Concept Badge -->
+    <div class="badge">C3 Reimagined</div>
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-inner">
+        <div class="logo">
+          <div class="logo-icon">C3</div>
+          <span>CELEBRATION</span>
+        </div>
+        <div class="header-actions">
+          <button class="icon-btn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="Profile">
+            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Pages Container -->
+    <main class="pages">
+      <!-- ==================== HOME PAGE ==================== -->
+      <section class="page active" id="page-home">
+        <!-- Hero - This Week's Message -->
+        <div class="hero">
+          <div class="hero-gradient"></div>
+          <div class="hero-content">
+            <div class="hero-eyebrow">This Week's Message</div>
+            <h1 class="hero-title">Bible Basics - Week 1</h1>
+            <div class="hero-meta">
+              <span class="hero-meta-item">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+                2 Timothy 3:14-17
+              </span>
+              <span class="hero-meta-item">38 min</span>
+            </div>
+            <div class="hero-actions">
+              <button class="btn btn-primary">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                Watch
+              </button>
+              <button class="btn btn-secondary">+ Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Check-In Card -->
+        <div class="checkin-card">
+          <div class="checkin-header">
+            <div class="checkin-info">
+              <div class="checkin-eyebrow">This Sunday</div>
+              <div class="checkin-title">February 2nd</div>
+              <div class="checkin-subtitle">5790 230th Ave, Hays</div>
+            </div>
+            <div class="streak-badge">
+              <span>🔥</span>
+              <span class="streak-count">12</span>
+            </div>
+          </div>
+          <div class="service-times">
+            <button class="time-btn" data-time="sat-5">
+              <div class="time-value">SAT 5</div>
+              <div class="time-period">PM</div>
+            </button>
+            <button class="time-btn" data-time="sun-8">
+              <div class="time-value">8:00</div>
+              <div class="time-period">AM</div>
+            </button>
+            <button class="time-btn active" data-time="sun-930">
+              <div class="time-value">9:30</div>
+              <div class="time-period">AM</div>
+            </button>
+            <button class="time-btn" data-time="sun-11">
+              <div class="time-value">11:00</div>
+              <div class="time-period">AM</div>
+            </button>
+          </div>
+          <button class="checkin-btn">I'll Be There 🙌</button>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+          <button class="quick-btn" data-action="give">
+            <div class="quick-icon">💝</div>
+            <div class="quick-label">Give</div>
+          </button>
+          <button class="quick-btn" data-action="prayer">
+            <div class="quick-icon">🙏</div>
+            <div class="quick-label">Prayer</div>
+          </button>
+          <button class="quick-btn" data-action="nt26">
+            <div class="quick-icon">📖</div>
+            <div class="quick-label">NT26</div>
+          </button>
+          <button class="quick-btn" data-action="new">
+            <div class="quick-icon">👋</div>
+            <div class="quick-label">I'm New</div>
+          </button>
+        </div>
+
+        <!-- Recent Messages -->
+        <section class="section">
+          <div class="section-header">
+            <div class="section-title">Recent Messages</div>
+            <a href="#" class="section-link" onclick="switchPage('watch'); return false;">See All</a>
+          </div>
+          <div class="hscroll hide-scrollbar">
+            <div class="message-card">
+              <div class="message-thumb">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Parables Wk 4</div>
+              <div class="message-meta">Jan 26 · 38 min</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Parables Wk 3</div>
+              <div class="message-meta">Jan 19 · 41 min</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Parables Wk 2</div>
+              <div class="message-meta">Jan 12 · 36 min</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">NT26 Kickoff</div>
+              <div class="message-meta">Jan 5 · 44 min</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Reading Plan Card -->
+        <div class="reading-card">
+          <div class="reading-icon">📖</div>
+          <div class="reading-content">
+            <div class="reading-eyebrow">NT26 Reading Plan</div>
+            <div class="reading-title">February 2 · Matthew 7</div>
+          </div>
+          <div class="reading-arrow">›</div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <section class="section">
+          <div class="section-header">
+            <div class="section-title">Upcoming Events</div>
+            <a href="#" class="section-link" onclick="switchPage('connect'); return false;">All Events</a>
+          </div>
+          <div class="hscroll hide-scrollbar">
+            <div class="event-card">
+              <div class="event-image teal">🚤</div>
+              <div class="event-body">
+                <div class="event-date">Feb 11 · 6 PM</div>
+                <div class="event-title">Get Your Life Back</div>
+                <div class="event-subtitle">Financial workshop</div>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-image gold">⭐</div>
+              <div class="event-body">
+                <div class="event-date">Feb 13 · 4 PM</div>
+                <div class="event-title">Night to Shine</div>
+                <div class="event-subtitle">Tim Tebow Foundation</div>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-image dark">💧</div>
+              <div class="event-body">
+                <div class="event-date">Feb 14-15</div>
+                <div class="event-title">Baptisms</div>
+                <div class="event-subtitle">Take your next step</div>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-image rose">☕</div>
+              <div class="event-body">
+                <div class="event-date">Feb 28 · 7:30 AM</div>
+                <div class="event-title">Men's Breakfast</div>
+                <div class="event-subtitle">Fellowship & food</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- ==================== WATCH PAGE ==================== -->
+      <section class="page" id="page-watch">
+        <!-- Featured Video -->
+        <div class="watch-hero">
+          <div class="watch-thumbnail">
+            <div class="play-button">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+          <div class="watch-info">
+            <div class="watch-series">Parables of Jesus</div>
+            <h1 class="watch-title">Week 4: The Talents</h1>
+            <div class="watch-meta">Pastor Kael · January 26, 2026 · 38 min</div>
+          </div>
+        </div>
+
+        <!-- Current Series -->
+        <section class="section">
+          <div class="section-header">
+            <div class="section-title">Current Series</div>
+          </div>
+          <div class="series-item">
+            <div class="series-thumb">
+              <div class="play-overlay">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="series-info">
+              <div class="series-title">Parables Wk 3 - The Sower</div>
+              <div class="series-meta">Jan 19 · 41 min</div>
+            </div>
+          </div>
+          <div class="series-item">
+            <div class="series-thumb">
+              <div class="play-overlay">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="series-info">
+              <div class="series-title">Parables Wk 2 - The Prodigal</div>
+              <div class="series-meta">Jan 12 · 36 min</div>
+            </div>
+          </div>
+          <div class="series-item">
+            <div class="series-thumb">
+              <div class="play-overlay">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+            <div class="series-info">
+              <div class="series-title">Parables Wk 1 - Good Samaritan</div>
+              <div class="series-meta">Jan 5 · 44 min</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Past Series -->
+        <section class="section">
+          <div class="section-header">
+            <div class="section-title">Past Series</div>
+            <a href="#" class="section-link">View All</a>
+          </div>
+          <div class="hscroll hide-scrollbar">
+            <div class="message-card">
+              <div class="message-thumb" style="background: linear-gradient(135deg, var(--c3-teal) 0%, var(--c3-teal-dark) 100%);">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Bible Basics</div>
+              <div class="message-meta">4 messages</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb" style="background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Christmas 2025</div>
+              <div class="message-meta">3 messages</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb" style="background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Pray Today</div>
+              <div class="message-meta">5 messages</div>
+            </div>
+            <div class="message-card">
+              <div class="message-thumb" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <div class="play-overlay">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <div class="message-title">Faith Forward</div>
+              <div class="message-meta">6 messages</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Sermon Notes Card -->
+        <div class="reading-card">
+          <div class="reading-icon">📝</div>
+          <div class="reading-content">
+            <div class="reading-eyebrow">Sermon Notes</div>
+            <div class="reading-title">Take notes during service</div>
+          </div>
+          <div class="reading-arrow">›</div>
+        </div>
+      </section>
+
+      <!-- ==================== GIVE PAGE ==================== -->
+      <section class="page" id="page-give">
+        <div class="give-header">
+          <h1 class="give-title">Give</h1>
+          <p class="give-subtitle">Support the mission of C3</p>
+        </div>
+
+        <div class="give-card">
+          <div class="give-label">Select Fund</div>
+          <div class="fund-buttons">
+            <button class="fund-btn active">General</button>
+            <button class="fund-btn">Missions</button>
+            <button class="fund-btn">Building</button>
+            <button class="fund-btn">Benevolence</button>
+          </div>
+
+          <div class="give-label">Amount</div>
+          <div class="amount-grid">
+            <button class="amount-btn">$25</button>
+            <button class="amount-btn">$50</button>
+            <button class="amount-btn active">$100</button>
+            <button class="amount-btn">$250</button>
+            <button class="amount-btn">$500</button>
+            <button class="amount-btn">Other</button>
+          </div>
+
+          <input type="text" class="amount-input" id="amount-input" value="$100" placeholder="$0" inputmode="numeric">
+
+          <div class="give-label">Frequency</div>
+          <div class="frequency-buttons">
+            <button class="freq-btn active">One-Time</button>
+            <button class="freq-btn">Weekly</button>
+            <button class="freq-btn">Monthly</button>
+          </div>
+
+          <button class="give-submit">Continue to Payment</button>
+        </div>
+
+        <!-- Giving Info -->
+        <div class="reading-card">
+          <div class="reading-icon">💡</div>
+          <div class="reading-content">
+            <div class="reading-eyebrow">Why Give?</div>
+            <div class="reading-title">Learn about generosity at C3</div>
+          </div>
+          <div class="reading-arrow">›</div>
+        </div>
+      </section>
+
+      <!-- ==================== CONNECT PAGE ==================== -->
+      <section class="page" id="page-connect">
+        <!-- New Here Featured -->
+        <div class="featured-card">
+          <div class="featured-icon">👋</div>
+          <div class="featured-content">
+            <div class="featured-title">New Here?</div>
+            <div class="featured-subtitle">Plan your first visit to C3</div>
+          </div>
+        </div>
+
+        <!-- Connect Grid -->
+        <div class="connect-grid">
+          <div class="connect-card">
+            <div class="connect-icon">🙏</div>
+            <div class="connect-title">Prayer Request</div>
+            <div class="connect-subtitle">We're here for you</div>
+          </div>
+          <div class="connect-card">
+            <div class="connect-icon">👥</div>
+            <div class="connect-title">LifeGroups</div>
+            <div class="connect-subtitle">Find community</div>
+          </div>
+          <div class="connect-card">
+            <div class="connect-icon">🙋</div>
+            <div class="connect-title">Serve</div>
+            <div class="connect-subtitle">Use your gifts</div>
+          </div>
+          <div class="connect-card">
+            <div class="connect-icon">📅</div>
+            <div class="connect-title">Events</div>
+            <div class="connect-subtitle">What's happening</div>
+          </div>
+        </div>
+
+        <!-- Upcoming Events -->
+        <section class="section">
+          <div class="section-header">
+            <div class="section-title">Upcoming Events</div>
+          </div>
+          <div class="hscroll hide-scrollbar">
+            <div class="event-card">
+              <div class="event-image teal">🚤</div>
+              <div class="event-body">
+                <div class="event-date">Feb 11 · 6 PM</div>
+                <div class="event-title">Get Your Life Back</div>
+                <div class="event-subtitle">Financial workshop</div>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-image gold">⭐</div>
+              <div class="event-body">
+                <div class="event-date">Feb 13 · 4 PM</div>
+                <div class="event-title">Night to Shine</div>
+                <div class="event-subtitle">Tim Tebow Foundation</div>
+              </div>
+            </div>
+            <div class="event-card">
+              <div class="event-image dark">💧</div>
+              <div class="event-body">
+                <div class="event-date">Feb 14-15</div>
+                <div class="event-title">Baptisms</div>
+                <div class="event-subtitle">Take your next step</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- NT26 Reading Plan -->
+        <div class="reading-card">
+          <div class="reading-icon">📖</div>
+          <div class="reading-content">
+            <div class="reading-eyebrow">NT26 Reading Plan</div>
+            <div class="reading-title">Join 200+ others reading daily</div>
+          </div>
+          <div class="reading-arrow">›</div>
+        </div>
+
+        <!-- Baptism Info -->
+        <div class="featured-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%); border-color: rgba(59, 130, 246, 0.2);">
+          <div class="featured-icon" style="background: #3B82F6;">💧</div>
+          <div class="featured-content">
+            <div class="featured-title">Ready for Baptism?</div>
+            <div class="featured-subtitle">Take your next step of faith</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== MORE PAGE ==================== -->
+      <section class="page" id="page-more">
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="profile-avatar">TP</div>
+          <div class="profile-info">
+            <div class="profile-name">Tyler Preisser</div>
+            <div class="profile-email">tyler@example.com</div>
+          </div>
+          <div class="profile-arrow">›</div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="more-section">
+          <div class="more-section-title">Resources</div>
+          <div class="more-list">
+            <div class="more-item">
+              <div class="more-icon teal">📖</div>
+              <div class="more-text">
+                <div class="more-title">NT26 Reading Plan</div>
+                <div class="more-subtitle">Daily devotional & audio</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon teal">📝</div>
+              <div class="more-text">
+                <div class="more-title">Sermon Notes</div>
+                <div class="more-subtitle">Take notes during service</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon teal">📅</div>
+              <div class="more-text">
+                <div class="more-title">Church Calendar</div>
+                <div class="more-subtitle">All upcoming events</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- About C3 Section -->
+        <div class="more-section">
+          <div class="more-section-title">About C3</div>
+          <div class="more-list">
+            <div class="more-item">
+              <div class="more-icon">👥</div>
+              <div class="more-text">
+                <div class="more-title">Our Staff</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon">📍</div>
+              <div class="more-text">
+                <div class="more-title">Locations</div>
+                <div class="more-subtitle">Hays & Colby</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon">⏰</div>
+              <div class="more-text">
+                <div class="more-title">Service Times</div>
+                <div class="more-subtitle">Sat 5pm · Sun 8, 9:30, 11am</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon">🎓</div>
+              <div class="more-text">
+                <div class="more-title">Encounter Young Adults</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="more-section">
+          <div class="more-section-title">Settings</div>
+          <div class="more-list">
+            <div class="more-item">
+              <div class="more-icon">🔔</div>
+              <div class="more-text">
+                <div class="more-title">Notifications</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon">📧</div>
+              <div class="more-text">
+                <div class="more-title">Contact Us</div>
+                <div class="more-subtitle">office@c3hays.com</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+            <div class="more-item">
+              <div class="more-icon">⚙️</div>
+              <div class="more-text">
+                <div class="more-title">App Settings</div>
+              </div>
+              <div class="more-arrow">›</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- App Info -->
+        <div style="text-align: center; padding: 24px 16px; color: var(--text-muted); font-size: var(--font-size-sm);">
+          <p>C3 Hays App v2.0</p>
+          <p style="margin-top: 4px;">Meet. Grow. Serve.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Liquid Glass Navigation -->
+    <nav class="glass-nav">
+      <div class="glass-pill">
+        <button class="nav-btn active" data-page="home" aria-label="Home">
+          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+          <span>Home</span>
+        </button>
+        <button class="nav-btn" data-page="watch" aria-label="Watch">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          <span>Watch</span>
+        </button>
+        <button class="nav-btn give-nav" data-page="give" aria-label="Give">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          <span>Give</span>
+        </button>
+        <button class="nav-btn" data-page="connect" aria-label="Connect">
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+          <span>Connect</span>
+        </button>
+        <button class="nav-btn" data-page="more" aria-label="More">
+          <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          <span>More</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="js/app.js"></script>
+</body>
+</html>
