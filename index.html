@@ -27,18 +27,43 @@
       --teal: #14B8A6;
       --teal-dim: rgba(20, 184, 166, 0.15);
       --blue: #3B82F6;
+      --padding: 20px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --radius-xs: 8px;
+      --nav-height: 56px;
+    }
+
+    /* Dark Mode (default) */
+    :root, [data-theme="dark"] {
       --bg: #000000;
+      --bg-secondary: #0a0a0a;
       --card: #111111;
       --card-hover: #1a1a1a;
       --border: rgba(255,255,255,0.08);
       --text-primary: #FFFFFF;
       --text-secondary: rgba(255,255,255,0.7);
       --text-tertiary: rgba(255,255,255,0.5);
-      --padding: 20px;
-      --radius: 16px;
-      --radius-sm: 12px;
-      --radius-xs: 8px;
-      --nav-height: 56px;
+      --glass-bg: rgba(28,28,30,0.7);
+      --glass-border: rgba(255,255,255,0.18);
+      --glass-highlight: rgba(255,255,255,0.15);
+      --shadow-color: rgba(0,0,0,0.3);
+    }
+
+    /* Light Mode */
+    [data-theme="light"] {
+      --bg: #F2F2F7;
+      --bg-secondary: #FFFFFF;
+      --card: #FFFFFF;
+      --card-hover: #F5F5F5;
+      --border: rgba(0,0,0,0.08);
+      --text-primary: #000000;
+      --text-secondary: rgba(0,0,0,0.6);
+      --text-tertiary: rgba(0,0,0,0.4);
+      --glass-bg: rgba(255,255,255,0.7);
+      --glass-border: rgba(0,0,0,0.1);
+      --glass-highlight: rgba(255,255,255,0.8);
+      --shadow-color: rgba(0,0,0,0.1);
     }
 
     * {
@@ -51,13 +76,14 @@
     html, body {
       height: 100%;
       overflow: hidden;
-      background: #0a0a0a;
+      background: var(--bg-secondary);
     }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-primary);
       -webkit-font-smoothing: antialiased;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     /* Device Container */
@@ -145,19 +171,15 @@
     /* Liquid Glass Effect */
     .liquid-glass {
       position: relative;
-      background: linear-gradient(
-        135deg,
-        rgba(255,255,255,0.12) 0%,
-        rgba(255,255,255,0.05) 40%,
-        rgba(255,255,255,0.02) 100%
-      );
+      background: var(--glass-bg);
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255,255,255,0.18);
+      border: 1px solid var(--glass-border);
       box-shadow:
-        0 8px 32px rgba(0,0,0,0.3),
-        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 8px 32px var(--shadow-color),
+        inset 0 1px 0 var(--glass-highlight),
         inset 0 -1px 0 rgba(255,255,255,0.05);
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .liquid-glass::before {
@@ -169,8 +191,8 @@
       height: 50%;
       background: linear-gradient(
         180deg,
-        rgba(255,255,255,0.15) 0%,
-        rgba(255,255,255,0) 100%
+        var(--glass-highlight) 0%,
+        transparent 100%
       );
       border-radius: inherit;
       pointer-events: none;
@@ -1459,8 +1481,8 @@
               <span class="logo-text" id="header-title">Home</span>
             </div>
             <div class="header-actions">
-              <button class="icon-btn liquid-glass">
-                <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+              <button class="icon-btn liquid-glass" onclick="toggleTheme()">
+                <svg id="theme-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
               </button>
               <button class="icon-btn liquid-glass">
                 <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -2080,6 +2102,32 @@
       t.classList.add('visible');
       setTimeout(() => t.classList.remove('visible'), 2500);
     }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      updateThemeIcon(next);
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('theme-icon');
+      if (icon) {
+        icon.innerHTML = theme === 'light'
+          ? '<path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>'
+          : '<path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>';
+      }
+    }
+
+    // Initialize theme from localStorage
+    (function() {
+      const saved = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      document.addEventListener('DOMContentLoaded', () => updateThemeIcon(saved));
+    })();
 
     // Expose
     window.switchPage = switchPage;
