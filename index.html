@@ -19,1226 +19,1787 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="css/variables.css">
-  <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/liquid-glass.css">
-  <link rel="stylesheet" href="css/components.css">
-  <link rel="stylesheet" href="css/modals.css">
-  <link rel="stylesheet" href="css/pages.css">
-
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    :root {
+      --teal: #14B8A6;
+      --teal-glow: rgba(20, 184, 166, 0.3);
+      --bg: #000000;
+      --card: #111111;
+      --card-hover: #1a1a1a;
+      --border: rgba(255,255,255,0.08);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255,255,255,0.7);
+      --text-tertiary: rgba(255,255,255,0.5);
+      --padding: 20px;
+      --radius: 16px;
+      --radius-sm: 12px;
+      --nav-height: 84px;
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: #0a0a0a;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Device Container */
+    .device-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: linear-gradient(145deg, #0f0f0f 0%, #000 100%);
+    }
+
+    .device-frame {
+      position: relative;
+      width: 393px;
+      height: 852px;
+      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      border-radius: 55px;
+      padding: 4px;
+      box-shadow:
+        0 50px 100px rgba(0,0,0,0.5),
+        0 0 0 1px rgba(255,255,255,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      transform-origin: center center;
+    }
+
+    .device-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      border-radius: 51px;
+      overflow: hidden;
+    }
+
+    /* Dynamic Island */
+    .dynamic-island {
+      position: absolute;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 126px;
+      height: 37px;
+      background: #000;
+      border-radius: 24px;
+      z-index: 1000;
+      box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.08);
+    }
+
+    .dynamic-island::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 24px;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: radial-gradient(circle, #1a1a2e 0%, #0d0d15 100%);
+      border-radius: 50%;
+      box-shadow: inset 0 0 2px rgba(255,255,255,0.1);
+    }
+
+    /* Home Indicator */
+    .home-indicator {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 134px;
+      height: 5px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      z-index: 1000;
+    }
+
+    /* App Container */
+    .app {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Pages Container */
+    .pages {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: calc(var(--nav-height) + 20px);
+    }
+
+    .page.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .page::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hero Section - Full Width to Edge */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0) 30%,
+        rgba(0,0,0,0) 50%,
+        rgba(0,0,0,0.7) 75%,
+        rgba(0,0,0,0.95) 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--padding);
+      padding-bottom: 24px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #000;
+    }
+
+    .btn-primary:active {
+      transform: scale(0.96);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: var(--text-primary);
+      backdrop-filter: blur(10px);
+    }
+
+    /* Check-In Section */
+    .checkin-section {
+      padding: 0 var(--padding);
+      margin-top: -8px;
+    }
+
+    .checkin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .checkin-date {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .streak-badge {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: rgba(251, 191, 36, 0.15);
+      border-radius: 20px;
+    }
+
+    .streak-icon {
+      width: 14px;
+      height: 14px;
+      fill: #FBBF24;
+    }
+
+    .streak-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: #FBBF24;
+    }
+
+    .service-times {
+      display: flex;
+      gap: 8px;
+    }
+
+    .time-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .time-btn .day {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-tertiary);
+      margin-bottom: 2px;
+    }
+
+    .time-btn .time {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .time-btn.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+    }
+
+    .time-btn.selected .day,
+    .time-btn.selected .time {
+      color: #000;
+    }
+
+    /* Animated Check-in Button */
+    .checkin-btn-container {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 0;
+    }
+
+    .checkin-btn-container.visible {
+      max-height: 60px;
+      opacity: 1;
+      margin-top: 12px;
+    }
+
+    .checkin-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      background: var(--teal);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .checkin-btn:active {
+      transform: scale(0.98);
+    }
+
+    .checkin-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Section Headers */
+    .section {
+      margin-top: 28px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--padding);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+    }
+
+    .section-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    /* Horizontal Scroll - With Proper Padding */
+    .hscroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 0 var(--padding);
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .hscroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hscroll > *:last-child {
+      margin-right: 0;
+    }
+
+    /* Event Cards */
+    .event-card {
+      flex: 0 0 auto;
+      width: 200px;
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+      transition: transform 0.2s ease;
+    }
+
+    .event-card:active {
+      transform: scale(0.98);
+    }
+
+    .event-image {
+      position: relative;
+      width: 100%;
+      height: 110px;
+      overflow: hidden;
+    }
+
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .event-body {
+      padding: 12px;
+    }
+
+    .event-date {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 4px;
+    }
+
+    .event-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .event-subtitle {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* NT26 Reading Plan Card */
+    .reading-card {
+      margin: 24px var(--padding) 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .reading-card:active {
+      background: var(--card-hover);
+      transform: scale(0.99);
+    }
+
+    .reading-logo {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .reading-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .reading-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .reading-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+
+    .reading-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .reading-arrow {
+      font-size: 20px;
+      color: var(--text-tertiary);
+    }
+
+    /* Encounter Card - Simple */
+    .encounter-card {
+      margin: 24px var(--padding) 0;
+      position: relative;
+      height: 180px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .encounter-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .encounter-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.2) 0%,
+        rgba(0,0,0,0.6) 100%
+      );
+    }
+
+    .encounter-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+    }
+
+    .encounter-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .encounter-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .encounter-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Message Cards (for Watch page) */
+    .message-card {
+      flex: 0 0 auto;
+      width: 160px;
+      scroll-snap-align: start;
+      cursor: pointer;
+    }
+
+    .message-thumb {
+      position: relative;
+      width: 100%;
+      height: 95px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+
+    .message-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px;
+      height: 36px;
+      background: rgba(0,0,0,0.7);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .message-thumb:hover .play-overlay,
+    .message-card:active .play-overlay {
+      opacity: 1;
+    }
+
+    .play-overlay svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+      margin-left: 2px;
+    }
+
+    .message-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+
+    .message-meta {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* Fixed Bottom Navigation */
+    .nav-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 12px 16px;
+      padding-bottom: calc(12px + var(--safe-bottom) + 8px);
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 70%, transparent 100%);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 8px 4px;
+      background: rgba(30,30,30,0.85);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.4),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 8px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 20px;
+    }
+
+    .nav-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: var(--text-tertiary);
+      transition: fill 0.2s ease;
+    }
+
+    .nav-btn span {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      transition: color 0.2s ease;
+    }
+
+    .nav-btn.active svg {
+      fill: var(--text-primary);
+    }
+
+    .nav-btn.active span {
+      color: var(--text-primary);
+    }
+
+    .nav-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* Watch Page Styles */
+    .watch-hero {
+      position: relative;
+      margin: var(--padding);
+      margin-top: 60px;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .watch-thumbnail {
+      position: relative;
+      width: 100%;
+      height: 200px;
+    }
+
+    .watch-thumbnail img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(10px);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .play-button:hover {
+      background: var(--teal);
+    }
+
+    .play-button svg {
+      width: 24px;
+      height: 24px;
+      fill: #fff;
+      margin-left: 3px;
+    }
+
+    .watch-info {
+      padding: 16px;
+      background: var(--card);
+    }
+
+    .watch-series {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .watch-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .watch-meta {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    /* Series Item */
+    .series-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 var(--padding);
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+
+    .series-thumb {
+      position: relative;
+      width: 100px;
+      height: 60px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .series-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .series-info {
+      flex: 1;
+    }
+
+    .series-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .series-meta {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* Give Page */
+    .give-page {
+      padding: var(--padding);
+      padding-top: 70px;
+    }
+
+    .give-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .give-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .give-header p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .give-section {
+      margin-bottom: 28px;
+    }
+
+    .give-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+    }
+
+    .fund-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .fund-btn {
+      padding: 10px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .fund-btn.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #000;
+    }
+
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .amount-btn {
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .amount-btn.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #000;
+    }
+
+    .amount-input {
+      width: 100%;
+      padding: 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .amount-input:focus {
+      outline: none;
+      border-color: var(--teal);
+    }
+
+    .frequency-options {
+      display: flex;
+      gap: 8px;
+    }
+
+    .freq-btn {
+      flex: 1;
+      padding: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .freq-btn.selected {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #000;
+    }
+
+    .give-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--teal);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: transform 0.2s ease;
+    }
+
+    .give-submit:active {
+      transform: scale(0.98);
+    }
+
+    /* Connect Page */
+    .connect-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 var(--padding);
+      margin-top: 70px;
+    }
+
+    .connect-card {
+      padding: 20px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .connect-card:active {
+      transform: scale(0.98);
+      background: var(--card-hover);
+    }
+
+    .connect-card svg {
+      width: 28px;
+      height: 28px;
+      fill: var(--teal);
+      margin-bottom: 12px;
+    }
+
+    .connect-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .connect-card p {
+      font-size: 12px;
+      color: var(--text-tertiary);
+    }
+
+    /* More Page */
+    .more-page {
+      padding: var(--padding);
+      padding-top: 70px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: var(--card);
+      border-radius: var(--radius);
+      margin-bottom: 24px;
+    }
+
+    .profile-avatar {
+      width: 56px;
+      height: 56px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .profile-info h3 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .profile-info p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    .menu-section {
+      margin-bottom: 24px;
+    }
+
+    .menu-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: var(--card);
+      border-radius: var(--radius-sm);
+      margin-bottom: 2px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .menu-item:first-child {
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .menu-item:last-child {
+      border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+      margin-bottom: 0;
+    }
+
+    .menu-item:only-child {
+      border-radius: var(--radius-sm);
+    }
+
+    .menu-item:active {
+      background: var(--card-hover);
+    }
+
+    .menu-item span {
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--text-tertiary);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      padding: 14px 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      z-index: 1001;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .toast.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      background: var(--teal);
+      color: #000;
+      border-color: var(--teal);
+    }
+
+    /* Responsive Scaling */
+    @media (max-height: 900px) {
+      .device-frame {
+        transform: scale(0.85);
+      }
+    }
+
+    @media (max-height: 750px) {
+      .device-frame {
+        transform: scale(0.7);
+      }
+    }
+  </style>
 </head>
 <body>
-  <!-- SVG Filters for Liquid Glass Effects -->
-  <svg class="liquid-glass-filters" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <!-- Glass blur and distortion filter -->
-      <filter id="liquid-glass-blur" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="blur"/>
-        <feColorMatrix in="blur" type="saturate" values="1.2" result="saturated"/>
-        <feComponentTransfer in="saturated" result="brightened">
-          <feFuncR type="linear" slope="1.05" intercept="0.02"/>
-          <feFuncG type="linear" slope="1.05" intercept="0.02"/>
-          <feFuncB type="linear" slope="1.05" intercept="0.02"/>
-        </feComponentTransfer>
-      </filter>
-
-      <!-- Specular highlight gradient -->
-      <linearGradient id="glass-specular" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="white" stop-opacity="0.4"/>
-        <stop offset="30%" stop-color="white" stop-opacity="0.15"/>
-        <stop offset="60%" stop-color="white" stop-opacity="0.03"/>
-        <stop offset="100%" stop-color="white" stop-opacity="0"/>
-      </linearGradient>
-
-      <!-- Glass edge highlight -->
-      <linearGradient id="glass-edge" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="white" stop-opacity="0.35"/>
-        <stop offset="50%" stop-color="white" stop-opacity="0.1"/>
-        <stop offset="100%" stop-color="white" stop-opacity="0.05"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <!-- iPhone 17 Pro Max Device Frame -->
+  <!-- Device Frame -->
   <div class="device-container">
-  <div class="device-frame">
-    <!-- Physical Buttons -->
-    <div class="device-buttons-left">
-      <div class="device-mute"></div>
-      <div class="device-volume-up"></div>
-      <div class="device-volume-down"></div>
-    </div>
-    <div class="device-power"></div>
-    <div class="device-camera-btn"></div>
+    <div class="device-frame">
+      <div class="device-screen">
+        <!-- Dynamic Island -->
+        <div class="dynamic-island"></div>
 
-    <!-- Screen -->
-    <div class="device-screen">
-      <!-- Dynamic Island -->
-      <div class="dynamic-island"></div>
-      <!-- Home Indicator -->
-      <div class="home-indicator"></div>
+        <!-- Home Indicator -->
+        <div class="home-indicator"></div>
 
-      <!-- App Container -->
-      <div class="app">
-        <!-- Concept Badge -->
-        <div class="badge">C3 Reimagined</div>
+        <!-- App -->
+        <div class="app">
+          <!-- Pages -->
+          <main class="pages">
+            <!-- HOME PAGE -->
+            <section class="page active" id="page-home">
+              <!-- Hero -->
+              <div class="hero">
+                <img class="hero-image" src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&q=80" alt="Bible Basics" loading="eager">
+                <div class="hero-gradient"></div>
+                <div class="hero-content">
+                  <div class="hero-eyebrow">This Week's Message</div>
+                  <h1 class="hero-title">Bible Basics - Week 1</h1>
+                  <div class="hero-meta">
+                    <span class="hero-meta-item">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
+                      2 Timothy 3:14-17
+                    </span>
+                    <span class="hero-meta-item">38 min</span>
+                  </div>
+                  <div class="hero-actions">
+                    <button class="btn btn-primary">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      Watch
+                    </button>
+                    <button class="btn btn-secondary">+ Save</button>
+                  </div>
+                </div>
+              </div>
 
-    <!-- Header -->
-    <header class="header">
-      <div class="header-inner">
-        <div class="logo">
-          <img src="https://media.thechurchcoassets.com/accounts/6004/0e8bc4ff-13bf-4baf-b900-89812eb5727a-imported-asset__largepreview__.webp" alt="C3 Logo" class="logo-img">
-          <span>CELEBRATION</span>
-        </div>
-        <div class="header-actions">
-          <button class="icon-btn" aria-label="Notifications">
-            <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-          </button>
-          <button class="icon-btn" aria-label="Profile">
-            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-          </button>
-        </div>
-      </div>
-    </header>
+              <!-- Check-In Section -->
+              <div class="checkin-section">
+                <div class="checkin-header">
+                  <div class="checkin-date">This Sunday, February 2</div>
+                  <div class="streak-badge">
+                    <svg class="streak-icon" viewBox="0 0 24 24"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
+                    <span class="streak-count">12</span>
+                  </div>
+                </div>
+                <div class="service-times">
+                  <button class="time-btn" data-time="sat-5" onclick="selectService(this)">
+                    <div class="day">Sat</div>
+                    <div class="time">5 PM</div>
+                  </button>
+                  <button class="time-btn" data-time="sun-8" onclick="selectService(this)">
+                    <div class="day">Sun</div>
+                    <div class="time">8 AM</div>
+                  </button>
+                  <button class="time-btn" data-time="sun-930" onclick="selectService(this)">
+                    <div class="day">Sun</div>
+                    <div class="time">9:30</div>
+                  </button>
+                  <button class="time-btn" data-time="sun-11" onclick="selectService(this)">
+                    <div class="day">Sun</div>
+                    <div class="time">11 AM</div>
+                  </button>
+                </div>
+                <div class="checkin-btn-container" id="checkin-container">
+                  <button class="checkin-btn" onclick="checkIn()">
+                    <span>I'll Be There</span>
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  </button>
+                </div>
+              </div>
 
-    <!-- Pages Container -->
-    <main class="pages">
-      <!-- ==================== HOME PAGE ==================== -->
-      <section class="page active" id="page-home">
-        <!-- Hero - This Week's Message -->
-        <div class="hero">
-          <img class="hero-image" src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=800&q=80" alt="Worship at C3" loading="lazy">
-          <div class="hero-gradient"></div>
-          <div class="hero-content">
-            <div class="hero-eyebrow">This Week's Message</div>
-            <h1 class="hero-title">Bible Basics - Week 1</h1>
-            <div class="hero-meta">
-              <span class="hero-meta-item">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z"/></svg>
-                2 Timothy 3:14-17
-              </span>
-              <span class="hero-meta-item">38 min</span>
-            </div>
-            <div class="hero-actions">
-              <button class="btn btn-primary">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                Watch
+              <!-- Upcoming Events -->
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Upcoming Events</div>
+                  <a href="#" class="section-link" onclick="switchPage('connect'); return false;">All Events</a>
+                </div>
+                <div class="hscroll">
+                  <div class="event-card" onclick="openEvent('gylib')">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Get Your Life Back" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 11 · 6 PM</div>
+                      <div class="event-title">Get Your Life Back</div>
+                      <div class="event-subtitle">Financial workshop</div>
+                    </div>
+                  </div>
+                  <div class="event-card" onclick="openEvent('nts')">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 13 · 4 PM</div>
+                      <div class="event-title">Night to Shine</div>
+                      <div class="event-subtitle">Tim Tebow Foundation</div>
+                    </div>
+                  </div>
+                  <div class="event-card" onclick="openEvent('baptisms')">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Baptisms" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 14-15</div>
+                      <div class="event-title">Baptisms</div>
+                      <div class="event-subtitle">Take your next step</div>
+                    </div>
+                  </div>
+                  <div class="event-card" onclick="openEvent('breakfast')">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Men's Breakfast" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 28 · 7:30 AM</div>
+                      <div class="event-title">Men's Breakfast</div>
+                      <div class="event-subtitle">Fellowship & food</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- NT26 Reading Plan -->
+              <div class="reading-card" onclick="openNT26()">
+                <div class="reading-logo">
+                  <img src="https://media.thechurchcoassets.com/accounts/6004/media/2024/11/b08aab9b-8f2d-48ed-9c7b-aa6bb2fa6ad1-nt26-logo-300x300.png" alt="NT26">
+                </div>
+                <div class="reading-content">
+                  <div class="reading-label">Today's Reading</div>
+                  <div class="reading-title">February 2 · Matthew 7</div>
+                </div>
+                <div class="reading-arrow">›</div>
+              </div>
+
+              <!-- Encounter Card -->
+              <div class="encounter-card" onclick="switchPage('connect')">
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Encounter Young Adults" loading="lazy">
+                <div class="encounter-gradient"></div>
+                <div class="encounter-content">
+                  <div class="encounter-title">Encounter</div>
+                  <div class="encounter-subtitle">Young Adults Ministry</div>
+                  <div class="encounter-meta">
+                    <span>Ages 18-25</span>
+                    <span>•</span>
+                    <span>Thursdays 7PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="height: 40px;"></div>
+            </section>
+
+            <!-- WATCH PAGE -->
+            <section class="page" id="page-watch">
+              <div class="watch-hero">
+                <div class="watch-thumbnail">
+                  <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80" alt="Parables sermon" loading="lazy">
+                  <div class="play-button">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                  </div>
+                </div>
+                <div class="watch-info">
+                  <div class="watch-series">Parables of Jesus</div>
+                  <h1 class="watch-title">Week 4: The Talents</h1>
+                  <div class="watch-meta">Pastor Kael · January 26, 2026 · 38 min</div>
+                </div>
+              </div>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Recent Messages</div>
+                  <a href="#" class="section-link">See All</a>
+                </div>
+                <div class="hscroll">
+                  <div class="message-card">
+                    <div class="message-thumb">
+                      <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Parables sermon" loading="lazy">
+                      <div class="play-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
+                    </div>
+                    <div class="message-title">Parables Wk 3</div>
+                    <div class="message-meta">Jan 19 · 41 min</div>
+                  </div>
+                  <div class="message-card">
+                    <div class="message-thumb">
+                      <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=400&q=80" alt="Parables sermon" loading="lazy">
+                      <div class="play-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
+                    </div>
+                    <div class="message-title">Parables Wk 2</div>
+                    <div class="message-meta">Jan 12 · 36 min</div>
+                  </div>
+                  <div class="message-card">
+                    <div class="message-thumb">
+                      <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80" alt="NT26 Kickoff" loading="lazy">
+                      <div class="play-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
+                    </div>
+                    <div class="message-title">NT26 Kickoff</div>
+                    <div class="message-meta">Jan 5 · 44 min</div>
+                  </div>
+                  <div class="message-card">
+                    <div class="message-thumb">
+                      <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=80" alt="Bible Basics" loading="lazy">
+                      <div class="play-overlay">
+                        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
+                    </div>
+                    <div class="message-title">Bible Basics Wk 1</div>
+                    <div class="message-meta">Dec 29 · 38 min</div>
+                  </div>
+                </div>
+              </section>
+
+              <section class="section">
+                <div class="section-header">
+                  <div class="section-title">Current Series</div>
+                </div>
+                <div class="series-item">
+                  <div class="series-thumb">
+                    <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=300&q=80" alt="The Sower" loading="lazy">
+                  </div>
+                  <div class="series-info">
+                    <div class="series-title">Parables Wk 3 - The Sower</div>
+                    <div class="series-meta">Jan 19 · 41 min</div>
+                  </div>
+                </div>
+                <div class="series-item">
+                  <div class="series-thumb">
+                    <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=300&q=80" alt="The Prodigal" loading="lazy">
+                  </div>
+                  <div class="series-info">
+                    <div class="series-title">Parables Wk 2 - The Prodigal</div>
+                    <div class="series-meta">Jan 12 · 36 min</div>
+                  </div>
+                </div>
+                <div class="series-item">
+                  <div class="series-thumb">
+                    <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=300&q=80" alt="Good Samaritan" loading="lazy">
+                  </div>
+                  <div class="series-info">
+                    <div class="series-title">Parables Wk 1 - Good Samaritan</div>
+                    <div class="series-meta">Jan 5 · 44 min</div>
+                  </div>
+                </div>
+              </section>
+
+              <div style="height: 40px;"></div>
+            </section>
+
+            <!-- GIVE PAGE -->
+            <section class="page" id="page-give">
+              <div class="give-page">
+                <div class="give-header">
+                  <h1>Give</h1>
+                  <p>Support the mission of C3 Hays</p>
+                </div>
+
+                <div class="give-section">
+                  <div class="give-label">Select Fund</div>
+                  <div class="fund-options">
+                    <button class="fund-btn selected" onclick="selectFund(this, 'general')">General</button>
+                    <button class="fund-btn" onclick="selectFund(this, 'missions')">Missions</button>
+                    <button class="fund-btn" onclick="selectFund(this, 'building')">Building</button>
+                    <button class="fund-btn" onclick="selectFund(this, 'benevolence')">Benevolence</button>
+                  </div>
+                </div>
+
+                <div class="give-section">
+                  <div class="give-label">Amount</div>
+                  <div class="amount-grid">
+                    <button class="amount-btn" onclick="selectAmount(this, 25)">$25</button>
+                    <button class="amount-btn" onclick="selectAmount(this, 50)">$50</button>
+                    <button class="amount-btn selected" onclick="selectAmount(this, 100)">$100</button>
+                    <button class="amount-btn" onclick="selectAmount(this, 250)">$250</button>
+                    <button class="amount-btn" onclick="selectAmount(this, 500)">$500</button>
+                    <button class="amount-btn" onclick="selectAmount(this, 1000)">$1000</button>
+                  </div>
+                  <input type="text" class="amount-input" placeholder="Other amount" oninput="handleCustomAmount(this)">
+                </div>
+
+                <div class="give-section">
+                  <div class="give-label">Frequency</div>
+                  <div class="frequency-options">
+                    <button class="freq-btn selected" onclick="selectFrequency(this, 'once')">One-Time</button>
+                    <button class="freq-btn" onclick="selectFrequency(this, 'weekly')">Weekly</button>
+                    <button class="freq-btn" onclick="selectFrequency(this, 'monthly')">Monthly</button>
+                  </div>
+                </div>
+
+                <button class="give-submit" onclick="submitGift()">Continue to Payment</button>
+              </div>
+            </section>
+
+            <!-- CONNECT PAGE -->
+            <section class="page" id="page-connect">
+              <div class="connect-grid">
+                <div class="connect-card" onclick="openPrayer()">
+                  <svg viewBox="0 0 24 24"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
+                  <h3>Prayer Request</h3>
+                  <p>Submit a prayer</p>
+                </div>
+                <div class="connect-card" onclick="window.location.href='pages/lifegroups.html'">
+                  <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                  <h3>LifeGroups</h3>
+                  <p>Find a group</p>
+                </div>
+                <div class="connect-card" onclick="openServe()">
+                  <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <h3>Serve</h3>
+                  <p>Join a team</p>
+                </div>
+                <div class="connect-card" onclick="openNewHere()">
+                  <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                  <h3>I'm New</h3>
+                  <p>Start here</p>
+                </div>
+              </div>
+
+              <section class="section" style="margin-top: 32px;">
+                <div class="section-header">
+                  <div class="section-title">Upcoming Events</div>
+                </div>
+                <div class="hscroll">
+                  <div class="event-card">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Get Your Life Back" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 11 · 6 PM</div>
+                      <div class="event-title">Get Your Life Back</div>
+                      <div class="event-subtitle">Financial workshop</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 13 · 4 PM</div>
+                      <div class="event-title">Night to Shine</div>
+                      <div class="event-subtitle">Tim Tebow Foundation</div>
+                    </div>
+                  </div>
+                  <div class="event-card">
+                    <div class="event-image">
+                      <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Men's Breakfast" loading="lazy">
+                    </div>
+                    <div class="event-body">
+                      <div class="event-date">Feb 28 · 7:30 AM</div>
+                      <div class="event-title">Men's Breakfast</div>
+                      <div class="event-subtitle">Fellowship & food</div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <div style="height: 40px;"></div>
+            </section>
+
+            <!-- MORE PAGE -->
+            <section class="page" id="page-more">
+              <div class="more-page">
+                <div class="profile-header">
+                  <div class="profile-avatar">TP</div>
+                  <div class="profile-info">
+                    <h3>Tyler Preisser</h3>
+                    <p>tyler@example.com</p>
+                  </div>
+                </div>
+
+                <div class="menu-section">
+                  <div class="menu-label">Resources</div>
+                  <div class="menu-item" onclick="openNT26()">
+                    <span>NT26 Reading Plan</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Sermon Notes</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Church Calendar</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                </div>
+
+                <div class="menu-section">
+                  <div class="menu-label">About C3</div>
+                  <div class="menu-item">
+                    <span>C3 Staff</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Weekend Services</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Encounter Young Adults</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>Contact Us</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                </div>
+
+                <div class="menu-section">
+                  <div class="menu-label">Settings</div>
+                  <div class="menu-item">
+                    <span>Notifications</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                  <div class="menu-item">
+                    <span>App Settings</span>
+                    <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+
+          <!-- Fixed Bottom Navigation -->
+          <div class="nav-container">
+            <nav class="nav">
+              <button class="nav-btn active" data-page="home" onclick="switchPage('home')">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>Home</span>
               </button>
-              <button class="btn btn-secondary">+ Save</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Check-In Card -->
-        <div class="checkin-card">
-          <div class="checkin-header">
-            <div class="checkin-info">
-              <div class="checkin-eyebrow">This Sunday</div>
-              <div class="checkin-title">February 2nd</div>
-              <div class="checkin-subtitle">5790 230th Ave, Hays</div>
-            </div>
-            <div class="streak-badge">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="streak-icon"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>
-              <span class="streak-count">12</span>
-            </div>
-          </div>
-          <div class="service-times">
-            <button class="time-btn" data-time="sat-5">
-              <div class="time-value">SAT 5</div>
-              <div class="time-period">PM</div>
-            </button>
-            <button class="time-btn" data-time="sun-8">
-              <div class="time-value">8:00</div>
-              <div class="time-period">AM</div>
-            </button>
-            <button class="time-btn active" data-time="sun-930">
-              <div class="time-value">9:30</div>
-              <div class="time-period">AM</div>
-            </button>
-            <button class="time-btn" data-time="sun-11">
-              <div class="time-value">11:00</div>
-              <div class="time-period">AM</div>
-            </button>
-          </div>
-          <button class="checkin-btn">
-            <span>I'll Be There</span>
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 18px; height: 18px; margin-left: 6px;"><path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg>
-          </button>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-          <button class="quick-btn" data-action="give">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="icon-heart"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-            </div>
-            <div class="quick-label">Give</div>
-          </button>
-          <button class="quick-btn" data-action="prayer">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="icon-prayer"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-            </div>
-            <div class="quick-label">Prayer</div>
-          </button>
-          <button class="quick-btn" data-action="nt26">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="icon-book"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-            </div>
-            <div class="quick-label">NT26</div>
-          </button>
-          <button class="quick-btn" data-action="new">
-            <div class="quick-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" class="icon-wave"><path d="M23 17v-2.35c-1.05-.45-1.78-1.4-1.94-2.48 1.1-.72 1.94-1.8 1.94-3.17 0-2.21-1.79-4-4-4s-4 1.79-4 4c0 1.37.84 2.45 1.94 3.17-.16 1.08-.89 2.03-1.94 2.48V17h8zm-10 0v-2.35c-1.05-.45-1.78-1.4-1.94-2.48C12.16 11.45 13 10.37 13 9c0-2.21-1.79-4-4-4S5 6.79 5 9c0 1.37.84 2.45 1.94 3.17-.16 1.08-.89 2.03-1.94 2.48V17h8z"/></svg>
-            </div>
-            <div class="quick-label">I'm New</div>
-          </button>
-        </div>
-
-        <!-- Recent Messages -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Recent Messages</div>
-            <a href="#" class="section-link" onclick="switchPage('watch'); return false;">See All</a>
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Parables sermon" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Parables Wk 4</div>
-              <div class="message-meta">Jan 26 · 38 min</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&q=80" alt="Parables sermon" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Parables Wk 3</div>
-              <div class="message-meta">Jan 19 · 41 min</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=400&q=80" alt="Parables sermon" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Parables Wk 2</div>
-              <div class="message-meta">Jan 12 · 36 min</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&q=80" alt="NT26 Kickoff" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">NT26 Kickoff</div>
-              <div class="message-meta">Jan 5 · 44 min</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Reading Plan Card -->
-        <div class="reading-card">
-          <div class="reading-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          </div>
-          <div class="reading-content">
-            <div class="reading-eyebrow">NT26 Reading Plan</div>
-            <div class="reading-title">February 2 · Matthew 7</div>
-          </div>
-          <div class="reading-arrow">›</div>
-        </div>
-
-        <!-- Encounter C3 Young Adults Section -->
-        <section class="section encounter-section">
-          <div class="section-header">
-            <div class="section-title" style="color: #FF6B35;">Encounter C3</div>
-            <a href="#" class="section-link" style="color: #FF6B35;">Learn More</a>
-          </div>
-          <div class="encounter-featured">
-            <div class="encounter-hero-card">
-              <img class="encounter-hero-img" src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Young Adults" loading="lazy">
-              <div class="encounter-gradient"></div>
-              <div class="encounter-content">
-                <div class="encounter-logo">ENCOUNTER</div>
-                <div class="encounter-tagline">Young Adults Ministry</div>
-                <div class="encounter-details">
-                  <span>Ages 18-25</span>
-                  <span>•</span>
-                  <span>Thursdays 7PM</span>
-                </div>
-                <button class="btn btn-encounter">Join Us This Week</button>
-              </div>
-            </div>
-          </div>
-          <div class="hscroll hide-scrollbar" style="margin-top: 16px;">
-            <div class="encounter-event-card">
-              <div class="encounter-event-img">
-                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=300&q=80" alt="Worship Night" loading="lazy">
-              </div>
-              <div class="encounter-event-body">
-                <div class="encounter-event-date">Feb 6 · 7 PM</div>
-                <div class="encounter-event-title">Worship Night</div>
-              </div>
-            </div>
-            <div class="encounter-event-card">
-              <div class="encounter-event-img">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=300&q=80" alt="Game Night" loading="lazy">
-              </div>
-              <div class="encounter-event-body">
-                <div class="encounter-event-date">Feb 13 · 7 PM</div>
-                <div class="encounter-event-title">Game Night</div>
-              </div>
-            </div>
-            <div class="encounter-event-card">
-              <div class="encounter-event-img">
-                <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?w=300&q=80" alt="Bible Study" loading="lazy">
-              </div>
-              <div class="encounter-event-body">
-                <div class="encounter-event-date">Feb 20 · 7 PM</div>
-                <div class="encounter-event-title">Bible Study</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Upcoming Events -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Upcoming Events</div>
-            <a href="#" class="section-link" onclick="switchPage('connect'); return false;">All Events</a>
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="event-card">
-              <div class="event-image">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial Workshop" loading="lazy">
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 11 · 6 PM</div>
-                <div class="event-title">Get Your Life Back</div>
-                <div class="event-subtitle">Financial workshop</div>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-image">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=400&q=80" alt="Night to Shine" loading="lazy">
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 13 · 4 PM</div>
-                <div class="event-title">Night to Shine</div>
-                <div class="event-subtitle">Tim Tebow Foundation</div>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-image">
-                <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?w=400&q=80" alt="Baptisms" loading="lazy">
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 14-15</div>
-                <div class="event-title">Baptisms</div>
-                <div class="event-subtitle">Take your next step</div>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-image">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=80" alt="Men's Breakfast" loading="lazy">
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 28 · 7:30 AM</div>
-                <div class="event-title">Men's Breakfast</div>
-                <div class="event-subtitle">Fellowship & food</div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <!-- ==================== WATCH PAGE ==================== -->
-      <section class="page" id="page-watch">
-        <!-- Featured Video -->
-        <div class="watch-hero">
-          <div class="watch-thumbnail">
-            <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=800&q=80" alt="Parables sermon" loading="lazy">
-            <div class="play-button">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-          <div class="watch-info">
-            <div class="watch-series">Parables of Jesus</div>
-            <h1 class="watch-title">Week 4: The Talents</h1>
-            <div class="watch-meta">Pastor Kael · January 26, 2026 · 38 min</div>
-          </div>
-        </div>
-
-        <!-- Current Series -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Current Series</div>
-          </div>
-          <div class="series-item">
-            <div class="series-thumb">
-              <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=300&q=80" alt="The Sower" loading="lazy">
-              <div class="play-overlay">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-            <div class="series-info">
-              <div class="series-title">Parables Wk 3 - The Sower</div>
-              <div class="series-meta">Jan 19 · 41 min</div>
-            </div>
-          </div>
-          <div class="series-item">
-            <div class="series-thumb">
-              <img src="https://images.unsplash.com/photo-1445633629932-0029acc44e88?w=300&q=80" alt="The Prodigal" loading="lazy">
-              <div class="play-overlay">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-            <div class="series-info">
-              <div class="series-title">Parables Wk 2 - The Prodigal</div>
-              <div class="series-meta">Jan 12 · 36 min</div>
-            </div>
-          </div>
-          <div class="series-item">
-            <div class="series-thumb">
-              <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=300&q=80" alt="Good Samaritan" loading="lazy">
-              <div class="play-overlay">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-            <div class="series-info">
-              <div class="series-title">Parables Wk 1 - Good Samaritan</div>
-              <div class="series-meta">Jan 5 · 44 min</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Past Series -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Past Series</div>
-            <a href="#" class="section-link">View All</a>
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Bible Basics" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Bible Basics</div>
-              <div class="message-meta">4 messages</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a814?w=400&q=80" alt="Christmas" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Christmas 2025</div>
-              <div class="message-meta">3 messages</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1507692049790-de58290a4334?w=400&q=80" alt="Pray Today" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Pray Today</div>
-              <div class="message-meta">5 messages</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=80" alt="Faith Forward" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Faith Forward</div>
-              <div class="message-meta">6 messages</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Wisdom Section -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Wisdom</div>
-            <a href="#" class="section-link">View All</a>
-          </div>
-          <div class="wisdom-description" style="padding: 0 16px; margin-bottom: 16px; font-size: 13px; color: var(--text-tertiary);">
-            Classes, courses & teachings to help you grow
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="wisdom-card">
-              <div class="wisdom-thumb">
-                <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=400&q=80" alt="Bible Basics" loading="lazy">
-                <div class="wisdom-badge">8 lessons</div>
-              </div>
-              <div class="wisdom-body">
-                <div class="wisdom-title">Bible Basics</div>
-                <div class="wisdom-meta">Foundation Course</div>
-              </div>
-            </div>
-            <div class="wisdom-card">
-              <div class="wisdom-thumb">
-                <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=400&q=80" alt="Marriage Course" loading="lazy">
-                <div class="wisdom-badge">6 lessons</div>
-              </div>
-              <div class="wisdom-body">
-                <div class="wisdom-title">Marriage Course</div>
-                <div class="wisdom-meta">Relationship Growth</div>
-              </div>
-            </div>
-            <div class="wisdom-card">
-              <div class="wisdom-thumb">
-                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80" alt="Financial Freedom" loading="lazy">
-                <div class="wisdom-badge">5 lessons</div>
-              </div>
-              <div class="wisdom-body">
-                <div class="wisdom-title">Financial Freedom</div>
-                <div class="wisdom-meta">Stewardship Class</div>
-              </div>
-            </div>
-            <div class="wisdom-card">
-              <div class="wisdom-thumb">
-                <img src="https://images.unsplash.com/photo-1476234251651-f353703a034d?w=400&q=80" alt="Parenting" loading="lazy">
-                <div class="wisdom-badge">4 lessons</div>
-              </div>
-              <div class="wisdom-body">
-                <div class="wisdom-title">Parenting</div>
-                <div class="wisdom-meta">Family Course</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Encounter C3 on Watch -->
-        <section class="section encounter-section">
-          <div class="section-header">
-            <div class="section-title" style="color: #FF6B35;">Encounter C3</div>
-            <a href="#" class="section-link" style="color: #FF6B35;">See All</a>
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80" alt="Finding Purpose" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Finding Purpose</div>
-              <div class="message-meta">Encounter · 28 min</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=400&q=80" alt="Overcoming Fear" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Overcoming Fear</div>
-              <div class="message-meta">Encounter · 32 min</div>
-            </div>
-            <div class="message-card">
-              <div class="message-thumb">
-                <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=400&q=80" alt="Identity in Christ" loading="lazy">
-                <div class="play-overlay">
-                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                </div>
-              </div>
-              <div class="message-title">Identity in Christ</div>
-              <div class="message-meta">Encounter · 35 min</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Sermon Notes Card -->
-        <div class="reading-card">
-          <div class="reading-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-          </div>
-          <div class="reading-content">
-            <div class="reading-eyebrow">Sermon Notes</div>
-            <div class="reading-title">Take notes during service</div>
-          </div>
-          <div class="reading-arrow">›</div>
-        </div>
-      </section>
-
-      <!-- ==================== GIVE PAGE ==================== -->
-      <section class="page" id="page-give">
-        <div class="give-header">
-          <h1 class="give-title">Give</h1>
-          <p class="give-subtitle">Support the mission of C3</p>
-        </div>
-
-        <div class="give-card">
-          <div class="give-label">Select Fund</div>
-          <div class="fund-buttons">
-            <button class="fund-btn active">General</button>
-            <button class="fund-btn">Missions</button>
-            <button class="fund-btn">Building</button>
-            <button class="fund-btn">Benevolence</button>
-          </div>
-
-          <div class="give-label">Amount</div>
-          <div class="amount-grid">
-            <button class="amount-btn">$25</button>
-            <button class="amount-btn">$50</button>
-            <button class="amount-btn active">$100</button>
-            <button class="amount-btn">$250</button>
-            <button class="amount-btn">$500</button>
-            <button class="amount-btn">Other</button>
-          </div>
-
-          <input type="text" class="amount-input" id="amount-input" value="$100" placeholder="$0" inputmode="numeric">
-
-          <div class="give-label">Frequency</div>
-          <div class="frequency-buttons">
-            <button class="freq-btn active">One-Time</button>
-            <button class="freq-btn">Weekly</button>
-            <button class="freq-btn">Monthly</button>
-          </div>
-
-          <button class="give-submit">Continue to Payment</button>
-        </div>
-
-        <!-- Giving Info -->
-        <div class="reading-card">
-          <div class="reading-icon">💡</div>
-          <div class="reading-content">
-            <div class="reading-eyebrow">Why Give?</div>
-            <div class="reading-title">Learn about generosity at C3</div>
-          </div>
-          <div class="reading-arrow">›</div>
-        </div>
-      </section>
-
-      <!-- ==================== CONNECT PAGE ==================== -->
-      <section class="page" id="page-connect">
-        <!-- New Here Featured -->
-        <div class="featured-card" onclick="openModal('new-here-modal')">
-          <div class="featured-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 28px; height: 28px;"><path d="M12 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7v7.5c0 1.38-1.12 2.5-2.5 2.5S16 19.88 16 18.5V13h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S8 19.88 8 18.5V13H5v-2l3.23-8.61C8.49 1.62 9.18 1 10 1h4c.82 0 1.51.62 1.77 1.39L19 11h2z"/></svg>
-          </div>
-          <div class="featured-content">
-            <div class="featured-title">New Here?</div>
-            <div class="featured-subtitle">Plan your first visit to C3</div>
-          </div>
-        </div>
-
-        <!-- Connect Grid -->
-        <div class="connect-grid">
-          <div class="connect-card" data-action="prayer">
-            <div class="connect-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 30px; height: 30px;"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-            </div>
-            <div class="connect-title">Prayer Request</div>
-            <div class="connect-subtitle">We're here for you</div>
-          </div>
-          <div class="connect-card" onclick="window.location.href='pages/lifegroups.html'">
-            <div class="connect-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 30px; height: 30px;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-            </div>
-            <div class="connect-title">LifeGroups</div>
-            <div class="connect-subtitle">Find community</div>
-          </div>
-          <div class="connect-card" onclick="openModal('volunteer-modal')">
-            <div class="connect-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 30px; height: 30px;"><path d="M16 13c3.31 0 6 2.69 6 6v2H2v-2c0-3.31 2.69-6 6-6h8zm0 2H8c-2.21 0-4 1.79-4 4h16c0-2.21-1.79-4-4-4zm-4-9c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
-            </div>
-            <div class="connect-title">Serve</div>
-            <div class="connect-subtitle">Use your gifts</div>
-          </div>
-          <div class="connect-card">
-            <div class="connect-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 30px; height: 30px;"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
-            </div>
-            <div class="connect-title">Events</div>
-            <div class="connect-subtitle">What's happening</div>
-          </div>
-        </div>
-
-        <!-- Upcoming Events -->
-        <section class="section">
-          <div class="section-header">
-            <div class="section-title">Upcoming Events</div>
-          </div>
-          <div class="hscroll hide-scrollbar">
-            <div class="event-card" onclick="window.location.href='pages/event.html'">
-              <div class="event-image teal">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 36px; height: 36px; opacity: 0.9;"><path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/></svg>
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 11 · 6 PM</div>
-                <div class="event-title">Get Your Life Back</div>
-                <div class="event-subtitle">Financial workshop</div>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-image gold">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 36px; height: 36px; opacity: 0.9;"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 13 · 4 PM</div>
-                <div class="event-title">Night to Shine</div>
-                <div class="event-subtitle">Tim Tebow Foundation</div>
-              </div>
-            </div>
-            <div class="event-card">
-              <div class="event-image blue">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 36px; height: 36px; opacity: 0.9;"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
-              </div>
-              <div class="event-body">
-                <div class="event-date">Feb 14-15</div>
-                <div class="event-title">Baptisms</div>
-                <div class="event-subtitle">Take your next step</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Volunteer CTA Card -->
-        <div class="volunteer-cta" onclick="openModal('volunteer-modal')">
-          <div class="volunteer-cta-content">
-            <div class="volunteer-cta-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 13c3.31 0 6 2.69 6 6v2H2v-2c0-3.31 2.69-6 6-6h8zm0 2H8c-2.21 0-4 1.79-4 4h16c0-2.21-1.79-4-4-4zm-4-9c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4z"/></svg>
-            </div>
-            <div class="volunteer-cta-text">
-              <div class="volunteer-cta-title">Ready to Serve?</div>
-              <div class="volunteer-cta-subtitle">Find your place on a Dream Team</div>
-            </div>
-          </div>
-          <button class="btn btn-primary" style="margin-top: 16px;">Sign Up to Volunteer</button>
-        </div>
-
-        <!-- NT26 Reading Plan -->
-        <div class="reading-card" data-action="nt26">
-          <div class="reading-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-          </div>
-          <div class="reading-content">
-            <div class="reading-eyebrow">NT26 Reading Plan</div>
-            <div class="reading-title">Join 200+ others reading daily</div>
-          </div>
-          <div class="reading-arrow">›</div>
-        </div>
-
-        <!-- Baptism Info -->
-        <div class="featured-card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0.05) 100%); border-color: rgba(59, 130, 246, 0.2);">
-          <div class="featured-icon" style="background: #3B82F6;">
-            <svg viewBox="0 0 24 24" fill="currentColor" style="width: 28px; height: 28px;"><path d="M12 2c-5.33 4.55-8 8.48-8 11.8 0 4.98 3.8 8.2 8 8.2s8-3.22 8-8.2c0-3.32-2.67-7.25-8-11.8z"/></svg>
-          </div>
-          <div class="featured-content">
-            <div class="featured-title">Ready for Baptism?</div>
-            <div class="featured-subtitle">Take your next step of faith</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==================== MORE PAGE ==================== -->
-      <section class="page" id="page-more">
-        <!-- Profile Card -->
-        <div class="profile-card" onclick="window.location.href='pages/profile.html'">
-          <div class="profile-avatar">TP</div>
-          <div class="profile-info">
-            <div class="profile-name">Tyler Preisser</div>
-            <div class="profile-email">tyler@example.com</div>
-          </div>
-          <div class="profile-arrow">›</div>
-        </div>
-
-        <!-- Resources Section -->
-        <div class="more-section">
-          <div class="more-section-title">Resources</div>
-          <div class="more-list">
-            <div class="more-item" data-action="nt26">
-              <div class="more-icon teal">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">NT26 Reading Plan</div>
-                <div class="more-subtitle">Daily devotional & audio</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon teal">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Sermon Notes</div>
-                <div class="more-subtitle">Take notes during service</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon teal">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Church Calendar</div>
-                <div class="more-subtitle">All upcoming events</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Shop Section -->
-        <div class="more-section">
-          <div class="more-section-title">Shop</div>
-          <div class="more-list">
-            <div class="more-item" onclick="window.location.href='pages/merch.html'">
-              <div class="more-icon" style="background: linear-gradient(135deg, var(--c3-teal-muted), rgba(20, 184, 166, 0.1));">
-                <svg viewBox="0 0 24 24" fill="var(--c3-teal)" style="width: 20px; height: 20px;"><path d="M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2h7.45zM6.16 6h12.15l-2.76 5H8.53L6.16 6zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">C3 Merch Store</div>
-                <div class="more-subtitle">Apparel, books & more</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- About C3 Section -->
-        <div class="more-section">
-          <div class="more-section-title">About C3</div>
-          <div class="more-list">
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Our Staff</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Locations</div>
-                <div class="more-subtitle">Hays & Colby</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Service Times</div>
-                <div class="more-subtitle">Sat 5pm · Sun 8, 9:30, 11am</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item" style="border-left: 3px solid #FF6B35;">
-              <div class="more-icon" style="background: rgba(255, 107, 53, 0.15);">
-                <svg viewBox="0 0 24 24" fill="#FF6B35" style="width: 20px; height: 20px;"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title" style="color: #FF6B35;">Encounter Young Adults</div>
-                <div class="more-subtitle">Ages 18-25 · Thursdays 7PM</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Settings Section -->
-        <div class="more-section">
-          <div class="more-section-title">Settings</div>
-          <div class="more-list">
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Notifications</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">Contact Us</div>
-                <div class="more-subtitle">office@c3hays.com</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-            <div class="more-item">
-              <div class="more-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-              </div>
-              <div class="more-text">
-                <div class="more-title">App Settings</div>
-              </div>
-              <div class="more-arrow">›</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- App Info -->
-        <div style="text-align: center; padding: 24px 16px; color: var(--text-muted); font-size: var(--font-size-sm);">
-          <p>C3 Hays App v2.0</p>
-          <p style="margin-top: 4px;">Meet. Grow. Serve.</p>
-        </div>
-      </section>
-    </main>
-
-    <!-- Liquid Glass Navigation -->
-    <nav class="glass-nav">
-      <div class="glass-pill">
-        <button class="nav-btn active" data-page="home" aria-label="Home">
-          <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span>Home</span>
-        </button>
-        <button class="nav-btn" data-page="watch" aria-label="Watch">
-          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          <span>Watch</span>
-        </button>
-        <button class="nav-btn give-nav" data-page="give" aria-label="Give">
-          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-          <span>Give</span>
-        </button>
-        <button class="nav-btn" data-page="connect" aria-label="Connect">
-          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-          <span>Connect</span>
-        </button>
-        <button class="nav-btn" data-page="more" aria-label="More">
-          <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-          <span>More</span>
-        </button>
-      </div>
-    </nav>
-  </div>
-
-  <!-- ==================== MODALS ==================== -->
-
-  <!-- Prayer Request Modal -->
-  <div class="modal-overlay" id="prayer-modal">
-    <div class="modal-content">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-header">
-          <div class="modal-title">Prayer Request</div>
-          <button class="modal-close" onclick="closeModal('prayer-modal')">
-            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="prayer-modal-header">
-            <div class="prayer-modal-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 40px; height: 40px;"><path d="M12.5 8c-2.65 0-5.05.99-6.9 2.6L2 7.5v9h9l-3.62-3.62c1.39-1.16 3.16-1.88 5.12-1.88 3.54 0 6.55 2.31 7.6 5.5l2.37-.78C21.08 11.03 17.15 8 12.5 8z"/></svg>
-            </div>
-            <div class="prayer-modal-title">How can we pray for you?</div>
-            <div class="prayer-modal-subtitle">Our prayer team is here for you</div>
-          </div>
-
-          <form id="prayer-form">
-            <div class="prayer-form-group">
-              <label class="prayer-form-label">Your Name</label>
-              <input type="text" class="prayer-form-input" placeholder="Enter your name" required>
-            </div>
-
-            <div class="prayer-form-group">
-              <label class="prayer-form-label">Email (optional)</label>
-              <input type="email" class="prayer-form-input" placeholder="you@example.com">
-            </div>
-
-            <div class="prayer-form-group">
-              <label class="prayer-form-label">Your Prayer Request</label>
-              <textarea class="prayer-form-input prayer-form-textarea" placeholder="Share what's on your heart..." required></textarea>
-            </div>
-
-            <div class="prayer-form-group">
-              <label class="prayer-form-label">Who should see this?</label>
-              <div class="prayer-visibility-options">
-                <div class="prayer-visibility-option active" data-value="team">
-                  <div class="prayer-radio"></div>
-                  <div class="prayer-option-text">
-                    <div class="prayer-option-title">Prayer Team Only</div>
-                    <div class="prayer-option-desc">Shared privately with our prayer team</div>
-                  </div>
-                </div>
-                <div class="prayer-visibility-option" data-value="anonymous">
-                  <div class="prayer-radio"></div>
-                  <div class="prayer-option-text">
-                    <div class="prayer-option-title">Anonymous Prayer Wall</div>
-                    <div class="prayer-option-desc">Others can pray with you (no name shown)</div>
-                  </div>
-                </div>
-                <div class="prayer-visibility-option" data-value="call">
-                  <div class="prayer-radio"></div>
-                  <div class="prayer-option-text">
-                    <div class="prayer-option-title">Request a Call</div>
-                    <div class="prayer-option-desc">A pastor will reach out to you</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" class="prayer-submit-btn">Submit Prayer Request</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- NT26 Reading Plan Modal -->
-  <div class="modal-overlay" id="nt26-modal">
-    <div class="modal-content">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-header">
-          <div class="modal-title">NT26 Reading Plan</div>
-          <button class="modal-close" onclick="closeModal('nt26-modal')">
-            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="nt26-today">
-            <div class="nt26-today-header">
-              <div class="nt26-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 28px; height: 28px;"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-              </div>
-              <div class="nt26-today-info">
-                <div class="nt26-today-label">Today's Reading</div>
-                <div class="nt26-today-title">Matthew 7</div>
-              </div>
-            </div>
-            <div class="nt26-verse">
-              "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you."
-              <br><br>— Matthew 7:7
-            </div>
-            <div class="nt26-actions">
-              <button class="btn btn-primary btn-block">Read Now</button>
-              <button class="btn btn-secondary">Listen</button>
-            </div>
-          </div>
-
-          <div class="nt26-progress-section">
-            <div class="nt26-progress-header">
-              <div class="nt26-progress-title">Your Progress</div>
-              <div class="nt26-progress-percent">12%</div>
-            </div>
-            <div class="nt26-progress-bar">
-              <div class="nt26-progress-fill" style="width: 12%"></div>
-            </div>
-            <div class="nt26-stats">
-              <div class="nt26-stat">
-                <strong>33</strong> days completed
-              </div>
-              <div class="nt26-stat">
-                <svg viewBox="0 0 24 24" fill="#F59E0B" style="width: 16px; height: 16px; display: inline; vertical-align: -2px;"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67z"/></svg>
-                <strong>12</strong> day streak
-              </div>
-            </div>
+              <button class="nav-btn" data-page="watch" onclick="switchPage('watch')">
+                <svg viewBox="0 0 24 24"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM9 8l7 4-7 4V8z"/></svg>
+                <span>Watch</span>
+              </button>
+              <button class="nav-btn" data-page="give" onclick="switchPage('give')">
+                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Give</span>
+              </button>
+              <button class="nav-btn" data-page="connect" onclick="switchPage('connect')">
+                <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                <span>Connect</span>
+              </button>
+              <button class="nav-btn" data-page="more" onclick="switchPage('more')">
+                <svg viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <span>More</span>
+              </button>
+            </nav>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- New Here Modal -->
-  <div class="modal-overlay" id="new-here-modal">
-    <div class="modal-content">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-header">
-          <div class="modal-title">Plan Your Visit</div>
-          <button class="modal-close" onclick="closeModal('new-here-modal')">
-            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="new-here-header">
-            <div class="new-here-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 40px; height: 40px;"><path d="M12 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7v7.5c0 1.38-1.12 2.5-2.5 2.5S16 19.88 16 18.5V13h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S8 19.88 8 18.5V13H5v-2l3.23-8.61C8.49 1.62 9.18 1 10 1h4c.82 0 1.51.62 1.77 1.39L19 11h2z"/></svg>
-            </div>
-            <div class="new-here-title">Welcome to C3!</div>
-            <div class="new-here-subtitle">We're so glad you're checking us out</div>
-          </div>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
 
-          <div class="new-here-steps">
-            <div class="new-here-step">
-              <div class="step-number">1</div>
-              <div class="step-content">
-                <div class="step-title">Pick a Service</div>
-                <div class="step-desc">Choose a time that works for you</div>
-              </div>
-            </div>
-            <div class="new-here-step">
-              <div class="step-number">2</div>
-              <div class="step-content">
-                <div class="step-title">Look for Greeters</div>
-                <div class="step-desc">They'll help you find everything</div>
-              </div>
-            </div>
-            <div class="new-here-step">
-              <div class="step-number">3</div>
-              <div class="step-content">
-                <div class="step-title">Grab Some Coffee</div>
-                <div class="step-desc">Free coffee bar in the lobby</div>
-              </div>
-            </div>
-          </div>
+  <script>
+    // State
+    let selectedService = null;
+    let checkedIn = false;
 
-          <div class="new-here-info">
-            <div class="new-here-info-row">
-              <div class="new-here-info-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-              </div>
-              <div class="new-here-info-text">
-                <div class="new-here-info-label">Location</div>
-                <div class="new-here-info-value">5790 230th Ave, Hays</div>
-              </div>
-            </div>
-            <div class="new-here-info-row">
-              <div class="new-here-info-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
-              </div>
-              <div class="new-here-info-text">
-                <div class="new-here-info-label">Service Times</div>
-                <div class="new-here-info-value">Sat 5pm · Sun 8, 9:30, 11am</div>
-              </div>
-            </div>
-            <div class="new-here-info-row">
-              <div class="new-here-info-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 20px; height: 20px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 8v-2c0-2.66 5.33-4 8-4s8 1.34 8 4v2H2v-2zm4-9c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg>
-              </div>
-              <div class="new-here-info-text">
-                <div class="new-here-info-label">Kids Ministry</div>
-                <div class="new-here-info-value">Birth through 5th grade</div>
-              </div>
-            </div>
-          </div>
+    // Page Navigation
+    function switchPage(pageName) {
+      // Update pages
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      document.getElementById('page-' + pageName).classList.add('active');
 
-          <button class="btn btn-primary btn-block btn-lg">Get Directions</button>
-        </div>
-      </div>
-    </div>
-  </div>
+      // Update nav
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.page === pageName) {
+          btn.classList.add('active');
+        }
+      });
 
-  <!-- Volunteer Signup Modal -->
-  <div class="modal-overlay" id="volunteer-modal">
-    <div class="modal-content">
-      <div class="modal-sheet">
-        <div class="modal-handle"></div>
-        <div class="modal-header">
-          <div class="modal-title">Volunteer Sign Up</div>
-          <button class="modal-close" onclick="closeModal('volunteer-modal')">
-            <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="volunteer-modal-header">
-            <div class="volunteer-modal-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor" style="width: 40px; height: 40px;"><path d="M16 13c3.31 0 6 2.69 6 6v2H2v-2c0-3.31 2.69-6 6-6h8zm0 2H8c-2.21 0-4 1.79-4 4h16c0-2.21-1.79-4-4-4zm-4-9c2.21 0 4 1.79 4 4s-1.79 4-4 4-4-1.79-4-4 1.79-4 4-4z"/></svg>
-            </div>
-            <div class="volunteer-modal-title">Join a Dream Team</div>
-            <div class="volunteer-modal-subtitle">Use your gifts to serve others</div>
-          </div>
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
 
-          <div class="volunteer-teams">
-            <div class="volunteer-team-card" data-team="welcome">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #14B8A6, #0D9488);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M12 4c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7v7.5c0 1.38-1.12 2.5-2.5 2.5S16 19.88 16 18.5V13h-3v5.5c0 1.38-1.12 2.5-2.5 2.5S8 19.88 8 18.5V13H5v-2l3.23-8.61C8.49 1.62 9.18 1 10 1h4c.82 0 1.51.62 1.77 1.39L19 11h2z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">Welcome Team</div>
-                <div class="volunteer-team-desc">Greet guests & create first impressions</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
+    // Service Selection
+    function selectService(btn) {
+      // Deselect all
+      document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
 
-            <div class="volunteer-team-card" data-team="worship">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #8B5CF6, #7C3AED);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">Worship Team</div>
-                <div class="volunteer-team-desc">Music, vocals & tech production</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
+      // Select clicked
+      btn.classList.add('selected');
+      selectedService = btn.dataset.time;
 
-            <div class="volunteer-team-card" data-team="kids">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #EC4899, #DB2777);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-6 8v-2c0-2.66 5.33-4 8-4s8 1.34 8 4v2H2v-2zm4-9c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">C3 Kids</div>
-                <div class="volunteer-team-desc">Teach & care for children</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
+      // Show check-in button with animation
+      document.getElementById('checkin-container').classList.add('visible');
 
-            <div class="volunteer-team-card" data-team="production">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #F59E0B, #D97706);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14zM8 15c0-1.66 1.34-3 3-3 .35 0 .69.07 1 .18V6h5v2h-3v7.03c-.02 1.64-1.35 2.97-3 2.97-1.66 0-3-1.34-3-3z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">Production Team</div>
-                <div class="volunteer-team-desc">Sound, lights & video</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
 
-            <div class="volunteer-team-card" data-team="hospitality">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #3B82F6, #2563EB);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M2 21h19v-3H2v3zM20 8h-3V4H3c-1.1 0-2 .9-2 2v3h19v-1zM2 19h19v-3H2v3z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">Hospitality</div>
-                <div class="volunteer-team-desc">Coffee bar & refreshments</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
+    // Check-in
+    function checkIn() {
+      if (!selectedService) return;
 
-            <div class="volunteer-team-card" data-team="parking">
-              <div class="volunteer-team-icon" style="background: linear-gradient(135deg, #10B981, #059669);">
-                <svg viewBox="0 0 24 24" fill="currentColor" style="width: 24px; height: 24px;"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
-              </div>
-              <div class="volunteer-team-info">
-                <div class="volunteer-team-name">Parking Team</div>
-                <div class="volunteer-team-desc">Outdoor welcome & parking</div>
-              </div>
-              <div class="volunteer-team-check"></div>
-            </div>
-          </div>
+      checkedIn = true;
+      showToast('You\'re checked in! See you Sunday.', 'success');
 
-          <button class="btn btn-primary btn-block btn-lg volunteer-submit">Sign Up for Selected Teams</button>
-        </div>
-      </div>
-    </div>
-  </div>
+      // Update streak
+      const streakCount = document.querySelector('.streak-count');
+      streakCount.textContent = '13';
 
-      </div><!-- End .app -->
-    </div><!-- End .device-screen -->
-  </div><!-- End .device-frame -->
-  </div><!-- End .device-container -->
+      // Hide button after success
+      setTimeout(() => {
+        document.getElementById('checkin-container').classList.remove('visible');
+      }, 1500);
 
-  <!-- JavaScript -->
-  <script src="js/app.js"></script>
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+    }
+
+    // Give Page Functions
+    function selectFund(btn, fund) {
+      document.querySelectorAll('.fund-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function selectAmount(btn, amount) {
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.querySelector('.amount-input').value = '';
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function handleCustomAmount(input) {
+      document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('selected'));
+      // Format as currency
+      let value = input.value.replace(/[^0-9]/g, '');
+      if (value) {
+        input.value = '$' + parseInt(value).toLocaleString();
+      }
+    }
+
+    function selectFrequency(btn, freq) {
+      document.querySelectorAll('.freq-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      if (navigator.vibrate) navigator.vibrate(10);
+    }
+
+    function submitGift() {
+      showToast('Opening secure payment...', 'success');
+      if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+    }
+
+    // Toast
+    function showToast(message, type = 'default') {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.className = 'toast ' + type;
+
+      setTimeout(() => {
+        toast.classList.add('visible');
+      }, 10);
+
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 3000);
+    }
+
+    // Placeholder functions for navigation
+    function openNT26() {
+      showToast('Opening NT26 Reading Plan...');
+    }
+
+    function openEvent(eventId) {
+      showToast('Opening event details...');
+    }
+
+    function openPrayer() {
+      showToast('Opening prayer request form...');
+    }
+
+    function openServe() {
+      showToast('Opening volunteer signup...');
+    }
+
+    function openNewHere() {
+      showToast('Welcome to C3!');
+    }
+
+    // Expose to window
+    window.switchPage = switchPage;
+    window.selectService = selectService;
+    window.checkIn = checkIn;
+    window.selectFund = selectFund;
+    window.selectAmount = selectAmount;
+    window.handleCustomAmount = handleCustomAmount;
+    window.selectFrequency = selectFrequency;
+    window.submitGift = submitGift;
+    window.openNT26 = openNT26;
+    window.openEvent = openEvent;
+    window.openPrayer = openPrayer;
+    window.openServe = openServe;
+    window.openNewHere = openNewHere;
+
+    // PWA Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>
