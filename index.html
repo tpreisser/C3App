@@ -563,6 +563,46 @@
       color: var(--text-tertiary);
     }
 
+    .nt26-progress-wrapper {
+      margin-top: 8px;
+    }
+
+    .nt26-progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .nt26-progress-fill {
+      height: 100%;
+      background: var(--teal);
+      border-radius: 2px;
+      transition: width 0.3s ease;
+    }
+
+    .nt26-progress-text {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+
+    .nt26-completed {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .nt26-completed svg {
+      width: 12px;
+      height: 12px;
+    }
+
     /* Encounter Card */
     .encounter-card {
       margin: 24px var(--padding) 0;
@@ -1411,6 +1451,20 @@
                 <div class="nt26-content">
                   <div class="nt26-label">Today's Reading</div>
                   <div class="nt26-title">February 2 · Matthew 7</div>
+                  <div class="nt26-progress-wrapper">
+                    <div class="nt26-progress-bar">
+                      <div class="nt26-progress-fill" style="width: 9%"></div>
+                    </div>
+                    <div class="nt26-progress-text">
+                      <span>33 of 365 days</span>
+                      <span class="nt26-completed">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Read today
+                      </span>
+                    </div>
+                  </div>
                 </div>
                 <div class="nt26-arrow">›</div>
               </div>
