@@ -216,11 +216,9 @@
 
     .page::-webkit-scrollbar { display: none; }
 
-    /* Page Title */
-    .page-title {
-      padding: 70px var(--padding) 20px;
-      font-size: 28px;
-      font-weight: 700;
+    /* Page Spacer - for pages without hero */
+    .page-spacer {
+      height: 90px;
     }
 
     /* Hero Section */
@@ -741,7 +739,7 @@
 
     /* Watch Hero */
     .watch-hero {
-      margin: 70px var(--padding) 0;
+      margin: 0 var(--padding);
       border-radius: var(--radius);
       overflow: hidden;
       background: var(--card);
@@ -1014,7 +1012,7 @@
 
     /* Connect Page */
     .connect-hero {
-      margin: 70px var(--padding) 20px;
+      margin: 0 var(--padding) 20px;
       padding: 24px;
       background: linear-gradient(135deg, var(--teal) 0%, #0d9488 100%);
       border-radius: var(--radius);
@@ -1108,7 +1106,7 @@
 
     /* More Page */
     .more-content {
-      padding: 70px var(--padding) 0;
+      padding: 0 var(--padding);
     }
 
     .profile-card {
@@ -1298,7 +1296,7 @@
             <div class="header-inner">
               <div class="logo">
                 <img src="https://media.thechurchcoassets.com/accounts/6004/0e8bc4ff-13bf-4baf-b900-89812eb5727a-imported-asset__largepreview__.webp" alt="C3" class="logo-img">
-                <span class="logo-text">CELEBRATION</span>
+                <span class="logo-text" id="header-title">Home</span>
               </div>
               <div class="header-actions">
                 <button class="icon-btn">
@@ -1431,8 +1429,7 @@
 
             <!-- WATCH -->
             <section class="page" id="page-watch">
-              <h1 class="page-title">Watch</h1>
-
+              <div class="page-spacer"></div>
               <div class="category-chips">
                 <div class="chip active">All</div>
                 <div class="chip">Sermons</div>
@@ -1596,8 +1593,7 @@
 
             <!-- GIVE -->
             <section class="page" id="page-give">
-              <h1 class="page-title">Give</h1>
-
+              <div class="page-spacer"></div>
               <div class="give-content">
                 <div class="give-hero">
                   <p>Support the mission of C3 Hays</p>
@@ -1657,8 +1653,7 @@
 
             <!-- CONNECT -->
             <section class="page" id="page-connect">
-              <h1 class="page-title">Connect</h1>
-
+              <div class="page-spacer"></div>
               <div class="connect-hero">
                 <h2>We're Glad You're Here</h2>
                 <p>Find your place at C3 Hays</p>
@@ -1738,6 +1733,7 @@
 
             <!-- MORE -->
             <section class="page" id="page-more">
+              <div class="page-spacer"></div>
               <div class="more-content">
                 <div class="profile-card">
                   <div class="profile-avatar">TP</div>
@@ -1836,6 +1832,11 @@
       document.getElementById('page-' + page).classList.add('active');
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       event.currentTarget.classList.add('active');
+
+      // Update header title
+      const titles = { home: 'Home', watch: 'Watch', give: 'Give', connect: 'Connect', more: 'More' };
+      document.getElementById('header-title').textContent = titles[page] || 'Home';
+
       if (navigator.vibrate) navigator.vibrate(10);
     }
 
