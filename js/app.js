@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickActions();
   initConnectCards();
   initPrayerForm();
+  initVolunteerForm();
   initReadingCards();
   initFeaturedCards();
   initTooltips();
@@ -416,16 +417,23 @@ function initConnectCards() {
   connectCards.forEach(card => {
     card.addEventListener('click', () => {
       const title = card.querySelector('.connect-title')?.textContent;
+      const action = card.dataset.action;
+
+      // Check for data-action first
+      if (action === 'prayer') {
+        openPrayerModal();
+        return;
+      }
 
       switch (title) {
         case 'Prayer Request':
           openPrayerModal();
           break;
         case 'LifeGroups':
-          showToast('LifeGroups finder coming soon', 'info');
+          window.location.href = 'pages/lifegroups.html';
           break;
         case 'Serve':
-          showToast('Volunteer sign-up coming soon', 'info');
+          openModal('volunteer-modal');
           break;
         case 'Events':
           showToast('Events calendar coming soon', 'info');
@@ -537,12 +545,59 @@ function handlePrayerSubmit() {
 
   // Close modal and show success
   closeModal('prayer-modal');
-  showToast('Prayer request submitted. We\'re praying for you! 🙏', 'success');
+  showToast('Prayer request submitted. We\'re praying for you!', 'success');
 
   // Reset form
   form.reset();
   document.querySelectorAll('.prayer-visibility-option').forEach((o, i) => {
     o.classList.toggle('active', i === 0);
+  });
+}
+
+/**
+ * Volunteer Form
+ */
+function initVolunteerForm() {
+  // Team selection cards
+  const teamCards = document.querySelectorAll('.volunteer-team-card');
+
+  teamCards.forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('selected');
+
+      if (navigator.vibrate) {
+        navigator.vibrate(10);
+      }
+    });
+  });
+
+  // Submit button
+  const submitBtn = document.querySelector('.volunteer-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', handleVolunteerSubmit);
+  }
+}
+
+function handleVolunteerSubmit() {
+  const selectedTeams = document.querySelectorAll('.volunteer-team-card.selected');
+
+  if (selectedTeams.length === 0) {
+    showToast('Please select at least one team', 'error');
+    return;
+  }
+
+  const teams = Array.from(selectedTeams).map(card => card.dataset.team);
+
+  // Log the submission (in real app, would send to server)
+  console.log('Volunteer signup:', { teams });
+
+  // Close modal and show success
+  closeModal('volunteer-modal');
+  showToast(`Signed up for ${selectedTeams.length} team${selectedTeams.length > 1 ? 's' : ''}! We'll be in touch.`, 'success');
+
+  // Reset selections
+  document.querySelectorAll('.volunteer-team-card').forEach(card => {
+    card.classList.remove('selected');
   });
 }
 

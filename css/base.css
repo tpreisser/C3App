@@ -23,12 +23,25 @@ body {
   font-weight: var(--font-weight-normal);
   line-height: var(--line-height-normal);
   color: var(--text-primary);
-  background: var(--bg-primary);
+  background: #1a1a1a;
   min-height: 100vh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* Center the app frame */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px 0;
+}
+
+/* Desktop: Show phone frame */
+@media (min-width: 500px) {
+  body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+    padding: 40px 20px;
+  }
 }
 
 /* Prevent pull-to-refresh on mobile */
@@ -93,11 +106,48 @@ ol {
 /* ==================== APP CONTAINER ==================== */
 
 .app {
+  width: 100%;
   max-width: var(--app-max-width);
-  margin: 0 auto;
   min-height: 100vh;
   min-height: 100dvh;
   background: var(--bg-primary);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Desktop: Phone frame styling */
+@media (min-width: 500px) {
+  .app {
+    min-height: 852px;
+    max-height: 90vh;
+    border-radius: 44px;
+    box-shadow:
+      0 0 0 12px #1a1a1a,
+      0 0 0 14px #333,
+      0 25px 50px rgba(0, 0, 0, 0.5),
+      0 50px 100px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    overflow-y: auto;
+  }
+
+  /* Simulated notch */
+  .app::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 34px;
+    background: #000;
+    border-radius: 0 0 20px 20px;
+    z-index: 9999;
+  }
+}
+
+.app-inner {
+  width: 100%;
+  max-width: var(--app-max-width);
   position: relative;
   overflow-x: hidden;
 }
